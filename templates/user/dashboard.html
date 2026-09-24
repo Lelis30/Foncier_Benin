@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Mon espace" %}
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Bienvenue -->
+
+<div class="mb-4">
+
+    <h1>
+        👋 {% trans "Bienvenue" %}
+        {% if user.first_name %}
+            {{ user.first_name }}
+        {% else %}
+            {{ user.username }}
+        {% endif %}
+    </h1>
+
+    <p class="lead">
+        {% trans "Bienvenue sur votre espace foncier." %}
+    </p>
+
+</div>
+
+
+<!-- Fonctionnalités -->
+
+<div class="row">
+
+    <!-- Carte -->
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow p-4 h-100">
+
+            <div class="text-center">
+
+                <h1>🗺️</h1>
+
+                <h4>
+                    {% trans "Carte foncière" %}
+                </h4>
+
+            </div>
+
+            <p>
+                {% trans "Visualisez les parcelles disponibles sur la carte." %}
+            </p>
+
+            <button class="btn btn-primary mt-auto">
+                🗺️ {% trans "Voir la carte" %}
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Vérification -->
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow p-4 h-100">
+
+            <div class="text-center">
+
+                <h1>🔎</h1>
+
+                <h4>
+                    {% trans "Vérifier une parcelle" %}
+                </h4>
+
+            </div>
+
+            <p>
+                {% trans "Recherchez une parcelle avec sa référence." %}
+            </p>
+
+            <a
+                href="#"
+                class="btn btn-success mt-auto"
+            >
+                🔎 {% trans "Rechercher" %}
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Signalement -->
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow p-4 h-100">
+
+            <div class="text-center">
+
+                <h1>🚨</h1>
+
+                <h4>
+                    {% trans "Signaler un problème" %}
+                </h4>
+
+            </div>
+
+            <p>
+                {% trans "Signalez une anomalie concernant une parcelle." %}
+            </p>
+
+            <button class="btn btn-danger mt-auto">
+                🚨 {% trans "Signaler" %}
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Carte -->
+
+<div class="card shadow p-4 mt-4">
+
+    <h3>
+        🗺️ {% trans "Carte des parcelles" %}
+    </h3>
+
+    <p>
+        {% trans "Visualisation des parcelles sur la carte." %}
+    </p>
+
+    <div
+        id="map"
+        style="height: 450px;"
+    ></div>
+
+</div>
+
+
+<!-- Leaflet CSS -->
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+
+<!-- Leaflet JavaScript -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+
+<script>
+
+    // Position de départ : Cotonou
+
+    const map = L.map('map').setView(
+        [6.3703, 2.3912],
+        12
+    );
+
+
+    // OpenStreetMap
+
+    L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+            attribution:
+                '&copy; OpenStreetMap contributors'
+        }
+    ).addTo(map);
+
+
+    // Exemple de parcelle
+
+    const marker = L.marker(
+        [6.3703, 2.3912]
+    ).addTo(map);
+
+
+    marker.bindPopup(
+        `
+        <strong>Parcelle AB-02548</strong>
+        <br>
+        📍 Cotonou
+        <br>
+        📐 500 m²
+        <br>
+        ✅ Vérifiée
+        `
+    );
+
+</script>
+
+{% endblock %}

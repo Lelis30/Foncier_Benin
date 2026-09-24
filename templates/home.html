@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+Foncier Bénin
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Présentation principale -->
+<div class="text-center py-5">
+
+    <h1 class="display-4">
+        🗺️ Foncier Bénin
+    </h1>
+
+    <p class="lead">
+        {% trans "Comprendre et sécuriser le foncier au Bénin" %}
+    </p>
+
+    <p>
+        {% trans "Visualisez, recherchez et vérifiez les informations foncières facilement." %}
+    </p>
+
+
+    <div class="mt-4">
+
+        <a
+            href="{% url 'login' %}"
+            class="btn btn-primary btn-lg"
+        >
+            🔐 {% trans "Se connecter" %}
+        </a>
+
+
+        <a
+            href="{% url 'register' %}"
+            class="btn btn-success btn-lg"
+        >
+            👤 {% trans "Créer un compte" %}
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- Fonctionnalités -->
+
+<div class="row mt-5">
+
+    <!-- Visualiser -->
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow p-4 h-100 text-center">
+
+            <h1>
+                🗺️
+            </h1>
+
+            <h4>
+                {% trans "Visualiser" %}
+            </h4>
+
+            <p>
+                {% trans "Visualisez les parcelles et leur localisation sur une carte." %}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Vérifier -->
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow p-4 h-100 text-center">
+
+            <h1>
+                🔎
+            </h1>
+
+            <h4>
+                {% trans "Vérifier" %}
+            </h4>
+
+            <p>
+                {% trans "Vérifiez les informations et les documents d'une parcelle." %}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Accessibilité -->
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow p-4 h-100 text-center">
+
+            <h1>
+                ♿
+            </h1>
+
+            <h4>
+                {% trans "Accessible" %}
+            </h4>
+
+            <p>
+                {% trans "Une plateforme conçue pour être accessible à tous." %}
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Informations supplémentaires -->
+
+<div class="card shadow p-4 mt-5">
+
+    <div class="row align-items-center">
+
+        <div class="col-md-8">
+
+            <h2>
+                🏡 {% trans "Sécurisez vos informations foncières" %}
+            </h2>
+
+            <p>
+                {% trans "Notre plateforme facilite l'accès aux informations relatives aux parcelles, propriétaires et documents fonciers." %}
+            </p>
+
+        </div>
+
+        <div class="col-md-4 text-center">
+
+            <a
+                href="{% url 'register' %}"
+                class="btn btn-success btn-lg"
+            >
+                {% trans "Commencer" %}
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

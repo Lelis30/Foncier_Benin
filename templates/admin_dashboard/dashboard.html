@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Administration" %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="mb-4">
+
+    <h1>
+        🔐 {% trans "Administration" %}
+    </h1>
+
+    <p class="lead">
+        {% trans "Gestion de la plateforme foncière." %}
+    </p>
+
+</div>
+
+
+<div class="row">
+
+    <!-- Parcelles -->
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card shadow p-3 text-center h-100">
+
+            <h1>📍</h1>
+
+            <h4>
+                {% trans "Parcelles" %}
+            </h4>
+
+            <p>
+                {% trans "Gérer les parcelles." %}
+            </p>
+
+            <a
+                href="/admin/land/parcel/"
+                class="btn btn-primary mt-auto"
+            >
+                {% trans "Gérer" %}
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Propriétaires -->
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card shadow p-3 text-center h-100">
+
+            <h1>👤</h1>
+
+            <h4>
+                {% trans "Propriétaires" %}
+            </h4>
+
+            <p>
+                {% trans "Gérer les propriétaires." %}
+            </p>
+
+            <a
+                href="/admin/land/owner/"
+                class="btn btn-primary mt-auto"
+            >
+                {% trans "Gérer" %}
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Documents -->
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card shadow p-3 text-center h-100">
+
+            <h1>📄</h1>
+
+            <h4>
+                {% trans "Documents" %}
+            </h4>
+
+            <p>
+                {% trans "Gérer les documents fonciers." %}
+            </p>
+
+            <a
+                href="/admin/land/document/"
+                class="btn btn-primary mt-auto"
+            >
+                {% trans "Gérer" %}
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Signalements -->
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card shadow p-3 text-center h-100">
+
+            <h1>🚨</h1>
+
+            <h4>
+                {% trans "Signalements" %}
+            </h4>
+
+            <p>
+                {% trans "Consulter les signalements." %}
+            </p>
+
+            <a
+                href="/admin/land/report/"
+                class="btn btn-danger mt-auto"
+            >
+                {% trans "Voir" %}
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card shadow p-4 mt-4">
+
+    <h3>
+        ⚙️ {% trans "Administration avancée" %}
+    </h3>
+
+    <p>
+        {% trans "Accédez à l'interface complète d'administration Django." %}
+    </p>
+
+    <div>
+
+        <a
+            href="/admin/"
+            class="btn btn-dark"
+        >
+            ⚙️ {% trans "Administration complète" %}
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

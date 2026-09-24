@@ -4,6 +4,29 @@ from django.contrib.auth.models import User
 
 class RegisterForm(forms.ModelForm):
 
+    first_name = forms.CharField(
+        label="Prénom",
+        max_length=150,
+        required=True
+    )
+
+    last_name = forms.CharField(
+        label="Nom",
+        max_length=150,
+        required=True
+    )
+
+    username = forms.CharField(
+        label="Nom d'utilisateur",
+        max_length=150,
+        help_text="Choisissez un nom d'utilisateur unique."
+    )
+
+    email = forms.EmailField(
+        label="Adresse e-mail",
+        required=True
+    )
+
     password = forms.CharField(
         widget=forms.PasswordInput,
         label="Mot de passe"
@@ -15,7 +38,6 @@ class RegisterForm(forms.ModelForm):
     )
 
     class Meta:
-
         model = User
 
         fields = [
@@ -26,17 +48,12 @@ class RegisterForm(forms.ModelForm):
         ]
 
     def clean(self):
-
         cleaned_data = super().clean()
 
         password = cleaned_data.get('password')
-
-        password_confirm = cleaned_data.get(
-            'password_confirm'
-        )
+        password_confirm = cleaned_data.get('password_confirm')
 
         if password != password_confirm:
-
             raise forms.ValidationError(
                 "Les mots de passe ne correspondent pas."
             )

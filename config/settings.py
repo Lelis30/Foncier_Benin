@@ -43,8 +43,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -119,9 +121,8 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Porto-Novo'
 
-USE_I18N = True
 
 USE_TZ = True
 
