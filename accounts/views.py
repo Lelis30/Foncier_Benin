@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import RegisterForm
 from .models import UserProfile
-from land.models import Parcel
+from land.models import Parcel, Report
 
 def home(request):
 
@@ -152,10 +152,45 @@ def user_dashboard(request):
     )
 
 
-@staff_member_required
+
+@login_required
 def admin_dashboard(request):
+
+    # Seuls les administrateurs
+    # peuvent accéder à cette page
+    if not request.user.is_staff:
+        return redirect('user_dashboard')
+
+    # Tous les signalements
+    reports = (
+        Report.objects
+        .select_related('parcel', 'user')
+        .order_by('-created_at')
+    )
+
+    # Statistiques
+    total_reports = reports.count()
+
+    pending_reports = reports.filter(
+        status='PENDING'
+    ).count()
+
+    reviewing_reports = reports.filter(
+        status='REVIEWING'
+    ).count()
+
+    resolved_reports = reports.filter(
+        status='RESOLVED'
+    ).count()
 
     return render(
         request,
-        'admin_dashboard/dashboard.html'
+        'admin_dashboard/dashboard.html',
+        {
+            'reports': reports,
+            'total_reports': total_reports,
+            'pending_reports': pending_reports,
+            'reviewing_reports': reviewing_reports,
+            'resolved_reports': resolved_reports,
+        }
     )

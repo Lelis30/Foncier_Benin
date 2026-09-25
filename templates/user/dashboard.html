@@ -111,13 +111,12 @@
             </p>
 
 
-            <button
-                type="button"
-                class="btn btn-danger mt-auto"
-                disabled
-            >
-                🚨 {% trans "Signaler" %}
-            </button>
+            <a
+    href="{% url 'report_problem' %}"
+    class="btn btn-danger mt-auto"
+>
+    🚨 {% trans "Signaler" %}
+</a>
 
         </div>
 

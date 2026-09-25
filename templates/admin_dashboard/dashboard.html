@@ -8,6 +8,10 @@
 
 {% block content %}
 
+
+<!-- TITRE -->
+
+
 <div class="mb-4">
 
     <h1>
@@ -21,9 +25,12 @@
 </div>
 
 
+<!-- CARTES PRINCIPALES -->
+
+
 <div class="row">
 
-    <!-- Parcelles -->
+    <!-- PARCELLES -->
 
     <div class="col-md-3 mb-4">
 
@@ -51,7 +58,7 @@
     </div>
 
 
-    <!-- Propriétaires -->
+    <!-- PROPRIETAIRES -->
 
     <div class="col-md-3 mb-4">
 
@@ -79,7 +86,7 @@
     </div>
 
 
-    <!-- Documents -->
+    <!-- DOCUMENTS -->
 
     <div class="col-md-3 mb-4">
 
@@ -107,7 +114,7 @@
     </div>
 
 
-    <!-- Signalements -->
+    <!-- SIGNALEMENTS -->
 
     <div class="col-md-3 mb-4">
 
@@ -124,7 +131,7 @@
             </p>
 
             <a
-                href="/admin/land/report/"
+                href="#reports"
                 class="btn btn-danger mt-auto"
             >
                 {% trans "Voir" %}
@@ -137,7 +144,383 @@
 </div>
 
 
-<div class="card shadow p-4 mt-4">
+<!-- STATISTIQUES DES SIGNALEMENTS -->
+
+
+<div class="mt-4 mb-3">
+
+    <h3>
+        📊 {% trans "Suivi des signalements" %}
+    </h3>
+
+</div>
+
+
+<div class="row">
+
+    <!-- TOTAL -->
+
+    <div class="col-md-3 mb-3">
+
+        <div class="card shadow-sm text-center p-3 h-100">
+
+            <h2>
+                {{ total_reports }}
+            </h2>
+
+            <strong>
+                🚨 {% trans "Total" %}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- EN ATTENTE -->
+
+    <div class="col-md-3 mb-3">
+
+        <div class="card shadow-sm text-center p-3 h-100">
+
+            <h2>
+                {{ pending_reports }}
+            </h2>
+
+            <strong>
+                🟡 {% trans "En attente" %}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- EN VERIFICATION -->
+
+    <div class="col-md-3 mb-3">
+
+        <div class="card shadow-sm text-center p-3 h-100">
+
+            <h2>
+                {{ reviewing_reports }}
+            </h2>
+
+            <strong>
+                🔵 {% trans "En vérification" %}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESOLUS -->
+
+    <div class="col-md-3 mb-3">
+
+        <div class="card shadow-sm text-center p-3 h-100">
+
+            <h2>
+                {{ resolved_reports }}
+            </h2>
+
+            <strong>
+                🟢 {% trans "Résolus" %}
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- LISTE DES SIGNALEMENTS -->
+
+
+<div
+    id="reports"
+    class="card shadow p-4 mt-4"
+>
+
+    <!-- EN-TETE -->
+
+    <div
+        class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"
+    >
+
+        <div>
+
+            <h3 class="mb-1">
+                🚨 {% trans "Signalements récents" %}
+            </h3>
+
+            <small class="text-muted">
+                {% trans "Consultez les problèmes signalés par les utilisateurs." %}
+            </small>
+
+        </div>
+
+
+        <a
+            href="/admin/land/report/"
+            class="btn btn-outline-danger"
+        >
+            ⚙️ {% trans "Gestion complète" %}
+        </a>
+
+    </div>
+
+
+    <!-- SI DES SIGNALEMENTS EXISTENT -->
+
+    {% if reports %}
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <!-- EN-TETE DU TABLEAU -->
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>
+                        {% trans "Parcelle" %}
+                    </th>
+
+                    <th>
+                        {% trans "Utilisateur" %}
+                    </th>
+
+                    <th>
+                        {% trans "Description" %}
+                    </th>
+
+                    <th>
+                        {% trans "Statut" %}
+                    </th>
+
+                    <th>
+                        {% trans "Date" %}
+                    </th>
+
+                    <th>
+                        {% trans "Action" %}
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <!-- CONTENU -->
+
+            <tbody>
+
+                {% for report in reports %}
+
+                <tr>
+
+                    <!-- PARCELLE -->
+
+                    <td>
+
+                        <strong>
+                            📍 {{ report.parcel.reference }}
+                        </strong>
+
+                        <br>
+
+                        <small class="text-muted">
+                            {{ report.parcel.location }}
+                        </small>
+
+                    </td>
+
+
+                    <!-- UTILISATEUR -->
+
+                    <td>
+
+                        👤 {{ report.user.username }}
+
+                    </td>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <td style="min-width: 250px; max-width: 350px;">
+
+                        {{ report.description|truncatechars:120 }}
+
+                    </td>
+
+
+                    <!-- STATUT -->
+
+                    <td>
+
+                        {% if report.status == 'PENDING' %}
+
+                            <span
+                                class="badge bg-warning text-dark"
+                            >
+                                🟡 {% trans "En attente" %}
+                            </span>
+
+
+                        {% elif report.status == 'REVIEWING' %}
+
+                            <span
+                                class="badge bg-primary"
+                            >
+                                🔵
+                                {% trans "En cours de vérification" %}
+                            </span>
+
+
+                        {% elif report.status == 'RESOLVED' %}
+
+                            <span
+                                class="badge bg-success"
+                            >
+                                🟢 {% trans "Résolu" %}
+                            </span>
+
+
+                        {% else %}
+
+                            <span
+                                class="badge bg-secondary"
+                            >
+                                {{ report.get_status_display }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- DATE -->
+
+                    <td style="white-space: nowrap;">
+
+                        📅
+                        {{ report.created_at|date:"d/m/Y" }}
+
+                        <br>
+
+                        <small class="text-muted">
+                            {{ report.created_at|date:"H:i" }}
+                        </small>
+
+                    </td>
+
+
+                    <!-- ACTION -->
+
+                    <td>
+
+                        <a
+                            href="/admin/land/report/{{ report.id }}/change/"
+                            class="btn btn-sm btn-outline-primary"
+                        >
+                            ✏️ {% trans "Modifier" %}
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- SI AUCUN SIGNALEMENT -->
+
+    {% else %}
+
+    <div class="alert alert-info mb-0">
+
+        ℹ️
+        {% trans "Aucun signalement n'a encore été enregistré." %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+
+<!-- LEGENDE DES STATUTS -->
+
+
+<div class="card shadow-sm p-4 mt-4">
+
+    <h4>
+        📌 {% trans "Statut des signalements" %}
+    </h4>
+
+    <div class="row mt-2">
+
+        <div class="col-md-4 mb-2">
+
+            <span class="badge bg-warning text-dark">
+                🟡 {% trans "En attente" %}
+            </span>
+
+            <small class="ms-2">
+                {% trans "Le signalement n'a pas encore été traité." %}
+            </small>
+
+        </div>
+
+
+        <div class="col-md-4 mb-2">
+
+            <span class="badge bg-primary">
+                🔵 {% trans "En cours de vérification" %}
+            </span>
+
+            <small class="ms-2">
+                {% trans "Le signalement est en cours d'analyse." %}
+            </small>
+
+        </div>
+
+
+        <div class="col-md-4 mb-2">
+
+            <span class="badge bg-success">
+                🟢 {% trans "Résolu" %}
+            </span>
+
+            <small class="ms-2">
+                {% trans "Le problème a été traité." %}
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ADMINISTRATION AVANCEE -->
+
+
+<div class="card shadow p-4 mt-4 mb-4">
 
     <h3>
         ⚙️ {% trans "Administration avancée" %}
@@ -159,5 +542,6 @@
     </div>
 
 </div>
+
 
 {% endblock %}

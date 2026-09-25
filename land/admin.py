@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from .models import (
     Owner,
     Parcel,
@@ -103,9 +102,16 @@ class ReportAdmin(admin.ModelAdmin):
         'parcel',
         'user',
         'status',
-        'created_at'
+        'created_at',
     )
 
     list_filter = (
         'status',
+        'created_at',
+    )
+
+    search_fields = (
+        'parcel__reference',
+        'user__username',
+        'description',
     )
