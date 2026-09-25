@@ -1,0 +1,66 @@
+/* MODE ACCESSIBILITE - CONTRASTE ELEVE */
+
+body.high-contrast {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+body.high-contrast main,
+body.high-contrast .container {
+    color: #fff;
+}
+
+body.high-contrast .accessibility-bar {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-bottom: 2px solid #ffff00;
+}
+
+body.high-contrast .navbar {
+    background-color: #000 !important;
+    border-bottom: 2px solid #ffff00;
+}
+
+body.high-contrast .card {
+    background-color: #111 !important;
+    color: #fff !important;
+    border: 2px solid #ffff00 !important;
+}
+
+body.high-contrast .table {
+    --bs-table-bg: #000;
+    --bs-table-color: #fff;
+    --bs-table-border-color: #ffff00;
+}
+
+body.high-contrast .table th,
+body.high-contrast .table td {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-color: #ffff00 !important;
+}
+
+body.high-contrast .text-muted {
+    color: #fff !important;
+}
+
+body.high-contrast a:not(.btn) {
+    color: #ffff00 !important;
+}
+
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 2px solid #ffff00 !important;
+}
+
+body.high-contrast .btn {
+    border: 2px solid #ffff00 !important;
+}
+
+body.high-contrast footer {
+    background-color: #000 !important;
+    color: #fff !important;
+}

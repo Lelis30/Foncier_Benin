@@ -1,7 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+
+    // VALIDATION DES FORMULAIRES - FRANCAIS / ANGLAIS
+
+
     const language =
         document.documentElement.lang || "fr";
+
 
     const messages = {
 
@@ -30,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             pattern:
                 "Le format saisi n'est pas valide."
         },
+
 
         en: {
             required:
@@ -63,12 +69,16 @@ document.addEventListener("DOMContentLoaded", function () {
         messages[language] || messages.fr;
 
 
-    const fields = document.querySelectorAll(
-        "input, select, textarea"
-    );
+    const fields =
+        document.querySelectorAll(
+            "input, select, textarea"
+        );
 
 
     fields.forEach(function (field) {
+
+        // Effacer le message personnalisé
+        // lorsque l'utilisateur modifie le champ.
 
         field.addEventListener(
             "input",
@@ -85,6 +95,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
 
+
+        // Messages personnalisés de validation.
 
         field.addEventListener(
             "invalid",
@@ -139,7 +151,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
 
-                else if (this.validity.rangeUnderflow) {
+                else if (
+                    this.validity.rangeUnderflow
+                ) {
 
                     this.setCustomValidity(
                         currentMessages.tooSmall
@@ -147,7 +161,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
 
-                else if (this.validity.rangeOverflow) {
+                else if (
+                    this.validity.rangeOverflow
+                ) {
 
                     this.setCustomValidity(
                         currentMessages.tooLarge
@@ -155,7 +171,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
 
-                else if (this.validity.patternMismatch) {
+                else if (
+                    this.validity.patternMismatch
+                ) {
 
                     this.setCustomValidity(
                         currentMessages.pattern
@@ -168,4 +186,206 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+
+    // RESTAURER LES PREFERENCES D'ACCESSIBILITE
+
+
+    applyFontSize();
+
+
+    const highContrast =
+        localStorage.getItem(
+            "foncierHighContrast"
+        );
+
+
+    if (highContrast === "true") {
+
+        document.body.classList.add(
+            "high-contrast"
+        );
+
+    }
+
 });
+
+
+// ACCESSIBILITE - FONCIER BENIN
+
+
+// Taille du texte enregistrée.
+// Valeur normale : 100 %
+
+let fontSize = parseInt(
+    localStorage.getItem("foncierFontSize")
+) || 100;
+
+
+// APPLIQUER LA TAILLE DU TEXTE
+
+
+function applyFontSize() {
+
+    document.documentElement.style.fontSize =
+        fontSize + "%";
+
+}
+
+
+// AGRANDIR LE TEXTE
+
+
+function increaseFontSize() {
+
+    if (fontSize < 140) {
+
+        fontSize += 10;
+
+
+        localStorage.setItem(
+            "foncierFontSize",
+            fontSize
+        );
+
+
+        applyFontSize();
+
+    }
+
+}
+
+
+// REDUIRE LE TEXTE
+
+
+function decreaseFontSize() {
+
+    if (fontSize > 80) {
+
+        fontSize -= 10;
+
+
+        localStorage.setItem(
+            "foncierFontSize",
+            fontSize
+        );
+
+
+        applyFontSize();
+
+    }
+
+}
+
+
+// CONTRASTE ELEVE
+
+
+function toggleHighContrast() {
+
+    document.body.classList.toggle(
+        "high-contrast"
+    );
+
+
+    const enabled =
+        document.body.classList.contains(
+            "high-contrast"
+        );
+
+
+    localStorage.setItem(
+        "foncierHighContrast",
+        enabled ? "true" : "false"
+    );
+
+}
+
+
+// LECTURE VOCALE
+
+
+function readPage() {
+
+    if (!("speechSynthesis" in window)) {
+
+        alert(
+            "La lecture vocale n'est pas disponible dans ce navigateur."
+        );
+
+        return;
+
+    }
+
+
+    // Arrêter une éventuelle lecture en cours.
+
+    window.speechSynthesis.cancel();
+
+
+    // Lire principalement le contenu de la page.
+
+    const main =
+        document.querySelector("main") ||
+        document.querySelector(".container") ||
+        document.body;
+
+
+    const text =
+        main.innerText.trim();
+
+
+    if (!text) {
+
+        return;
+
+    }
+
+
+    const speech =
+        new SpeechSynthesisUtterance(text);
+
+
+    const language =
+        document.documentElement.lang || "fr";
+
+
+    if (language.startsWith("en")) {
+
+        speech.lang = "en-US";
+
+    }
+
+    else {
+
+        speech.lang = "fr-FR";
+
+    }
+
+
+    speech.rate = 0.9;
+
+    speech.pitch = 1;
+
+    speech.volume = 1;
+
+
+    window.speechSynthesis.speak(
+        speech
+    );
+
+}
+
+
+// ARRETER LA LECTURE VOCALE
+
+
+function stopReading() {
+
+    if ("speechSynthesis" in window) {
+
+        window.speechSynthesis.cancel();
+
+    }
+
+}
