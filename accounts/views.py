@@ -3,10 +3,9 @@ from django.contrib.auth import (authenticate, login, logout)
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-
 from .forms import RegisterForm
 from .models import UserProfile
-
+from land.models import Parcel
 
 def home(request):
 
@@ -120,9 +119,28 @@ def logout_view(request):
 @login_required
 def user_dashboard(request):
 
+    parcels = Parcel.objects.all()
+
+    parcels_data = []
+
+    for parcel in parcels:
+
+        parcels_data.append({
+            'id': parcel.id,
+            'reference': parcel.reference,
+            'location': parcel.location,
+            'area': parcel.area,
+            'latitude': parcel.latitude,
+            'longitude': parcel.longitude,
+            'status': parcel.get_status_display(),
+        })
+
     return render(
         request,
-        'user/dashboard.html'
+        'user/dashboard.html',
+        {
+            'parcels_data': parcels_data
+        }
     )
 
 

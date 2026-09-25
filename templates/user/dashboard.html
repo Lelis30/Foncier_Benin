@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}
 {% trans "Mon espace" %}
 {% endblock %}
 
-
 {% block content %}
 
-<!-- Bienvenue -->
+<!-- ============================= -->
+<!-- TITRE DU DASHBOARD -->
+<!-- ============================= -->
 
 <div class="mb-4">
 
@@ -28,31 +30,36 @@
 </div>
 
 
-<!-- Fonctionnalités -->
+<!-- ============================= -->
+<!-- CARTES DES FONCTIONNALITÉS -->
+<!-- ============================= -->
 
-<div class="row">
+<div class="row g-4 mb-5">
 
-    <!-- Carte -->
 
-    <div class="col-md-4 mb-4">
+    <!-- CARTE FONCIÈRE -->
 
-        <div class="card shadow p-4 h-100">
+    <div class="col-md-4">
 
-            <div class="text-center">
+        <div class="card shadow-sm h-100 p-4">
 
-                <h1>🗺️</h1>
-
-                <h4>
-                    {% trans "Carte foncière" %}
-                </h4>
-
+            <div style="font-size: 35px;">
+                🗺️
             </div>
+
+            <h3 class="mt-2">
+                {% trans "Carte foncière" %}
+            </h3>
 
             <p>
                 {% trans "Visualisez les parcelles disponibles sur la carte." %}
             </p>
 
-            <button class="btn btn-primary mt-auto">
+            <button
+                type="button"
+                class="btn btn-primary w-100"
+                onclick="document.getElementById('map-section').scrollIntoView({behavior: 'smooth'});"
+            >
                 🗺️ {% trans "Voir la carte" %}
             </button>
 
@@ -61,29 +68,27 @@
     </div>
 
 
-    <!-- Vérification -->
+    <!-- VÉRIFIER UNE PARCELLE -->
 
-    <div class="col-md-4 mb-4">
+    <div class="col-md-4">
 
-        <div class="card shadow p-4 h-100">
+        <div class="card shadow-sm h-100 p-4">
 
-            <div class="text-center">
-
-                <h1>🔎</h1>
-
-                <h4>
-                    {% trans "Vérifier une parcelle" %}
-                </h4>
-
+            <div style="font-size: 35px;">
+                🔎
             </div>
+
+            <h3 class="mt-2">
+                {% trans "Vérifier une parcelle" %}
+            </h3>
 
             <p>
                 {% trans "Recherchez une parcelle avec sa référence." %}
             </p>
 
             <a
-                href="#"
-                class="btn btn-success mt-auto"
+                href="{% url 'search_parcel' %}"
+                class="btn btn-success w-100"
             >
                 🔎 {% trans "Rechercher" %}
             </a>
@@ -93,27 +98,29 @@
     </div>
 
 
-    <!-- Signalement -->
+    <!-- SIGNALER -->
 
-    <div class="col-md-4 mb-4">
+    <div class="col-md-4">
 
-        <div class="card shadow p-4 h-100">
+        <div class="card shadow-sm h-100 p-4">
 
-            <div class="text-center">
-
-                <h1>🚨</h1>
-
-                <h4>
-                    {% trans "Signaler un problème" %}
-                </h4>
-
+            <div style="font-size: 35px;">
+                🚨
             </div>
+
+            <h3 class="mt-2">
+                {% trans "Signaler un problème" %}
+            </h3>
 
             <p>
                 {% trans "Signalez une anomalie concernant une parcelle." %}
             </p>
 
-            <button class="btn btn-danger mt-auto">
+            <button
+                type="button"
+                class="btn btn-danger w-100"
+                disabled
+            >
                 🚨 {% trans "Signaler" %}
             </button>
 
@@ -124,27 +131,39 @@
 </div>
 
 
-<!-- Carte -->
+<!-- ============================= -->
+<!-- SECTION CARTE -->
+<!-- ============================= -->
 
-<div class="card shadow p-4 mt-4">
+<div
+    id="map-section"
+    class="card shadow-sm p-4 mb-4"
+>
 
-    <h3>
+    <h2>
         🗺️ {% trans "Carte des parcelles" %}
-    </h3>
+    </h2>
 
     <p>
-        {% trans "Visualisation des parcelles sur la carte." %}
+        {% trans "Les parcelles enregistrées apparaissent automatiquement sur la carte." %}
     </p>
 
     <div
         id="map"
-        style="height: 450px;"
+        style="
+            height: 450px;
+            width: 100%;
+            border-radius: 8px;
+            background-color: #e5e5e5;
+        "
     ></div>
 
 </div>
 
 
-<!-- Leaflet CSS -->
+<!-- ============================= -->
+<!-- LEAFLET CSS -->
+<!-- ============================= -->
 
 <link
     rel="stylesheet"
@@ -152,52 +171,264 @@
 />
 
 
-<!-- Leaflet JavaScript -->
+<!-- ============================= -->
+<!-- LEAFLET JAVASCRIPT -->
+<!-- ============================= -->
 
 <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
 </script>
 
 
+<!-- ============================= -->
+<!-- DONNÉES DJANGO -->
+<!-- ============================= -->
+
+{{ parcels|json_script:"parcels-data" }}
+
+
+<!-- ============================= -->
+<!-- JAVASCRIPT DE LA CARTE -->
+<!-- ============================= -->
+
 <script>
 
-    // Position de départ : Cotonou
+document.addEventListener("DOMContentLoaded", function () {
 
-    const map = L.map('map').setView(
+    // ==========================================
+    // 1. CRÉATION DE LA CARTE
+    // ==========================================
+
+    const map = L.map("map").setView(
         [6.3703, 2.3912],
         12
     );
 
 
-    // OpenStreetMap
+    // ==========================================
+    // 2. FOND DE CARTE
+    // ==========================================
 
     L.tileLayer(
-        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
+            maxZoom: 19,
+
             attribution:
                 '&copy; OpenStreetMap contributors'
         }
     ).addTo(map);
 
 
-    // Exemple de parcelle
+    // ==========================================
+    // 3. RÉCUPÉRER LES PARCELLES DJANGO
+    // ==========================================
 
-    const marker = L.marker(
-        [6.3703, 2.3912]
-    ).addTo(map);
+    const dataElement =
+        document.getElementById("parcels-data");
+
+    let parcels = [];
 
 
-    marker.bindPopup(
-        `
-        <strong>Parcelle AB-02548</strong>
-        <br>
-        📍 Cotonou
-        <br>
-        📐 500 m²
-        <br>
-        ✅ Vérifiée
-        `
-    );
+    if (dataElement) {
+
+        try {
+
+            parcels =
+                JSON.parse(
+                    dataElement.textContent
+                );
+
+        } catch (error) {
+
+            console.error(
+                "Erreur pendant la lecture des parcelles :",
+                error
+            );
+
+        }
+
+    }
+
+
+    // ==========================================
+    // 4. TABLEAU POUR LES COORDONNÉES
+    // ==========================================
+
+    const coordinates = [];
+
+
+    // ==========================================
+    // 5. AFFICHER LES PARCELLES
+    // ==========================================
+
+    parcels.forEach(function (parcel) {
+
+        const latitude =
+            parseFloat(parcel.latitude);
+
+        const longitude =
+            parseFloat(parcel.longitude);
+
+
+        // Vérifier les coordonnées
+
+        if (
+            Number.isNaN(latitude) ||
+            Number.isNaN(longitude)
+        ) {
+
+            console.warn(
+                "Coordonnées invalides :",
+                parcel
+            );
+
+            return;
+        }
+
+
+        // Ajouter les coordonnées
+
+        coordinates.push([
+            latitude,
+            longitude
+        ]);
+
+
+        // ======================================
+        // PROPRIÉTAIRE
+        // ======================================
+
+        let owner =
+            parcel.owner || "Non renseigné";
+
+
+        // ======================================
+        // STATUT
+        // ======================================
+
+        let status =
+            parcel.status || "PENDING";
+
+
+        let statusText =
+            status;
+
+
+        if (status === "VERIFIED") {
+
+            statusText =
+                "✅ Vérifiée";
+
+        } else if (status === "PENDING") {
+
+            statusText =
+                "🟡 En attente";
+
+        } else if (status === "DISPUTED") {
+
+            statusText =
+                "⚠️ En litige";
+
+        }
+
+
+        // ======================================
+        // CRÉATION DU MARQUEUR
+        // ======================================
+
+        const marker =
+            L.marker([
+                latitude,
+                longitude
+            ]).addTo(map);
+
+
+        // ======================================
+        // POPUP
+        // ======================================
+
+        marker.bindPopup(`
+
+            <div style="min-width: 220px;">
+
+                <h5>
+                    📍 ${parcel.reference || ""}
+                </h5>
+
+                <hr>
+
+                <strong>
+                    {% trans "Localisation" %} :
+                </strong>
+
+                ${parcel.location || "Non renseignée"}
+
+                <br><br>
+
+
+                <strong>
+                    {% trans "Superficie" %} :
+                </strong>
+
+                ${parcel.area || "Non renseignée"} m²
+
+                <br><br>
+
+
+                <strong>
+                    {% trans "Propriétaire" %} :
+                </strong>
+
+                ${owner}
+
+                <br><br>
+
+
+                <strong>
+                    {% trans "Statut" %} :
+                </strong>
+
+                ${statusText}
+
+            </div>
+
+        `);
+
+    });
+
+
+    // ==========================================
+    // 6. ZOOM AUTOMATIQUE
+    // ==========================================
+
+    if (coordinates.length > 0) {
+
+        const bounds =
+            L.latLngBounds(coordinates);
+
+        map.fitBounds(
+            bounds,
+            {
+                padding: [40, 40],
+                maxZoom: 16
+            }
+        );
+
+    }
+
+
+    // ==========================================
+    // 7. CORRECTION AFFICHAGE LEAFLET
+    // ==========================================
+
+    setTimeout(function () {
+
+        map.invalidateSize();
+
+    }, 300);
+
+});
 
 </script>
 

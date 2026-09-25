@@ -1,18 +1,25 @@
+{% load i18n %}
+{% load static %}
+
 <!DOCTYPE html>
+
 <html lang="{{ LANGUAGE_CODE }}">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>
         {% block title %}
-        Foncier Bénin
+            Foncier Bénin
         {% endblock %}
     </title>
+
 
     <!-- Bootstrap -->
     <link
@@ -20,19 +27,29 @@
         rel="stylesheet"
     >
 
-    <!-- Notre CSS -->
+
+    <!-- Notre fichier CSS -->
     <link
         rel="stylesheet"
-        href="/static/css/style.css"
+        href="{% static 'css/style.css' %}"
     >
 
 </head>
 
+
 <body>
+
+
+<!-- ============================= -->
+<!-- BARRE DE NAVIGATION -->
+<!-- ============================= -->
 
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
 
     <div class="container">
+
+
+        <!-- Logo -->
 
         <a
             class="navbar-brand"
@@ -42,9 +59,19 @@
         </a>
 
 
+        <!-- Menu -->
+
         <div class="d-flex align-items-center gap-2">
 
+
+            <!-- ============================= -->
+            <!-- UTILISATEUR CONNECTÉ -->
+            <!-- ============================= -->
+
             {% if user.is_authenticated %}
+
+
+                <!-- Administrateur -->
 
                 {% if user.is_staff %}
 
@@ -52,8 +79,11 @@
                         class="btn btn-warning"
                         href="{% url 'admin_dashboard' %}"
                     >
-                        ⚙️ Administration
+                        ⚙️ {% trans "Administration" %}
                     </a>
+
+
+                <!-- Utilisateur normal -->
 
                 {% else %}
 
@@ -61,64 +91,115 @@
                         class="btn btn-light"
                         href="{% url 'user_dashboard' %}"
                     >
-                        🏠 Dashboard
+                        🏠 {% trans "Tableau de bord" %}
                     </a>
 
                 {% endif %}
 
 
+                <!-- Déconnexion -->
+
                 <a
                     class="btn btn-danger"
                     href="{% url 'logout' %}"
                 >
-                    🚪 Déconnexion
+                    🚪 {% trans "Déconnexion" %}
                 </a>
 
+
+            <!-- ============================= -->
+            <!-- UTILISATEUR NON CONNECTÉ -->
+            <!-- ============================= -->
+
             {% else %}
+
+
+                <!-- Connexion -->
 
                 <a
                     class="btn btn-light"
                     href="{% url 'login' %}"
                 >
-                    🔐 Connexion
+                    🔐 {% trans "Connexion" %}
                 </a>
+
+
+                <!-- Inscription -->
 
                 <a
                     class="btn btn-success"
                     href="{% url 'register' %}"
                 >
-                    👤 Inscription
+                    👤 {% trans "Inscription" %}
                 </a>
+
 
             {% endif %}
 
 
-            <!-- Choix de langue -->
+
+            <!-- ============================= -->
+            <!-- CHOIX DE LA LANGUE -->
+            <!-- ============================= -->
 
             <form
                 action="{% url 'set_language' %}"
                 method="post"
+                class="m-0"
             >
 
                 {% csrf_token %}
+
+
+                <!--
+                Après changement de langue,
+                rester sur la page actuelle.
+                -->
+
+                <input
+                    name="next"
+                    type="hidden"
+                    value="{{ request.path }}"
+                >
+
+
+                <!-- Langue actuellement utilisée -->
+
+                {% get_current_language as CURRENT_LANGUAGE %}
+
 
                 <select
                     name="language"
                     onchange="this.form.submit()"
                     class="form-select"
+                    aria-label="{% trans 'Choisir la langue' %}"
                 >
 
-                    <option value="fr">
+
+                    <!-- Français -->
+
+                    <option
+                        value="fr"
+                        {% if CURRENT_LANGUAGE == 'fr' %}selected{% endif %}
+                    >
                         🇫🇷 Français
                     </option>
 
-                    <option value="en">
+
+                    <!-- Anglais -->
+
+                    <option
+                        value="en"
+                        {% if CURRENT_LANGUAGE == 'en' %}selected{% endif %}
+                    >
                         🇬🇧 English
                     </option>
+
 
                 </select>
 
             </form>
+
 
         </div>
 
@@ -126,6 +207,11 @@
 
 </nav>
 
+
+
+<!-- ============================= -->
+<!-- CONTENU DES PAGES -->
+<!-- ============================= -->
 
 <main class="container py-4">
 
@@ -136,6 +222,11 @@
 </main>
 
 
+
+<!-- ============================= -->
+<!-- PIED DE PAGE -->
+<!-- ============================= -->
+
 <footer class="text-center p-4">
 
     <p>
@@ -143,6 +234,14 @@
     </p>
 
 </footer>
+
+
+
+<!-- ============================= -->
+<!-- JAVASCRIPT ACCESSIBILITÉ -->
+<!-- ============================= -->
+
+<script src="{% static 'js/accessibility.js' %}"></script>
 
 
 </body>

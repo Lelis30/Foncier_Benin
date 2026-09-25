@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Vérifier une parcelle" %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-9">
+
+        <div class="card shadow p-4">
+
+            <h1 class="mb-3">
+                🔎 {% trans "Vérifier une parcelle" %}
+            </h1>
+
+            <p>
+                {% trans "Entrez la référence de la parcelle que vous souhaitez vérifier." %}
+            </p>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+
+                    <label
+                        for="reference"
+                        class="form-label"
+                    >
+                        {% trans "Référence de la parcelle" %}
+                    </label>
+
+                    <input
+                        type="text"
+                        id="reference"
+                        name="reference"
+                        class="form-control form-control-lg"
+                        placeholder="AB-02548"
+                        required
+                    >
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-success btn-lg"
+                >
+                    🔎 {% trans "Vérifier" %}
+                </button>
+
+            </form>
+
+        </div>
+
+
+        {% if searched %}
+
+            {% if parcel %}
+
+                <div class="card shadow p-4 mt-4">
+
+                    <h2>
+                        📍 {% trans "Informations de la parcelle" %}
+                    </h2>
+
+                    <hr>
+
+                    <p>
+                        <strong>{% trans "Référence" %} :</strong>
+                        {{ parcel.reference }}
+                    </p>
+
+                    <p>
+                        <strong>{% trans "Localisation" %} :</strong>
+                        {{ parcel.location }}
+                    </p>
+
+                    <p>
+                        <strong>{% trans "Superficie" %} :</strong>
+                        {{ parcel.area }} m²
+                    </p>
+
+
+                    <p>
+                        <strong>{% trans "Propriétaire" %} :</strong>
+
+                        {% if parcel.owner %}
+
+                            {{ parcel.owner.first_name }}
+                            {{ parcel.owner.last_name }}
+
+                        {% else %}
+
+                            {% trans "Non renseigné" %}
+
+                        {% endif %}
+                    </p>
+
+
+                    <p>
+                        <strong>{% trans "Statut" %} :</strong>
+
+                        {% if parcel.status == 'VERIFIED' %}
+
+                            <span class="badge bg-success">
+                                ✓ {% trans "Vérifiée" %}
+                            </span>
+
+                        {% elif parcel.status == 'PENDING' %}
+
+                            <span class="badge bg-warning text-dark">
+                                ⏳ {% trans "En attente" %}
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+                                ⚠ {% trans "En litige" %}
+                            </span>
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+            {% else %}
+
+                <div class="alert alert-danger mt-4">
+
+                    <strong>
+                        ⚠ {% trans "Parcelle introuvable" %}
+                    </strong>
+
+                    <br>
+
+                    {% trans "Aucune parcelle ne correspond à cette référence." %}
+
+                </div>
+
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
