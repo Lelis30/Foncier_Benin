@@ -202,9 +202,16 @@ document.addEventListener(
         // GROUPES DE COUCHES
 
 
-        const parcelsLayer = L.layerGroup().addTo(map);
-
         const agriculturalLayer = L.layerGroup().addTo(map);
+
+
+        // GROUPES DES PARCELLES PAR STATUT
+
+        const verifiedParcelsLayer = L.layerGroup().addTo(map);
+
+        const pendingParcelsLayer = L.layerGroup().addTo(map);
+
+        const disputedParcelsLayer = L.layerGroup().addTo(map);
 
 
         // RECUPERER LES PARCELLES
@@ -341,13 +348,67 @@ document.addEventListener(
                 // MARQUEUR PARCELLE
 
 
-                const marker = L.marker(
+
+    // ICONE DE LA PARCELLE SELON SON STATUT
+
+    let parcelIconSymbol = "📍";
+
+    if (parcel.status === "VERIFIED") {
+    parcelIconSymbol = "✅";
+    }
+    else if (parcel.status === "PENDING") {
+    parcelIconSymbol = "⏳";
+    }
+    else if (parcel.status === "DISPUTED") {
+    parcelIconSymbol = "⚠️";
+    }
+
+    const parcelIcon = L.divIcon({
+    className: "parcel-status-marker",
+
+    html: `
+        <div style="
+            font-size: 30px;
+            line-height: 35px;
+            text-align: center;
+        ">
+            ${parcelIconSymbol}
+        </div>
+    `,
+
+    iconSize: [35, 35],
+    iconAnchor: [17, 17],
+    popupAnchor: [0, -15]
+    });
+
+    const marker =
+    L.marker(
         [
             latitude,
             longitude
-        ]
-        ).addTo(parcelsLayer);
+        ],
+        {
+            icon: parcelIcon
+        }
+    );
 
+
+
+        // CLASSER LA PARCELLE SELON SON STATUT
+
+        if (parcel.status === "VERIFIED") {
+
+        marker.addTo(verifiedParcelsLayer);}
+
+        else if (parcel.status === "PENDING") {
+
+        marker.addTo(pendingParcelsLayer);}
+
+        else if (parcel.status === "DISPUTED") {
+
+        marker.addTo(disputedParcelsLayer);
+
+    }
 
                 // POPUP
 
@@ -462,11 +523,9 @@ document.addEventListener(
                         iconSize:
                             [35, 35],
 
-                        iconAnchor:
-                            [17, 17],
+                        iconAnchor: [-8, 17],
 
-                        popupAnchor:
-                            [0, -15]
+                        popupAnchor: [25, -15]
 
                     });
 
@@ -536,6 +595,28 @@ document.addEventListener(
         );
 
 
+        // CONTROLE DES COUCHES
+
+
+       const overlayMaps = {
+    "🌾 Zones agricoles": agriculturalLayer,
+
+    "✅ Parcelles vérifiées": verifiedParcelsLayer,
+    "⏳ Parcelles en attente": pendingParcelsLayer,
+    "⚠️ Parcelles en litige": disputedParcelsLayer
+    };
+
+
+
+    L.control.layers(
+    null,
+    overlayMaps,
+    {
+        collapsed: false
+    }
+    ).addTo(map);
+
+
         // LEGENDE DE LA CARTE
 
         const legend =
@@ -556,32 +637,38 @@ document.addEventListener(
 
 
                 div.innerHTML = `
-                    <div style="
-                        background: white;
-                        color: black;
-                        padding: 12px 15px;
-                        border-radius: 8px;
-                        box-shadow:
-                            0 1px 6px
-                            rgba(0,0,0,0.35);
-                        font-size: 14px;
-                        line-height: 26px;
-                    ">
+    <div style="
+        background: white;
+        color: black;
+        padding: 12px 15px;
+        border-radius: 8px;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.35);
+        font-size: 14px;
+        line-height: 28px;
+    ">
 
-                        <strong>
-                            🗺️ Légende
-                        </strong>
+        <strong>
+            🗺️ Légende
+        </strong>
 
-                        <br>
+        <br>
 
-                        📍 Parcelle foncière
+        ✅ Parcelle vérifiée
 
-                        <br>
+        <br>
 
-                        🌾 Zone agricole
+        ⏳ Parcelle en attente
 
-                    </div>
-                `;
+        <br>
+
+        ⚠️ Parcelle en litige
+
+        <br>
+
+        🌾 Zone agricole
+
+    </div>
+`;
 
 
                 return div;
