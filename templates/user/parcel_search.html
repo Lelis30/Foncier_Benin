@@ -10,18 +10,30 @@
 
 <div class="row justify-content-center">
 
-    <div class="col-lg-9">
+    <div class="col-lg-10">
 
-        <div class="card shadow p-4">
 
-            <h1 class="mb-3">
+        <!-- TITRE -->
+
+
+        <div class="mb-4">
+
+            <h1>
                 🔎 {% trans "Vérifier une parcelle" %}
             </h1>
 
-            <p>
+            <p class="lead">
                 {% trans "Entrez la référence de la parcelle que vous souhaitez vérifier." %}
             </p>
 
+        </div>
+
+
+
+        <!-- FORMULAIRE DE RECHERCHE -->
+
+
+        <div class="card shadow-sm p-4 mb-4">
 
             <form method="POST">
 
@@ -33,7 +45,9 @@
                         for="reference"
                         class="form-label"
                     >
-                        {% trans "Référence de la parcelle" %}
+                        <strong>
+                            {% trans "Référence de la parcelle" %}
+                        </strong>
                     </label>
 
                     <input
@@ -41,15 +55,16 @@
                         id="reference"
                         name="reference"
                         class="form-control form-control-lg"
-                        placeholder="AB-02548"
+                        placeholder="Exemple : AB-02548"
                         required
                     >
 
                 </div>
 
+
                 <button
                     type="submit"
-                    class="btn btn-success btn-lg"
+                    class="btn btn-success"
                 >
                     🔎 {% trans "Vérifier" %}
                 </button>
@@ -59,98 +74,550 @@
         </div>
 
 
-        {% if searched %}
 
-            {% if parcel %}
-
-                <div class="card shadow p-4 mt-4">
-
-                    <h2>
-                        📍 {% trans "Informations de la parcelle" %}
-                    </h2>
-
-                    <hr>
-
-                    <p>
-                        <strong>{% trans "Référence" %} :</strong>
-                        {{ parcel.reference }}
-                    </p>
-
-                    <p>
-                        <strong>{% trans "Localisation" %} :</strong>
-                        {{ parcel.location }}
-                    </p>
-
-                    <p>
-                        <strong>{% trans "Superficie" %} :</strong>
-                        {{ parcel.area }} m²
-                    </p>
+        <!-- PARCELLE TROUVEE -->
 
 
-                    <p>
-                        <strong>{% trans "Propriétaire" %} :</strong>
+        {% if parcel %}
 
-                        {% if parcel.owner %}
+        <div class="card shadow-sm p-4 mb-4">
 
-                            {{ parcel.owner.first_name }}
-                            {{ parcel.owner.last_name }}
-
-                        {% else %}
-
-                            {% trans "Non renseigné" %}
-
-                        {% endif %}
-                    </p>
+            <h2 class="mb-4">
+                📍 {% trans "Informations de la parcelle" %}
+            </h2>
 
 
-                    <p>
-                        <strong>{% trans "Statut" %} :</strong>
+            <!-- REFERENCE -->
 
-                        {% if parcel.status == 'VERIFIED' %}
+            <p>
 
-                            <span class="badge bg-success">
-                                ✓ {% trans "Vérifiée" %}
-                            </span>
+                <strong>
+                    {% trans "Référence" %} :
+                </strong>
 
-                        {% elif parcel.status == 'PENDING' %}
+                {{ parcel.reference }}
 
-                            <span class="badge bg-warning text-dark">
-                                ⏳ {% trans "En attente" %}
-                            </span>
+            </p>
 
-                        {% else %}
 
-                            <span class="badge bg-danger">
-                                ⚠ {% trans "En litige" %}
-                            </span>
+            <!-- LOCALISATION -->
 
-                        {% endif %}
+            <p>
 
-                    </p>
+                <strong>
+                    {% trans "Localisation" %} :
+                </strong>
 
-                </div>
+                {{ parcel.location }}
+
+            </p>
+
+
+            <!-- SUPERFICIE -->
+
+            <p>
+
+                <strong>
+                    {% trans "Superficie" %} :
+                </strong>
+
+                {{ parcel.area }} m²
+
+            </p>
+
+
+            <!-- PROPRIETAIRE -->
+
+            <p>
+
+                <strong>
+                    {% trans "Propriétaire" %} :
+                </strong>
+
+                {% if parcel.owner %}
+
+                    {{ parcel.owner.first_name }}
+                    {{ parcel.owner.last_name }}
+
+                {% else %}
+
+                    {% trans "Non renseigné" %}
+
+                {% endif %}
+
+            </p>
+
+
+            <!-- STATUT -->
+
+            <p>
+
+                <strong>
+                    {% trans "Statut" %} :
+                </strong>
+
+
+                {% if parcel.status == 'VERIFIED' %}
+
+                    <span class="badge bg-success">
+                        ✅ {% trans "Vérifiée" %}
+                    </span>
+
+
+                {% elif parcel.status == 'PENDING' %}
+
+                    <span class="badge bg-warning text-dark">
+                        ⏳ {% trans "En attente" %}
+                    </span>
+
+
+                {% elif parcel.status == 'DISPUTED' %}
+
+                    <span class="badge bg-danger">
+                        ⚠️ {% trans "En litige" %}
+                    </span>
+
+
+                {% else %}
+
+                    <span class="badge bg-secondary">
+                        {{ parcel.get_status_display }}
+                    </span>
+
+                {% endif %}
+
+            </p>
+
+
+
+            <!-- DOCUMENTS FONCIERS -->
+
+
+            <hr class="my-4">
+
+
+            <h3 class="mb-3">
+
+                📄 {% trans "Documents fonciers" %}
+
+            </h3>
+
+
+            {% if parcel.documents.all %}
+
+            <div class="table-responsive">
+
+                <table
+                    class="table table-bordered table-hover align-middle"
+                >
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th>
+                                {% trans "Type" %}
+                            </th>
+
+                            <th>
+                                {% trans "Numéro" %}
+                            </th>
+
+                            <th>
+                                {% trans "Statut" %}
+                            </th>
+
+                            <th>
+                                {% trans "Document" %}
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for document in parcel.documents.all %}
+
+                        <tr>
+
+                            <!-- TYPE -->
+
+                            <td>
+
+                                {{ document.get_document_type_display }}
+
+                            </td>
+
+
+                            <!-- NUMERO -->
+
+                            <td>
+
+                                <strong>
+                                    {{ document.document_number }}
+                                </strong>
+
+                            </td>
+
+
+                            <!-- STATUT -->
+
+                            <td>
+
+                                {% if document.verified %}
+
+                                    <span class="badge bg-success">
+
+                                        ✅ {% trans "Vérifié" %}
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        ⏳ {% trans "Non vérifié" %}
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- FICHIER -->
+
+                            <td>
+
+                                {% if document.document_file %}
+
+                                    <a
+                                        href="{{ document.document_file.url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="btn btn-sm btn-primary"
+                                    >
+
+                                        👁️ {% trans "Consulter" %}
+
+                                    </a>
+
+                                {% else %}
+
+                                    <span class="text-muted">
+
+                                        {% trans "Aucun fichier" %}
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
 
             {% else %}
 
-                <div class="alert alert-danger mt-4">
+            <div class="alert alert-info">
 
-                    <strong>
-                        ⚠ {% trans "Parcelle introuvable" %}
-                    </strong>
+                ℹ️
+                {% trans "Aucun document foncier n'est enregistré pour cette parcelle." %}
 
-                    <br>
-
-                    {% trans "Aucune parcelle ne correspond à cette référence." %}
-
-                </div>
+            </div>
 
             {% endif %}
 
+
+
+            <!-- COORDONNEES GPS -->
+
+
+            <hr class="my-4">
+
+
+            <h3>
+                🌍 {% trans "Localisation géographique" %}
+            </h3>
+
+
+            <div class="row mb-3">
+
+                <div class="col-md-6">
+
+                    <strong>
+                        {% trans "Latitude" %} :
+                    </strong>
+
+                    {{ parcel.latitude }}
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <strong>
+                        {% trans "Longitude" %} :
+                    </strong>
+
+                    {{ parcel.longitude }}
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CARTE -->
+
+
+            <div
+                id="parcel-map"
+                style="
+                    height: 350px;
+                    width: 100%;
+                    border-radius: 10px;
+                    overflow: hidden;
+                "
+            >
+            </div>
+
+
+        </div>
+
         {% endif %}
+
+
+        <!-- PARCELLE INTROUVABLE -->
+
+
+        {% if searched and not parcel %}
+
+        <div class="alert alert-danger">
+
+            <h4>
+                ❌ {% trans "Parcelle introuvable" %}
+            </h4>
+
+            <p class="mb-0">
+
+                {% trans "Aucune parcelle ne correspond à cette référence. Vérifiez la référence et réessayez." %}
+
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <div class="mb-4">
+
+            <a
+                href="{% url 'user_dashboard' %}"
+                class="btn btn-secondary"
+            >
+
+                ← {% trans "Retour au tableau de bord" %}
+
+            </a>
+
+        </div>
 
     </div>
 
 </div>
+
+
+<!-- CARTE LEAFLET -->
+
+
+{% if parcel %}
+
+
+<!-- LEAFLET CSS -->
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+>
+
+
+<!-- LEAFLET JAVASCRIPT -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+
+<!-- DONNEES DJANGO -->
+
+{{ parcel.latitude|json_script:"parcel-latitude" }}
+
+{{ parcel.longitude|json_script:"parcel-longitude" }}
+
+{{ parcel.reference|json_script:"parcel-reference" }}
+
+{{ parcel.location|json_script:"parcel-location" }}
+
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        // RECUPERER LES DONNEES
+
+
+        const latitude = JSON.parse(
+            document.getElementById(
+                'parcel-latitude'
+            ).textContent
+        );
+
+
+        const longitude = JSON.parse(
+            document.getElementById(
+                'parcel-longitude'
+            ).textContent
+        );
+
+
+        const reference = JSON.parse(
+            document.getElementById(
+                'parcel-reference'
+            ).textContent
+        );
+
+
+        const location = JSON.parse(
+            document.getElementById(
+                'parcel-location'
+            ).textContent
+        );
+
+
+
+        // CONVERTIR LES COORDONNEES
+
+
+        const lat = parseFloat(latitude);
+
+        const lng = parseFloat(longitude);
+
+
+
+        // VERIFIER LES COORDONNEES
+
+
+        if (
+            Number.isNaN(lat) ||
+            Number.isNaN(lng)
+        ) {
+
+            console.log(
+                "Coordonnées GPS invalides."
+            );
+
+            return;
+
+        }
+
+
+
+        // CREER LA CARTE
+
+
+        const map = L.map(
+            'parcel-map'
+        ).setView(
+            [
+                lat,
+                lng
+            ],
+            16
+        );
+
+
+
+        // FOND DE CARTE ESRI
+
+
+        L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+            {
+                attribution: 'Tiles &copy; Esri',
+                maxZoom: 19
+            }
+        ).addTo(map);
+
+
+
+
+        const marker = L.marker(
+            [
+                lat,
+                lng
+            ]
+        ).addTo(map);
+
+
+
+        // POPUP
+
+
+        marker
+            .bindPopup(
+                `
+                <div style="min-width: 180px;">
+
+                    <strong>
+                        📍 ${reference}
+                    </strong>
+
+                    <br>
+
+                    ${location}
+
+                </div>
+                `
+            )
+            .openPopup();
+
+
+
+        // CORRECTION AFFICHAGE
+
+
+        setTimeout(
+            function () {
+
+                map.invalidateSize();
+
+            },
+            200
+        );
+
+    }
+);
+
+</script>
+
+{% endif %}
+
 
 {% endblock %}

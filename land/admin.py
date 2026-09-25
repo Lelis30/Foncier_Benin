@@ -55,12 +55,24 @@ class DocumentAdmin(admin.ModelAdmin):
         'document_number',
         'parcel',
         'document_type',
-        'verified'
+        'verified',
+        'created_at',
     )
 
     list_filter = (
         'verified',
-        'document_type'
+        'document_type',
+        'created_at',
+    )
+
+    search_fields = (
+        'document_number',
+        'parcel__reference',
+        'parcel__location',
+    )
+
+    ordering = (
+        '-created_at',
     )
 
 
