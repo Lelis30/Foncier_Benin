@@ -198,6 +198,15 @@ document.addEventListener(
         ).addTo(map);
 
 
+
+        // GROUPES DE COUCHES
+
+
+        const parcelsLayer = L.layerGroup().addTo(map);
+
+        const agriculturalLayer = L.layerGroup().addTo(map);
+
+
         // RECUPERER LES PARCELLES
 
         const parcelsElement =
@@ -332,13 +341,12 @@ document.addEventListener(
                 // MARQUEUR PARCELLE
 
 
-                const marker =
-                    L.marker(
-                        [
-                            latitude,
-                            longitude
-                        ]
-                    ).addTo(map);
+                const marker = L.marker(
+        [
+            latitude,
+            longitude
+        ]
+        ).addTo(parcelsLayer);
 
 
                 // POPUP
@@ -466,17 +474,16 @@ document.addEventListener(
                 // MARQUEUR AGRICOLE
 
 
-                const marker =
-                    L.marker(
-                        [
-                            latitude,
-                            longitude
-                        ],
-                        {
-                            icon:
-                                agriculturalIcon
-                        }
-                    ).addTo(map);
+            const marker = L.marker(
+        [
+            latitude,
+            longitude
+        ],
+        {
+            icon:
+                agriculturalIcon
+        }
+    ).addTo(agriculturalLayer);
 
 
 
