@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import RegisterForm
 from .models import UserProfile
-from land.models import Parcel, Report
+from land.models import Parcel, Report, AgriculturalZone
 
 def home(request):
 
@@ -143,11 +143,28 @@ def user_dashboard(request):
             'owner': owner_name,
         })
 
+    # ZONES AGRICOLES
+
+    agricultural_zones = AgriculturalZone.objects.all()
+
+    agricultural_zones_data = []
+
+    for zone in agricultural_zones:
+        agricultural_zones_data.append({
+            'id': zone.id,
+            'name': zone.name,
+            'location': zone.location,
+            'area': zone.area,
+            'description': zone.description,
+            'latitude': zone.latitude,
+            'longitude': zone.longitude,
+        })
     return render(
         request,
         'user/dashboard.html',
         {
-            'parcels_data': parcels_data
+            'parcels_data': parcels_data,
+            'agricultural_zones_data': agricultural_zones_data,
         }
     )
 

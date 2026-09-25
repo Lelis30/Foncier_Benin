@@ -2,52 +2,53 @@
 {% load i18n %}
 
 {% block title %}
-{% trans "Mon espace" %}
+    {% trans "Tableau de bord" %}
 {% endblock %}
 
 
 {% block content %}
 
+<!-- TITRE -->
 
 
 <div class="mb-4">
 
     <h1>
-        👋 {% trans "Bienvenue" %}
-        {% if user.first_name %}
-            {{ user.first_name }}
-        {% else %}
-            {{ user.username }}
-        {% endif %}
+        🏠 {% trans "Tableau de bord" %}
     </h1>
 
     <p class="lead">
-        {% trans "Bienvenue sur votre espace foncier." %}
+        {% trans "Bienvenue" %},
+        <strong>{{ user.username }}</strong>.
+    </p>
+
+    <p>
+        {% trans "Consultez, recherchez et vérifiez les informations foncières." %}
     </p>
 
 </div>
 
 
+<!-- ACTIONS PRINCIPALES -->
 
-<div class="row g-4 mb-5">
+
+<div class="row">
 
 
     <!-- CARTE FONCIERE -->
 
-    <div class="col-md-4">
+    <div class="col-md-4 mb-4">
 
-        <div class="card shadow-sm h-100 p-4">
+        <div class="card shadow p-4 text-center h-100">
 
-            <div style="font-size: 35px;">
-                🗺️
-            </div>
+            <h1>🗺️</h1>
 
-            <h3>
+            <h4>
                 {% trans "Carte foncière" %}
-            </h3>
+            </h4>
 
             <p>
-                {% trans "Visualisez les parcelles disponibles sur la carte." %}
+                {% trans "Visualisez les parcelles enregistrées sur la carte." %}
             </p>
 
             <a
@@ -64,27 +65,25 @@
 
     <!-- VERIFIER UNE PARCELLE -->
 
-    <div class="col-md-4">
+    <div class="col-md-4 mb-4">
 
-        <div class="card shadow-sm h-100 p-4">
+        <div class="card shadow p-4 text-center h-100">
 
-            <div style="font-size: 35px;">
-                🔎
-            </div>
+            <h1>🔎</h1>
 
-            <h3>
+            <h4>
                 {% trans "Vérifier une parcelle" %}
-            </h3>
+            </h4>
 
             <p>
-                {% trans "Recherchez une parcelle avec sa référence." %}
+                {% trans "Recherchez une parcelle à partir de sa référence." %}
             </p>
 
             <a
                 href="{% url 'search_parcel' %}"
                 class="btn btn-success mt-auto"
             >
-                🔎 {% trans "Rechercher" %}
+                🔎 {% trans "Vérifier" %}
             </a>
 
         </div>
@@ -94,29 +93,26 @@
 
     <!-- SIGNALER UN PROBLEME -->
 
-    <div class="col-md-4">
+    <div class="col-md-4 mb-4">
 
-        <div class="card shadow-sm h-100 p-4">
+        <div class="card shadow p-4 text-center h-100">
 
-            <div style="font-size: 35px;">
-                🚨
-            </div>
+            <h1>🚨</h1>
 
-            <h3>
+            <h4>
                 {% trans "Signaler un problème" %}
-            </h3>
+            </h4>
 
             <p>
                 {% trans "Signalez une anomalie concernant une parcelle." %}
             </p>
 
-
             <a
-    href="{% url 'report_problem' %}"
-    class="btn btn-danger mt-auto"
->
-    🚨 {% trans "Signaler" %}
-</a>
+                href="{% url 'report_problem' %}"
+                class="btn btn-danger mt-auto"
+            >
+                🚨 {% trans "Signaler" %}
+            </a>
 
         </div>
 
@@ -125,21 +121,22 @@
 </div>
 
 
+<!-- CARTE -->
+
+
 <div
     id="map-section"
-    class="card shadow-sm p-4 mb-5"
+    class="card shadow mt-4 p-4"
 >
 
-    <h2>
+    <h3>
         🗺️ {% trans "Carte des parcelles" %}
-    </h2>
+    </h3>
 
     <p>
-        {% trans "Les parcelles enregistrées apparaissent automatiquement sur la carte." %}
+        {% trans "Les parcelles et les zones agricoles enregistrées apparaissent automatiquement sur la carte." %}
     </p>
 
-
-    <!-- CARTE LEAFLET -->
 
     <div
         id="map"
@@ -147,43 +144,33 @@
             height: 500px;
             width: 100%;
             border-radius: 10px;
-            overflow: hidden;
         "
     >
-    </div>
-
-
-    <!-- MESSAGE SI AUCUNE PARCELLE -->
-
-    <div
-        id="no-parcels-message"
-        class="alert alert-info mt-3"
-        style="display: none;"
-    >
-        ℹ️ {% trans "Aucune parcelle avec des coordonnées GPS valides n'est disponible." %}
     </div>
 
 </div>
 
 
+<!-- DONNEES DJANGO POUR JAVASCRIPT -->
 
 {{ parcels_data|json_script:"parcels-data" }}
 
+{{ agricultural_zones_data|json_script:"agricultural-zones-data" }}
 
+
+<!-- LEAFLET -->
 
 <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    crossorigin=""
->
-
+/>
 
 <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    crossorigin=""
-></script>
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
 
 
+<!-- JAVASCRIPT DE LA CARTE -->
 
 <script>
 
@@ -191,64 +178,92 @@ document.addEventListener(
     "DOMContentLoaded",
     function () {
 
+        // CREATION DE LA CARTE
+
+        const map =
+            L.map("map").setView(
+                [6.3703, 2.3912],
+                10
+            );
 
 
-        const map = L.map(
-            'map'
-        ).setView(
-            [6.3703, 2.3912],
-            9
-        );
-
-
+        // CARTE ESRI
 
         L.tileLayer(
-            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+            "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
             {
-                attribution: 'Tiles &copy; Esri',
+                attribution: "Tiles &copy; Esri",
                 maxZoom: 19
             }
         ).addTo(map);
 
 
+        // RECUPERER LES PARCELLES
 
-        const dataElement =
+        const parcelsElement =
             document.getElementById(
-                'parcels-data'
+                "parcels-data"
             );
 
 
-        if (!dataElement) {
+        let parcels = [];
 
-            console.log(
-                "Aucune donnée de parcelle reçue."
-            );
 
-            return;
+        if (parcelsElement) {
+
+            parcels =
+                JSON.parse(
+                    parcelsElement.textContent
+                );
+
         }
 
 
-
-        // Transformer le JSON en tableau JavaScript
-
-        const parcels =
-            JSON.parse(
-                dataElement.textContent
-            );
-
-
         console.log(
-            "Parcelles reçues depuis Django :",
+            "Parcelles reçues :",
             parcels
         );
 
 
+        // RECUPERER LES ZONES AGRICOLES
+
+
+        const agriculturalZonesElement =
+            document.getElementById(
+                "agricultural-zones-data"
+            );
+
+
+        let agriculturalZones = [];
+
+
+        if (agriculturalZonesElement) {
+
+            agriculturalZones =
+                JSON.parse(
+                    agriculturalZonesElement.textContent
+                );
+
+        }
+
+
+        console.log(
+            "Zones agricoles reçues :",
+            agriculturalZones
+        );
+
+
+        // TABLEAU DE TOUS LES MARQUEURS
 
         const markers = [];
 
 
+        // AFFICHER LES PARCELLES
+
+
         parcels.forEach(
             function (parcel) {
+
 
                 const latitude =
                     parseFloat(
@@ -262,19 +277,28 @@ document.addEventListener(
                     );
 
 
+                // Vérifier les coordonnées
+
                 if (
                     Number.isNaN(latitude) ||
                     Number.isNaN(longitude)
                 ) {
 
                     console.log(
-                        "Coordonnées GPS invalides :",
+                        "Coordonnées invalides :",
                         parcel.reference
                     );
 
                     return;
+
                 }
 
+
+                // STATUT
+
+                let statusText =
+                    parcel.status_display ||
+                    parcel.status;
 
 
                 let statusIcon = "🟡";
@@ -288,7 +312,6 @@ document.addEventListener(
 
                 }
 
-
                 else if (
                     parcel.status === "PENDING"
                 ) {
@@ -296,7 +319,6 @@ document.addEventListener(
                     statusIcon = "⏳";
 
                 }
-
 
                 else if (
                     parcel.status === "DISPUTED"
@@ -307,6 +329,8 @@ document.addEventListener(
                 }
 
 
+                // MARQUEUR PARCELLE
+
 
                 const marker =
                     L.marker(
@@ -314,86 +338,53 @@ document.addEventListener(
                             latitude,
                             longitude
                         ]
-                    )
-                    .addTo(map);
+                    ).addTo(map);
 
+
+                // POPUP
 
 
                 marker.bindPopup(`
+                    <div style="min-width:220px">
 
-                    <div
-                        style="
-                            min-width: 230px;
-                            font-size: 14px;
-                        "
-                    >
-
-                        <h5
-                            style="
-                                margin-bottom: 10px;
-                            "
-                        >
+                        <h5>
                             📍 ${parcel.reference}
                         </h5>
 
-
                         <hr>
 
+                        <strong>
+                            👤 Propriétaire :
+                        </strong>
 
-                        <p>
+                        ${parcel.owner || "Non renseigné"}
 
-                            <strong>
-                                👤 Propriétaire :
-                            </strong>
+                        <br><br>
 
-                            <br>
+                        <strong>
+                            📍 Localisation :
+                        </strong>
 
-                            ${parcel.owner}
+                        ${parcel.location}
 
-                        </p>
+                        <br>
 
+                        <strong>
+                            📐 Superficie :
+                        </strong>
 
-                        <p>
+                        ${parcel.area} m²
 
-                            <strong>
-                                📍 Localisation :
-                            </strong>
+                        <br><br>
 
-                            <br>
+                        <strong>
+                            Statut :
+                        </strong>
 
-                            ${parcel.location}
-
-                        </p>
-
-
-                        <p>
-
-                            <strong>
-                                📐 Superficie :
-                            </strong>
-
-                            <br>
-
-                            ${parcel.area} m²
-
-                        </p>
-
-
-                        <p>
-
-                            <strong>
-                                Statut :
-                            </strong>
-
-                            <br>
-
-                            ${statusIcon}
-                            ${parcel.status_display}
-
-                        </p>
+                        ${statusIcon}
+                        ${statusText}
 
                     </div>
-
                 `);
 
 
@@ -401,16 +392,206 @@ document.addEventListener(
                     marker
                 );
 
+            }
+        );
+
+
+        // AFFICHER LES ZONES AGRICOLES
+
+
+        agriculturalZones.forEach(
+            function (zone) {
+
+
+                const latitude =
+                    parseFloat(
+                        zone.latitude
+                    );
+
+
+                const longitude =
+                    parseFloat(
+                        zone.longitude
+                    );
+
+
+
+                // Vérifier les coordonnées
+
+                if (
+                    Number.isNaN(latitude) ||
+                    Number.isNaN(longitude)
+                ) {
+
+                    console.log(
+                        "Coordonnées invalides pour la zone :",
+                        zone.name
+                    );
+
+                    return;
+
+                }
+
+
+                // ICONE ZONE AGRICOLE
+
+                const agriculturalIcon =
+                    L.divIcon({
+
+                        className:
+                            "agricultural-marker",
+
+                        html: `
+                            <div style="
+                                font-size: 30px;
+                                line-height: 30px;
+                                text-align: center;
+                            ">
+                                🌾
+                            </div>
+                        `,
+
+                        iconSize:
+                            [35, 35],
+
+                        iconAnchor:
+                            [17, 17],
+
+                        popupAnchor:
+                            [0, -15]
+
+                    });
+
+
+                // MARQUEUR AGRICOLE
+
+
+                const marker =
+                    L.marker(
+                        [
+                            latitude,
+                            longitude
+                        ],
+                        {
+                            icon:
+                                agriculturalIcon
+                        }
+                    ).addTo(map);
+
+
+
+                // POPUP AGRICOLE
+
+
+                marker.bindPopup(`
+                    <div style="min-width:220px">
+
+                        <h5>
+                            🌾 ${zone.name}
+                        </h5>
+
+                        <hr>
+
+                        <strong>
+                            📍 Localisation :
+                        </strong>
+
+                        ${zone.location}
+
+                        <br><br>
+
+                        <strong>
+                            📐 Superficie :
+                        </strong>
+
+                        ${zone.area} m²
+
+                        <br><br>
+
+                        <strong>
+                            📝 Description :
+                        </strong>
+
+                        ${
+                            zone.description ||
+                            "Non renseignée"
+                        }
+
+                    </div>
+                `);
+
+
+                markers.push(
+                    marker
+                );
 
             }
         );
 
 
+        // LEGENDE DE LA CARTE
+
+        const legend =
+            L.control({
+                position: "bottomleft"
+            });
+
+
+        legend.onAdd =
+            function () {
+
+
+                const div =
+                    L.DomUtil.create(
+                        "div",
+                        "map-legend"
+                    );
+
+
+                div.innerHTML = `
+                    <div style="
+                        background: white;
+                        color: black;
+                        padding: 12px 15px;
+                        border-radius: 8px;
+                        box-shadow:
+                            0 1px 6px
+                            rgba(0,0,0,0.35);
+                        font-size: 14px;
+                        line-height: 26px;
+                    ">
+
+                        <strong>
+                            🗺️ Légende
+                        </strong>
+
+                        <br>
+
+                        📍 Parcelle foncière
+
+                        <br>
+
+                        🌾 Zone agricole
+
+                    </div>
+                `;
+
+
+                return div;
+
+            };
+
+
+        legend.addTo(map);
+
+
+
+        // AJUSTER AUTOMATIQUEMENT LA CARTE
+
 
         if (
             markers.length > 0
         ) {
-
 
             const group =
                 L.featureGroup(
@@ -421,34 +602,20 @@ document.addEventListener(
             map.fitBounds(
                 group.getBounds(),
                 {
-                    padding: [
-                        40,
-                        40
-                    ],
-                    maxZoom: 16
+                    padding:
+                        [40, 40],
+
+                    maxZoom:
+                        16
                 }
             );
 
-
-        } else {
-
-
-
-            const message =
-                document.getElementById(
-                    'no-parcels-message'
-                );
-
-
-            if (message) {
-
-                message.style.display =
-                    'block';
-
-            }
-
         }
 
+
+
+
+        // CORRIGER LA TAILLE DE LA CARTE
 
 
         setTimeout(
