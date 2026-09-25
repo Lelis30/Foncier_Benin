@@ -8,9 +8,9 @@
 
 {% block content %}
 
-<!-- ============================= -->
+
 <!-- TITRE DU DASHBOARD -->
-<!-- ============================= -->
+
 
 <div class="mb-4">
 
@@ -30,9 +30,9 @@
 </div>
 
 
-<!-- ============================= -->
+
 <!-- CARTES DES FONCTIONNALITÉS -->
-<!-- ============================= -->
+
 
 <div class="row g-4 mb-5">
 
@@ -131,9 +131,7 @@
 </div>
 
 
-<!-- ============================= -->
-<!-- SECTION CARTE -->
-<!-- ============================= -->
+
 
 <div
     id="map-section"
@@ -161,9 +159,7 @@
 </div>
 
 
-<!-- ============================= -->
-<!-- LEAFLET CSS -->
-<!-- ============================= -->
+
 
 <link
     rel="stylesheet"
@@ -171,33 +167,25 @@
 />
 
 
-<!-- ============================= -->
-<!-- LEAFLET JAVASCRIPT -->
-<!-- ============================= -->
+
 
 <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
 </script>
 
 
-<!-- ============================= -->
-<!-- DONNÉES DJANGO -->
-<!-- ============================= -->
+
 
 {{ parcels|json_script:"parcels-data" }}
 
 
-<!-- ============================= -->
-<!-- JAVASCRIPT DE LA CARTE -->
-<!-- ============================= -->
+
 
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ==========================================
-    // 1. CRÉATION DE LA CARTE
-    // ==========================================
+
 
     const map = L.map("map").setView(
         [6.3703, 2.3912],
@@ -205,9 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 
-    // ==========================================
-    // 2. FOND DE CARTE
-    // ==========================================
+
 
     L.tileLayer(
         "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -220,9 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ).addTo(map);
 
 
-    // ==========================================
-    // 3. RÉCUPÉRER LES PARCELLES DJANGO
-    // ==========================================
+
 
     const dataElement =
         document.getElementById("parcels-data");
@@ -251,16 +235,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    // ==========================================
-    // 4. TABLEAU POUR LES COORDONNÉES
-    // ==========================================
+
 
     const coordinates = [];
 
 
-    // ==========================================
-    // 5. AFFICHER LES PARCELLES
-    // ==========================================
+
 
     parcels.forEach(function (parcel) {
 
@@ -271,7 +251,6 @@ document.addEventListener("DOMContentLoaded", function () {
             parseFloat(parcel.longitude);
 
 
-        // Vérifier les coordonnées
 
         if (
             Number.isNaN(latitude) ||
@@ -287,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        // Ajouter les coordonnées
+
 
         coordinates.push([
             latitude,
@@ -295,17 +274,13 @@ document.addEventListener("DOMContentLoaded", function () {
         ]);
 
 
-        // ======================================
-        // PROPRIÉTAIRE
-        // ======================================
+
 
         let owner =
             parcel.owner || "Non renseigné";
 
 
-        // ======================================
-        // STATUT
-        // ======================================
+
 
         let status =
             parcel.status || "PENDING";
@@ -333,9 +308,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        // ======================================
-        // CRÉATION DU MARQUEUR
-        // ======================================
 
         const marker =
             L.marker([
@@ -344,9 +316,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ]).addTo(map);
 
 
-        // ======================================
-        // POPUP
-        // ======================================
+
 
         marker.bindPopup(`
 
@@ -398,9 +368,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    // ==========================================
-    // 6. ZOOM AUTOMATIQUE
-    // ==========================================
+
 
     if (coordinates.length > 0) {
 
@@ -418,9 +386,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    // ==========================================
-    // 7. CORRECTION AFFICHAGE LEAFLET
-    // ==========================================
+
 
     setTimeout(function () {
 
