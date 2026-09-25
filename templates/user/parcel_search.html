@@ -542,6 +542,84 @@
 </div>
 
 {% endif %}
+
+
+    <!-- ZONES AGRICOLES -->
+
+
+        <hr class="my-4">
+
+        <h3 class="mb-3">
+    🌾 {% trans "Zones agricoles" %}
+        </h3>
+
+            <p class="text-muted">
+        {% trans "Informations agricoles enregistrées pour cette parcelle." %}
+        </p>
+
+    {% if parcel.agricultural_zones.all %}
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead class="table-dark">
+                <tr>
+                <th>{% trans "Nom" %}</th>
+                <th>{% trans "Localisation" %}</th>
+                <th>{% trans "Superficie" %}</th>
+                <th>{% trans "Description" %}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for zone in parcel.agricultural_zones.all %}
+
+            <tr>
+
+                <td>
+                    <strong>
+                        🌾 {{ zone.name }}
+                    </strong>
+                </td>
+
+                <td>
+                    📍 {{ zone.location }}
+                </td>
+
+                <td>
+                    {{ zone.area }} m²
+                </td>
+
+                <td>
+                    {% if zone.description %}
+                        {{ zone.description }}
+                    {% else %}
+                        <span class="text-muted">
+                            {% trans "Aucune description" %}
+                        </span>
+                    {% endif %}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% else %}
+
+<div class="alert alert-info">
+    ℹ️ {% trans "Aucune zone agricole n'est enregistrée pour cette parcelle." %}
+</div>
+
+{% endif %}
+
             <!-- COORDONNEES GPS -->
 
 

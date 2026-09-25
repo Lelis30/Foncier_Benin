@@ -143,20 +143,34 @@ class Building(models.Model):
 
 class AgriculturalZone(models.Model):
 
+    # Parcelle liée à la zone agricole
+    parcel = models.ForeignKey(
+        Parcel,
+        on_delete=models.CASCADE,
+        related_name='agricultural_zones',
+        null=True,
+        blank=True
+    )
+
+    # Nom de la zone
     name = models.CharField(
         max_length=200
     )
 
+    # Localisation
     location = models.CharField(
         max_length=255
     )
 
+    # Superficie en m²
     area = models.FloatField()
 
+    # Description
     description = models.TextField(
         blank=True
     )
 
+    # Coordonnées GPS
     latitude = models.FloatField()
 
     longitude = models.FloatField()

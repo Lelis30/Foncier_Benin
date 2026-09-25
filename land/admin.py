@@ -100,8 +100,20 @@ class AgriculturalZoneAdmin(admin.ModelAdmin):
 
     list_display = (
         'name',
+        'parcel',
         'location',
-        'area'
+        'area',
+    )
+
+    list_filter = (
+        'location',
+    )
+
+    search_fields = (
+        'name',
+        'parcel__reference',
+        'location',
+        'description',
     )
 
 
