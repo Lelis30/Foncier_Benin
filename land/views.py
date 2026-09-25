@@ -8,6 +8,7 @@ def search_parcel(request):
 
     parcel = None
     searched = False
+    transactions = []
 
     if request.method == 'POST':
 
@@ -21,13 +22,23 @@ def search_parcel(request):
         if reference:
 
             try:
+
                 parcel = (
                     Parcel.objects
                     .select_related('owner')
                     .get(reference__iexact=reference)
                 )
 
+                # Transactions :
+                # de la plus récente à la plus ancienne
+                transactions = (
+                    parcel.landtransaction_set
+                    .all()
+                    .order_by('-date')
+                )
+
             except Parcel.DoesNotExist:
+
                 parcel = None
 
     return render(
@@ -35,7 +46,8 @@ def search_parcel(request):
         'user/parcel_search.html',
         {
             'parcel': parcel,
-            'searched': searched
+            'searched': searched,
+            'transactions': transactions,
         }
     )
 

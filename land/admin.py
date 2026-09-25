@@ -81,9 +81,19 @@ class BuildingAdmin(admin.ModelAdmin):
 
     list_display = (
         'parcel',
-        'building_type'
+        'building_type',
+        'description',
     )
 
+    list_filter = (
+        'building_type',
+    )
+
+    search_fields = (
+        'parcel__reference',
+        'parcel__location',
+        'description',
+    )
 
 @admin.register(AgriculturalZone)
 class AgriculturalZoneAdmin(admin.ModelAdmin):
@@ -102,9 +112,24 @@ class LandTransactionAdmin(admin.ModelAdmin):
         'parcel',
         'transaction_type',
         'date',
-        'verified'
+        'verified',
     )
 
+    list_filter = (
+        'transaction_type',
+        'verified',
+        'date',
+    )
+
+    search_fields = (
+        'parcel__reference',
+        'parcel__location',
+        'description',
+    )
+
+    ordering = (
+        '-date',
+    )
 
 @admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
