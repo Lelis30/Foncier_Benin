@@ -119,11 +119,17 @@ def logout_view(request):
 @login_required
 def user_dashboard(request):
 
-    parcels = Parcel.objects.all()
+    parcels = Parcel.objects.select_related('owner').all()
 
     parcels_data = []
 
     for parcel in parcels:
+
+
+        if parcel.owner:
+            owner_name = f"{parcel.owner.first_name} {parcel.owner.last_name}"
+        else:
+            owner_name = "Non renseigné"
 
         parcels_data.append({
             'id': parcel.id,
@@ -132,7 +138,9 @@ def user_dashboard(request):
             'area': parcel.area,
             'latitude': parcel.latitude,
             'longitude': parcel.longitude,
-            'status': parcel.get_status_display(),
+            'status': parcel.status,
+            'status_display': parcel.get_status_display(),
+            'owner': owner_name,
         })
 
     return render(

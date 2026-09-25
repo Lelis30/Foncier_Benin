@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% load static %}
 
 {% block title %}
 {% trans "Mon espace" %}
 {% endblock %}
 
+
 {% block content %}
 
-
-<!-- TITRE DU DASHBOARD -->
 
 
 <div class="mb-4">
@@ -31,13 +29,10 @@
 
 
 
-<!-- CARTES DES FONCTIONNALITÉS -->
-
-
 <div class="row g-4 mb-5">
 
 
-    <!-- CARTE FONCIÈRE -->
+    <!-- CARTE FONCIERE -->
 
     <div class="col-md-4">
 
@@ -47,7 +42,7 @@
                 🗺️
             </div>
 
-            <h3 class="mt-2">
+            <h3>
                 {% trans "Carte foncière" %}
             </h3>
 
@@ -55,20 +50,19 @@
                 {% trans "Visualisez les parcelles disponibles sur la carte." %}
             </p>
 
-            <button
-                type="button"
-                class="btn btn-primary w-100"
-                onclick="document.getElementById('map-section').scrollIntoView({behavior: 'smooth'});"
+            <a
+                href="#map-section"
+                class="btn btn-primary mt-auto"
             >
                 🗺️ {% trans "Voir la carte" %}
-            </button>
+            </a>
 
         </div>
 
     </div>
 
 
-    <!-- VÉRIFIER UNE PARCELLE -->
+    <!-- VERIFIER UNE PARCELLE -->
 
     <div class="col-md-4">
 
@@ -78,7 +72,7 @@
                 🔎
             </div>
 
-            <h3 class="mt-2">
+            <h3>
                 {% trans "Vérifier une parcelle" %}
             </h3>
 
@@ -88,7 +82,7 @@
 
             <a
                 href="{% url 'search_parcel' %}"
-                class="btn btn-success w-100"
+                class="btn btn-success mt-auto"
             >
                 🔎 {% trans "Rechercher" %}
             </a>
@@ -98,7 +92,7 @@
     </div>
 
 
-    <!-- SIGNALER -->
+    <!-- SIGNALER UN PROBLEME -->
 
     <div class="col-md-4">
 
@@ -108,7 +102,7 @@
                 🚨
             </div>
 
-            <h3 class="mt-2">
+            <h3>
                 {% trans "Signaler un problème" %}
             </h3>
 
@@ -116,9 +110,10 @@
                 {% trans "Signalez une anomalie concernant une parcelle." %}
             </p>
 
+
             <button
                 type="button"
-                class="btn btn-danger w-100"
+                class="btn btn-danger mt-auto"
                 disabled
             >
                 🚨 {% trans "Signaler" %}
@@ -131,11 +126,9 @@
 </div>
 
 
-
-
 <div
     id="map-section"
-    class="card shadow-sm p-4 mb-4"
+    class="card shadow-sm p-4 mb-5"
 >
 
     <h2>
@@ -146,115 +139,90 @@
         {% trans "Les parcelles enregistrées apparaissent automatiquement sur la carte." %}
     </p>
 
+
+    <!-- CARTE LEAFLET -->
+
     <div
         id="map"
         style="
-            height: 450px;
+            height: 500px;
             width: 100%;
-            border-radius: 8px;
-            background-color: #e5e5e5;
+            border-radius: 10px;
+            overflow: hidden;
         "
-    ></div>
+    >
+    </div>
+
+
+    <!-- MESSAGE SI AUCUNE PARCELLE -->
+
+    <div
+        id="no-parcels-message"
+        class="alert alert-info mt-3"
+        style="display: none;"
+    >
+        ℹ️ {% trans "Aucune parcelle avec des coordonnées GPS valides n'est disponible." %}
+    </div>
 
 </div>
 
+
+
+{{ parcels_data|json_script:"parcels-data" }}
 
 
 
 <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-
-
+    crossorigin=""
+>
 
 
 <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-</script>
-
-
-
-
-{{ parcels|json_script:"parcels-data" }}
-
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    crossorigin=""
+></script>
 
 
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
 
 
-    const map = L.map("map").setView(
-        [6.3703, 2.3912],
-        12
-    );
+        const map = L.map(
+            'map'
+        ).setView(
+            [6.3703, 2.3912],
+            9
+        );
 
 
- L.tileLayer(
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
-    {
-        maxZoom: 19,
-        attribution:
-            "Tiles &copy; Esri"
-    }
-).addTo(map);
+
+        L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+            {
+                attribution: 'Tiles &copy; Esri',
+                maxZoom: 19
+            }
+        ).addTo(map);
 
 
-    const dataElement =
-        document.getElementById("parcels-data");
 
-    let parcels = [];
-
-
-    if (dataElement) {
-
-        try {
-
-            parcels =
-                JSON.parse(
-                    dataElement.textContent
-                );
-
-        } catch (error) {
-
-            console.error(
-                "Erreur pendant la lecture des parcelles :",
-                error
+        const dataElement =
+            document.getElementById(
+                'parcels-data'
             );
 
-        }
 
-    }
+        if (!dataElement) {
 
-
-
-
-    const coordinates = [];
-
-
-
-
-    parcels.forEach(function (parcel) {
-
-        const latitude =
-            parseFloat(parcel.latitude);
-
-        const longitude =
-            parseFloat(parcel.longitude);
-
-
-
-        if (
-            Number.isNaN(latitude) ||
-            Number.isNaN(longitude)
-        ) {
-
-            console.warn(
-                "Coordonnées invalides :",
-                parcel
+            console.log(
+                "Aucune donnée de parcelle reçue."
             );
 
             return;
@@ -262,135 +230,242 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+        // Transformer le JSON en tableau JavaScript
 
-        coordinates.push([
-            latitude,
-            longitude
-        ]);
-
-
-
-
-        let owner =
-            parcel.owner || "Non renseigné";
+        const parcels =
+            JSON.parse(
+                dataElement.textContent
+            );
 
 
+        console.log(
+            "Parcelles reçues depuis Django :",
+            parcels
+        );
 
 
-        let status =
-            parcel.status || "PENDING";
+
+        const markers = [];
 
 
-        let statusText =
-            status;
+        parcels.forEach(
+            function (parcel) {
+
+                const latitude =
+                    parseFloat(
+                        parcel.latitude
+                    );
 
 
-        if (status === "VERIFIED") {
+                const longitude =
+                    parseFloat(
+                        parcel.longitude
+                    );
 
-            statusText =
-                "✅ Vérifiée";
 
-        } else if (status === "PENDING") {
+                if (
+                    Number.isNaN(latitude) ||
+                    Number.isNaN(longitude)
+                ) {
 
-            statusText =
-                "🟡 En attente";
+                    console.log(
+                        "Coordonnées GPS invalides :",
+                        parcel.reference
+                    );
 
-        } else if (status === "DISPUTED") {
+                    return;
+                }
 
-            statusText =
-                "⚠️ En litige";
+
+
+                let statusIcon = "🟡";
+
+
+                if (
+                    parcel.status === "VERIFIED"
+                ) {
+
+                    statusIcon = "✅";
+
+                }
+
+
+                else if (
+                    parcel.status === "PENDING"
+                ) {
+
+                    statusIcon = "⏳";
+
+                }
+
+
+                else if (
+                    parcel.status === "DISPUTED"
+                ) {
+
+                    statusIcon = "⚠️";
+
+                }
+
+
+
+                const marker =
+                    L.marker(
+                        [
+                            latitude,
+                            longitude
+                        ]
+                    )
+                    .addTo(map);
+
+
+
+                marker.bindPopup(`
+
+                    <div
+                        style="
+                            min-width: 230px;
+                            font-size: 14px;
+                        "
+                    >
+
+                        <h5
+                            style="
+                                margin-bottom: 10px;
+                            "
+                        >
+                            📍 ${parcel.reference}
+                        </h5>
+
+
+                        <hr>
+
+
+                        <p>
+
+                            <strong>
+                                👤 Propriétaire :
+                            </strong>
+
+                            <br>
+
+                            ${parcel.owner}
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                📍 Localisation :
+                            </strong>
+
+                            <br>
+
+                            ${parcel.location}
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                📐 Superficie :
+                            </strong>
+
+                            <br>
+
+                            ${parcel.area} m²
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Statut :
+                            </strong>
+
+                            <br>
+
+                            ${statusIcon}
+                            ${parcel.status_display}
+
+                        </p>
+
+                    </div>
+
+                `);
+
+
+                markers.push(
+                    marker
+                );
+
+
+            }
+        );
+
+
+
+        if (
+            markers.length > 0
+        ) {
+
+
+            const group =
+                L.featureGroup(
+                    markers
+                );
+
+
+            map.fitBounds(
+                group.getBounds(),
+                {
+                    padding: [
+                        40,
+                        40
+                    ],
+                    maxZoom: 16
+                }
+            );
+
+
+        } else {
+
+
+
+            const message =
+                document.getElementById(
+                    'no-parcels-message'
+                );
+
+
+            if (message) {
+
+                message.style.display =
+                    'block';
+
+            }
 
         }
 
 
 
-        const marker =
-            L.marker([
-                latitude,
-                longitude
-            ]).addTo(map);
+        setTimeout(
+            function () {
 
+                map.invalidateSize();
 
-
-
-        marker.bindPopup(`
-
-            <div style="min-width: 220px;">
-
-                <h5>
-                    📍 ${parcel.reference || ""}
-                </h5>
-
-                <hr>
-
-                <strong>
-                    {% trans "Localisation" %} :
-                </strong>
-
-                ${parcel.location || "Non renseignée"}
-
-                <br><br>
-
-
-                <strong>
-                    {% trans "Superficie" %} :
-                </strong>
-
-                ${parcel.area || "Non renseignée"} m²
-
-                <br><br>
-
-
-                <strong>
-                    {% trans "Propriétaire" %} :
-                </strong>
-
-                ${owner}
-
-                <br><br>
-
-
-                <strong>
-                    {% trans "Statut" %} :
-                </strong>
-
-                ${statusText}
-
-            </div>
-
-        `);
-
-    });
-
-
-
-
-    if (coordinates.length > 0) {
-
-        const bounds =
-            L.latLngBounds(coordinates);
-
-        map.fitBounds(
-            bounds,
-            {
-                padding: [40, 40],
-                maxZoom: 16
-            }
+            },
+            200
         );
 
+
     }
-
-
-
-
-    setTimeout(function () {
-
-        map.invalidateSize();
-
-    }, 300);
-
-});
+);
 
 </script>
+
 
 {% endblock %}
