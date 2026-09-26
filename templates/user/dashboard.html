@@ -750,11 +750,13 @@ document.addEventListener(
             }
         );
 
+// =====================================================
+// COUCHES + LEGENDE DANS UN SEUL PANNEAU
+// =====================================================
 
-        // CONTROLE DES COUCHES
+// Déclaration des couches affichables/masquables
 
-
-       const overlayMaps = {};
+const overlayMaps = {};
 
 overlayMaps[
     "🌾 " + mapTranslations.agriculturalZones
@@ -773,75 +775,48 @@ overlayMaps[
 ] = disputedParcelsLayer;
 
 
-
-    L.control.layers(
+// Création du contrôle Leaflet
+const layersControl = L.control.layers(
     null,
     overlayMaps,
     {
-        collapsed: false
+        collapsed: false,
+        position: "bottomleft"
     }
-    ).addTo(map);
+).addTo(map);
 
 
-        // LEGENDE DE LA CARTE
+// Ajouter un titre au panneau
+setTimeout(function () {
 
-        const legend =
-            L.control({
-                position: "bottomleft"
-            });
+    const controlContainer =
+        layersControl.getContainer();
 
+    if (controlContainer) {
 
-        legend.onAdd =
-            function () {
+        const title =
+            L.DomUtil.create(
+                "div",
+                "layers-control-title"
+            );
 
+        title.innerHTML =
+            "🗺️ " + mapTranslations.legend;
 
-                const div =
-                    L.DomUtil.create(
-                        "div",
-                        "map-legend"
-                    );
+        title.style.fontWeight = "700";
+        title.style.fontSize = "14px";
+        title.style.marginBottom = "8px";
+        title.style.paddingBottom = "7px";
+        title.style.borderBottom = "1px solid #e5e7eb";
+        title.style.color = "#0f172a";
 
+        controlContainer.insertBefore(
+            title,
+            controlContainer.firstChild
+        );
+    }
 
-                div.innerHTML = `
-    <div style="
-        background: white;
-        padding: 12px 15px;
-        border-radius: 8px;
-        box-shadow: 0 1px 6px rgba(0,0,0,0.35);
-        font-size: 14px;
-        line-height: 26px;
-    ">
-
-        <strong>
-            🗺️ ${mapTranslations.legend}
-        </strong>
-
-        <br>
-
-        ✅ ${mapTranslations.verifiedParcel}
-
-        <br>
-
-        ⏳ ${mapTranslations.pendingParcel}
-
-        <br>
-
-        ⚠️ ${mapTranslations.disputedParcel}
-
-        <br>
-
-        🌾 ${mapTranslations.agriculturalZone}
-
-    </div>
-`;
-
-
-                return div;
-
-            };
-
-
-        legend.addTo(map);
+}, 0);
 
 
 
@@ -870,8 +845,6 @@ overlayMaps[
             );
 
         }
-
-
 
 
         // CORRIGER LA TAILLE DE LA CARTE

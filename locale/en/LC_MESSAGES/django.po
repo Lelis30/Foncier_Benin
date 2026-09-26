@@ -58,28 +58,24 @@ msgid "Connexion"
 msgstr "Login"
 
 #: .\templates\accounts\login.html:194
-#, fuzzy
 #| msgid "Bienvenue sur votre espace foncier."
 msgid "Accédez à votre espace Foncier Bénin."
-msgstr "Welcome to your land management area."
+msgstr "Access your Foncier Benin account."
 
 #: .\templates\accounts\login.html:233
-#, fuzzy
 #| msgid "Nom d'utilisateur"
 msgid "Entrez votre nom d'utilisateur"
-msgstr "Username"
+msgstr "Enter your username"
 
 #: .\templates\accounts\login.html:262
-#, fuzzy
 #| msgid "Confirmer le mot de passe"
 msgid "Entrez votre mot de passe"
-msgstr "Confirm password"
+msgstr "Enter your password"
 
 #: .\templates\accounts\login.html:271
-#, fuzzy
 #| msgid "Confirmer le mot de passe"
 msgid "Afficher ou masquer le mot de passe"
-msgstr "Confirm password"
+msgstr "Show or hide password"
 
 #: .\templates\accounts\login.html:287 .\templates\accounts\register.html:224
 #: .\templates\home.html:211
@@ -87,10 +83,9 @@ msgid "Se connecter"
 msgstr "Log in"
 
 #: .\templates\accounts\login.html:296
-#, fuzzy
 #| msgid "Bienvenue sur votre espace foncier."
 msgid "Connexion sécurisée à votre espace foncier"
-msgstr "Welcome to your land management area."
+msgstr "Secure login to your land account"
 
 #: .\templates\accounts\login.html:304
 msgid "Vous n'avez pas encore de compte ?"
@@ -104,7 +99,7 @@ msgstr "Create an account"
 
 #: .\templates\accounts\register.html:193
 msgid "Créez votre espace personnel sur Foncier Bénin."
-msgstr ""
+msgstr "Create your personal account on Foncier Benin."
 
 #: .\templates\accounts\register.html:211
 msgid "Créer mon compte"
@@ -169,7 +164,7 @@ msgstr "View"
 
 #: .\templates\admin_dashboard\dashboard.html:153
 msgid "Suivi des signalements"
-msgstr "Reports"
+msgstr "Report tracking"
 
 #: .\templates\admin_dashboard\dashboard.html:172
 msgid "Total"
@@ -192,16 +187,14 @@ msgid "Résolus"
 msgstr "Resolved"
 
 #: .\templates\admin_dashboard\dashboard.html:245
-#, fuzzy
 #| msgid "Carte des parcelles"
 msgid "Gestion des parcelles"
-msgstr "Parcel map"
+msgstr "Parcel management"
 
 #: .\templates\admin_dashboard\dashboard.html:256
-#, fuzzy
 #| msgid "Carte des parcelles"
 msgid "Total des parcelles"
-msgstr "Parcel map"
+msgstr "Total parcels"
 
 #: .\templates\admin_dashboard\dashboard.html:274
 #: .\templates\user\dashboard.html:317
@@ -219,10 +212,9 @@ msgid "Parcelles en litige"
 msgstr "Disputed parcels"
 
 #: .\templates\admin_dashboard\dashboard.html:337
-#, fuzzy
 #| msgid "Parcelles vérifiées"
 msgid "Parcelles enregistrées"
-msgstr "Verified parcels"
+msgstr "Registered parcels"
 
 #: .\templates\admin_dashboard\dashboard.html:351
 #: .\templates\user\parcel_detail.html:129
@@ -236,7 +228,7 @@ msgstr "Reference"
 #: .\templates\user\parcel_detail.html:151
 #: .\templates\user\parcel_search.html:267
 msgid "Propriétaire"
-msgstr "Owners"
+msgstr "Owner"
 
 #: .\templates\admin_dashboard\dashboard.html:359
 #: .\templates\user\parcel_detail.html:184
@@ -298,10 +290,9 @@ msgid "Modifier"
 msgstr "Edit"
 
 #: .\templates\admin_dashboard\dashboard.html:469
-#, fuzzy
 #| msgid "Aucun signalement n'a encore été enregistré."
 msgid "Aucune parcelle n'est encore enregistrée."
-msgstr "No reports have been submitted yet."
+msgstr "No parcel has been registered yet."
 
 #: .\templates\admin_dashboard\dashboard.html:496
 msgid "Signalements récents"
@@ -319,11 +310,11 @@ msgstr "Full administration"
 #: .\templates\user\payment.html:28 .\templates\user\payment_success.html:34
 #: .\templates\user\purchase_confirm.html:28
 msgid "Parcelle"
-msgstr "Parcels"
+msgstr "Parcel"
 
 #: .\templates\admin_dashboard\dashboard.html:535
 msgid "Utilisateur"
-msgstr "Username"
+msgstr "User"
 
 #: .\templates\admin_dashboard\dashboard.html:539
 #: .\templates\user\parcel_detail.html:391
@@ -333,7 +324,7 @@ msgstr "Username"
 #: .\templates\user\parcel_search.html:687
 #: .\templates\user\parcel_search.html:796
 msgid "Description"
-msgstr "Register"
+msgstr "Description"
 
 #: .\templates\admin_dashboard\dashboard.html:547
 #: .\templates\user\parcel_detail.html:390
@@ -357,7 +348,7 @@ msgstr "No reports have been submitted yet."
 
 #: .\templates\admin_dashboard\dashboard.html:710
 msgid "Statut des signalements"
-msgstr "View reports."
+msgstr "Report status"
 
 #: .\templates\admin_dashboard\dashboard.html:722
 msgid "Le signalement n'a pas encore été traité."
@@ -384,54 +375,47 @@ msgid "Administration complète"
 msgstr "Full administration"
 
 #: .\templates\base.html:56
-#, fuzzy
 #| msgid "Accessibilité"
 msgid "Options d’accessibilité"
-msgstr "Accessible"
+msgstr "Accessibility options"
 
 #: .\templates\base.html:58 .\templates\home.html:623
 msgid "Accessibilité"
-msgstr "Accessible"
+msgstr "Accessibility"
 
 #: .\templates\base.html:64
-#, fuzzy
 #| msgid "Accessibilité"
 msgid "Options d'accessibilité"
-msgstr "Accessible"
+msgstr "Accessibility options"
 
 #: .\templates\base.html:75
-#, fuzzy
 #| msgid "Réduire la taille du texte"
 msgid "Réduire le texte"
 msgstr "Decrease text size"
 
 #: .\templates\base.html:86
-#, fuzzy
 #| msgid "Agrandir la taille du texte"
 msgid "Agrandir le texte"
 msgstr "Increase text size"
 
 #: .\templates\base.html:97
-#, fuzzy
 #| msgid "Contraste"
 msgid "Contraste élevé"
-msgstr "Contrast"
+msgstr "High contrast"
 
 #: .\templates\base.html:109
-#, fuzzy
 #| msgid "Voir la carte"
 msgid "Lire la page"
-msgstr "View map"
+msgstr "Read page aloud"
 
 #: .\templates\base.html:119
-#, fuzzy
 #| msgid "Arrêter la lecture vocale"
 msgid "Arrêter la lecture"
-msgstr "Stop voice reading"
+msgstr "Stop reading"
 
 #: .\templates\base.html:152
 msgid "Information foncière simple et sécurisée"
-msgstr ""
+msgstr "Simple and secure land information"
 
 #: .\templates\base.html:166 .\templates\user\dashboard.html:5
 #: .\templates\user\parcel_detail.html:39
@@ -457,95 +441,85 @@ msgid ""
 msgstr "View, search and verify land information easily."
 
 #: .\templates\home.html:245
-#, fuzzy
 #| msgid "Gérer les parcelles."
 msgid "Sécurisez vos parcelles"
-msgstr "Manage parcels."
+msgstr "Secure your parcels"
 
 #: .\templates\home.html:249
-#, fuzzy
 #| msgid ""
 #| "Notre plateforme facilite l'accès aux informations relatives aux "
 #| "parcelles, propriétaires et documents fonciers."
 msgid ""
 "Accédez facilement aux informations relatives aux parcelles et aux "
 "propriétaires."
-msgstr ""
-"Our platform makes it easier to access information about parcels, owners and "
-"land documents."
+msgstr "Easily access information about parcels and owners."
 
 #: .\templates\home.html:273
-#, fuzzy
 #| msgid "Vérifier une parcelle"
 msgid "Vérifiez avant d'acheter"
-msgstr "Verify a parcel"
+msgstr "Verify before buying"
 
 #: .\templates\home.html:277
 msgid "Consultez les informations disponibles avant toute opération foncière."
-msgstr ""
+msgstr "Review the available information before any land transaction."
 
 #: .\templates\home.html:301
-#, fuzzy
 #| msgid "Carte des parcelles"
 msgid "Visualisez les parcelles"
-msgstr "Parcel map"
+msgstr "View parcels"
 
 #: .\templates\home.html:305
-#, fuzzy
 #| msgid "Visualisez les parcelles enregistrées sur la carte."
 msgid "Localisez les parcelles et les zones agricoles grâce à la cartographie."
-msgstr "View registered parcels on the map."
+msgstr "Locate parcels and agricultural zones using the map."
 
 #: .\templates\home.html:329
-#, fuzzy
 #| msgid "Gérer les documents fonciers."
 msgid "Consultez les documents fonciers"
-msgstr "Manage land documents."
+msgstr "View land documents"
 
 #: .\templates\home.html:333
 msgid "Retrouvez les documents et l'historique associés à une parcelle."
-msgstr ""
+msgstr "Find the documents and history associated with a parcel."
 
 #: .\templates\home.html:357
-#, fuzzy
 #| msgid "Une plateforme conçue pour être accessible à tous."
 msgid "Une plateforme accessible à tous"
-msgstr "A platform designed to be accessible to everyone."
+msgstr "A platform accessible to everyone"
 
 #: .\templates\home.html:361
 msgid ""
 "Une solution numérique pensée pour faciliter l'accès à l'information "
 "foncière."
-msgstr ""
+msgstr "A digital solution designed to make land information easier to access."
 
 #: .\templates\home.html:383
 msgid "Précédent"
-msgstr ""
+msgstr "Previous"
 
 #: .\templates\home.html:401
 msgid "Suivant"
-msgstr ""
+msgstr "Next"
 
 #: .\templates\home.html:415
 msgid "Une plateforme foncière simple et sécurisée"
-msgstr ""
+msgstr "A simple and secure land platform"
 
 #: .\templates\home.html:419
 msgid "Accédez rapidement aux principales fonctionnalités de Foncier Bénin."
-msgstr ""
+msgstr "Quickly access the main features of Foncier Benin."
 
 #: .\templates\home.html:439 .\templates\user\dashboard.html:41
 #: .\templates\user\parcel_search.html:47
-#, fuzzy
 #| msgid "Vérifier une parcelle"
 msgid "Rechercher une parcelle"
-msgstr "Verify a parcel"
+msgstr "Search for a parcel"
 
 #: .\templates\home.html:443
 msgid ""
 "Retrouvez rapidement une parcelle grâce à sa référence et consultez ses "
 "informations."
-msgstr ""
+msgstr "Quickly find a parcel using its reference and view its information."
 
 #: .\templates\home.html:452 .\templates\home.html:746
 #: .\templates\user\dashboard.html:98
@@ -553,100 +527,97 @@ msgid "Rechercher"
 msgstr "Search"
 
 #: .\templates\home.html:474
-#, fuzzy
 #| msgid "Sécurisez vos informations foncières"
 msgid "Vérifier les informations"
-msgstr "Secure your land information"
+msgstr "Verify information"
 
 #: .\templates\home.html:478 .\templates\home.html:774
 msgid ""
 "Consultez le propriétaire, les documents fonciers et l'historique des "
 "transactions."
-msgstr ""
+msgstr "View the owner, land documents, and transaction history."
 
 #: .\templates\home.html:487 .\templates\home.html:770
 msgid "Vérifier"
 msgstr "Verify"
 
 #: .\templates\home.html:509 .\templates\user\dashboard.html:128
-#, fuzzy
 #| msgid "Voir la carte"
 msgid "Explorer la carte"
-msgstr "View map"
+msgstr "Explore the map"
 
 #: .\templates\home.html:513
-#, fuzzy
 #| msgid "Visualisez les parcelles enregistrées sur la carte."
 msgid ""
 "Visualisez les parcelles et les zones agricoles directement sur la carte."
-msgstr "View registered parcels on the map."
+msgstr "View parcels and agricultural zones directly on the map."
 
 #: .\templates\home.html:522
 msgid "Explorer"
-msgstr ""
+msgstr "Explore"
 
 #: .\templates\home.html:549
 msgid "Notre mission"
-msgstr ""
+msgstr "Our mission"
 
 #: .\templates\home.html:553
 msgid "Rendre l'information foncière plus simple, accessible et sécurisée"
-msgstr ""
+msgstr "Make land information simpler, more accessible, and more secure"
 
 #: .\templates\home.html:558
 msgid ""
 "Foncier Bénin facilite l'accès aux informations foncières afin d'aider les "
 "citoyens à mieux comprendre, vérifier et sécuriser leurs opérations liées "
 "aux parcelles."
-msgstr ""
+msgstr "Foncier Benin makes land information easier to access, helping citizens better understand, verify, and secure parcel-related transactions."
 
 #: .\templates\home.html:575
 msgid "Transparence"
-msgstr ""
+msgstr "Transparency"
 
 #: .\templates\home.html:579
 msgid ""
 "Faciliter la consultation des informations disponibles sur les parcelles."
-msgstr ""
+msgstr "Make it easier to consult available parcel information."
 
 #: .\templates\home.html:599
 msgid "Sécurité"
-msgstr ""
+msgstr "Security"
 
 #: .\templates\home.html:603
 msgid ""
 "Renforcer la vérification des informations avant une opération foncière."
-msgstr ""
+msgstr "Strengthen information verification before a land transaction."
 
 #: .\templates\home.html:627
 msgid "Proposer une plateforme simple et utilisable par le plus grand nombre."
-msgstr ""
+msgstr "Provide a simple platform that can be used by as many people as possible."
 
 #: .\templates\home.html:647
 msgid "Valorisation du territoire"
-msgstr ""
+msgstr "Land development"
 
 #: .\templates\home.html:651
 msgid "Mieux visualiser les parcelles, bâtiments et zones agricoles."
-msgstr ""
+msgstr "Better visualize parcels, buildings, and agricultural zones."
 
 #: .\templates\home.html:679
 msgid "Le foncier au service de tous"
-msgstr ""
+msgstr "Land information for everyone"
 
 #: .\templates\home.html:684
 msgid ""
 "Une solution numérique pensée pour rapprocher les citoyens de l'information "
 "foncière."
-msgstr ""
+msgstr "A digital solution designed to bring citizens closer to land information."
 
 #: .\templates\home.html:690
 msgid "Simple"
-msgstr ""
+msgstr "Simple"
 
 #: .\templates\home.html:694
 msgid "Sécurisé"
-msgstr ""
+msgstr "Secure"
 
 #: .\templates\home.html:698
 msgid "Accessible"
@@ -654,86 +625,78 @@ msgstr "Accessible"
 
 #: .\templates\home.html:718
 msgid "Processus sécurisé"
-msgstr ""
+msgstr "Secure process"
 
 #: .\templates\home.html:722
 msgid "Comment ça marche ?"
-msgstr ""
+msgstr "How does it work?"
 
 #: .\templates\home.html:726
-#, fuzzy
 #| msgid "Recherchez une parcelle à partir de sa référence."
 msgid "De la recherche d'une parcelle jusqu'au transfert de propriété."
-msgstr "Search for a parcel using its reference."
+msgstr "From searching for a parcel to the transfer of ownership."
 
 #: .\templates\home.html:750
-#, fuzzy
 #| msgid "Recherchez une parcelle à partir de sa référence."
 msgid ""
 "Recherchez une parcelle grâce à sa référence et consultez sa localisation."
-msgstr "Search for a parcel using its reference."
+msgstr "Search for a parcel using its reference and view its location."
 
 #: .\templates\home.html:794
 msgid "Acheter"
-msgstr ""
+msgstr "Buy"
 
 #: .\templates\home.html:798
 msgid "Effectuez le paiement de la parcelle avec le moyen de paiement proposé."
-msgstr ""
+msgstr "Pay for the parcel using one of the available payment methods."
 
 #: .\templates\home.html:818
 msgid "Valider le transfert"
-msgstr ""
+msgstr "Validate the transfer"
 
 #: .\templates\home.html:822
 msgid ""
 "Après vérification du paiement, l'administration valide le transfert de "
 "propriété."
-msgstr ""
+msgstr "After payment verification, the administration validates the transfer of ownership."
 
 #: .\templates\home.html:841
-#, fuzzy
 #| msgid "Carte foncière"
 msgid "Sécurité foncière"
-msgstr "Land map"
+msgstr "Land security"
 
 #: .\templates\home.html:846
 msgid "Sécurisez vos informations foncières"
 msgstr "Secure your land information"
 
 #: .\templates\home.html:853
-#, fuzzy
 #| msgid ""
 #| "Notre plateforme facilite l'accès aux informations relatives aux "
 #| "parcelles, propriétaires et documents fonciers."
 msgid ""
 "Foncier Bénin facilite l'accès aux informations relatives aux parcelles, "
 "propriétaires, documents fonciers et historiques de transactions."
-msgstr ""
-"Our platform makes it easier to access information about parcels, owners and "
-"land documents."
+msgstr "Foncier Benin makes it easier to access information about parcels, owners, land documents, and transaction histories."
 
 #: .\templates\home.html:866
 msgid "Commencer"
 msgstr "Get started"
 
 #: .\templates\user\dashboard.html:18
-#, fuzzy
 #| msgid "Mon espace"
 msgid "Mon espace foncier"
-msgstr "My account"
+msgstr "My land account"
 
 #: .\templates\user\dashboard.html:22
 msgid "Bonjour"
-msgstr ""
+msgstr "Hello"
 
 #: .\templates\user\dashboard.html:34
-#, fuzzy
 #| msgid "Consultez, recherchez et vérifiez les informations foncières."
 msgid ""
 "Consultez, recherchez et vérifiez vos informations foncières depuis votre "
 "espace personnel."
-msgstr "View, search and verify land information easily."
+msgstr "View, search, and verify land information from your personal account."
 
 #: .\templates\user\dashboard.html:46
 msgid "Voir la carte"
@@ -741,15 +704,15 @@ msgstr "View map"
 
 #: .\templates\user\dashboard.html:61
 msgid "Services"
-msgstr ""
+msgstr "Services"
 
 #: .\templates\user\dashboard.html:65
 msgid "Que souhaitez-vous faire ?"
-msgstr ""
+msgstr "What would you like to do?"
 
 #: .\templates\user\dashboard.html:69
 msgid "Accédez rapidement aux principaux services fonciers."
-msgstr ""
+msgstr "Quickly access the main land services."
 
 #: .\templates\user\dashboard.html:88 .\templates\user\parcel_search.html:5
 #: .\templates\user\parcel_search.html:27
@@ -757,23 +720,21 @@ msgid "Vérifier une parcelle"
 msgstr "Verify a parcel"
 
 #: .\templates\user\dashboard.html:92
-#, fuzzy
 #| msgid "Recherchez une parcelle à partir de sa référence."
 msgid ""
 "Recherchez une parcelle à partir de sa référence et consultez ses "
 "informations."
-msgstr "Search for a parcel using its reference."
+msgstr "Search for a parcel using its reference and view its information."
 
 #: .\templates\user\dashboard.html:118
 msgid "Carte foncière"
 msgstr "Land map"
 
 #: .\templates\user\dashboard.html:122
-#, fuzzy
 #| msgid "Visualisez les parcelles enregistrées sur la carte."
 msgid ""
 "Visualisez les parcelles et les zones agricoles enregistrées sur la carte."
-msgstr "View registered parcels on the map."
+msgstr "View registered parcels and agricultural zones on the map."
 
 #: .\templates\user\dashboard.html:148 .\templates\user\report_problem.html:5
 #: .\templates\user\report_problem.html:20
@@ -785,41 +746,36 @@ msgid "Signalez une anomalie ou un problème concernant une parcelle."
 msgstr "Report an issue concerning a parcel."
 
 #: .\templates\user\dashboard.html:158
-#, fuzzy
 #| msgid "Suivi des signalements"
 msgid "Faire un signalement"
-msgstr "Reports"
+msgstr "Submit a report"
 
 #: .\templates\user\dashboard.html:180 .\templates\user\dashboard.html:244
 #: .\templates\user\parcel_search.html:968
-#, fuzzy
 #| msgid "Carte foncière"
 msgid "Carte interactive"
-msgstr "Land map"
+msgstr "Interactive map"
 
 #: .\templates\user\dashboard.html:184
-#, fuzzy
 #| msgid "Sécurisez vos informations foncières"
 msgid "Explorez les informations foncières"
-msgstr "Secure your land information"
+msgstr "Explore land information"
 
 #: .\templates\user\dashboard.html:188
-#, fuzzy
 #| msgid "Visualisez les parcelles enregistrées sur la carte."
 msgid ""
 "Visualisez les parcelles et les zones agricoles enregistrées sur le "
 "territoire."
-msgstr "View registered parcels on the map."
+msgstr "View parcels and agricultural zones registered in the area."
 
 #: .\templates\user\dashboard.html:198
 msgid "Données foncières disponibles"
-msgstr ""
+msgstr "Available land data"
 
 #: .\templates\user\dashboard.html:218
-#, fuzzy
 #| msgid "Localisation"
 msgid "Localisation des terrains"
-msgstr "Location"
+msgstr "Land locations"
 
 #: .\templates\user\dashboard.html:229 .\templates\user\dashboard.html:316
 #: .\templates\user\parcel_detail.html:529
@@ -829,15 +785,15 @@ msgstr "Agricultural zones"
 
 #: .\templates\user\dashboard.html:233
 msgid "Espaces agricoles enregistrés"
-msgstr ""
+msgstr "Registered agricultural areas"
 
 #: .\templates\user\dashboard.html:248
 msgid "Cliquez sur un marqueur pour voir les détails"
-msgstr ""
+msgstr "Click a marker to view details"
 
 #: .\templates\user\dashboard.html:286 .\templates\user\dashboard.html:324
 msgid "Zone agricole"
-msgstr "Agricultural zones"
+msgstr "Agricultural zone"
 
 #: .\templates\user\dashboard.html:320
 msgid "Légende"
@@ -856,29 +812,25 @@ msgid "Parcelle en litige"
 msgstr "Disputed parcel"
 
 #: .\templates\user\parcel_detail.html:5
-#, fuzzy
 #| msgid "Informations de la parcelle"
 msgid "Détails de la parcelle"
-msgstr "Parcel information"
+msgstr "Parcel details"
 
 #: .\templates\user\parcel_detail.html:19
 #: .\templates\user\parcel_search.html:131
-#, fuzzy
 #| msgid "Carte foncière"
 msgid "Fiche foncière"
-msgstr "Land map"
+msgstr "Land record"
 
 #: .\templates\user\parcel_detail.html:27
-#, fuzzy
 #| msgid "Informations agricoles enregistrées pour cette parcelle."
 msgid "Consultez les informations détaillées enregistrées pour cette parcelle."
-msgstr "Agricultural information recorded for this parcel."
+msgstr "View the detailed information recorded for this parcel."
 
 #: .\templates\user\parcel_detail.html:69
-#, fuzzy
 #| msgid "Informations de la parcelle"
 msgid "Informations principales"
-msgstr "Parcel information"
+msgstr "Main information"
 
 #: .\templates\user\parcel_detail.html:73
 msgid "Informations de la parcelle"
@@ -886,17 +838,16 @@ msgstr "Parcel information"
 
 #: .\templates\user\parcel_detail.html:236
 msgid "Prix de vente"
-msgstr ""
+msgstr "Sale price"
 
 #: .\templates\user\parcel_detail.html:244
 msgid "Disponible à la vente"
-msgstr ""
+msgstr "Available for sale"
 
 #: .\templates\user\parcel_detail.html:258
-#, fuzzy
 #| msgid "Carte des parcelles"
 msgid "Acheter cette parcelle"
-msgstr "Parcel map"
+msgstr "Buy this parcel"
 
 #: .\templates\user\parcel_detail.html:277
 #: .\templates\user\parcel_search.html:400
@@ -996,10 +947,9 @@ msgid "Longitude"
 msgstr "Longitude"
 
 #: .\templates\user\parcel_detail.html:643
-#, fuzzy
 #| msgid "Vérifier une parcelle"
 msgid "Modifier la parcelle"
-msgstr "Verify a parcel"
+msgstr "Edit parcel"
 
 #: .\templates\user\parcel_detail.html:650
 #: .\templates\user\parcel_search.html:1021
@@ -1009,123 +959,108 @@ msgid "Retour au tableau de bord"
 msgstr "Back to dashboard"
 
 #: .\templates\user\parcel_search.html:23
-#, fuzzy
 #| msgid "Sécurisez vos informations foncières"
 msgid "Vérification foncière"
-msgstr "Secure your land information"
+msgstr "Land verification"
 
 #: .\templates\user\parcel_search.html:31
-#, fuzzy
 #| msgid "Recherchez une parcelle à partir de sa référence."
 msgid ""
 "Consultez les informations foncières d'une parcelle à partir de sa référence."
-msgstr "Search for a parcel using its reference."
+msgstr "View a parcel's land information using its reference."
 
 #: .\templates\user\parcel_search.html:51
-#, fuzzy
 #| msgid "Entrez la référence de la parcelle que vous souhaitez vérifier."
 msgid "Saisissez la référence cadastrale de la parcelle à vérifier."
-msgstr "Enter the reference of the parcel you want to verify."
+msgstr "Enter the cadastral reference of the parcel to verify."
 
 #: .\templates\user\parcel_search.html:66
 msgid "Référence de la parcelle"
 msgstr "Parcel reference"
 
 #: .\templates\user\parcel_search.html:91
-#, fuzzy
 #| msgid "Vérifier une parcelle"
 msgid "Vérifier la parcelle"
-msgstr "Verify a parcel"
+msgstr "Verify parcel"
 
 #: .\templates\user\parcel_search.html:102
 msgid ""
 "La référence permet d'identifier de manière unique une parcelle enregistrée "
 "dans la plateforme."
-msgstr ""
+msgstr "The reference uniquely identifies a parcel registered on the platform."
 
 #: .\templates\user\parcel_search.html:139
-#, fuzzy
 #| msgid "Informations agricoles enregistrées pour cette parcelle."
 msgid "Informations enregistrées pour cette parcelle"
-msgstr "Agricultural information recorded for this parcel."
+msgstr "Information recorded for this parcel"
 
 #: .\templates\user\parcel_search.html:160
-#, fuzzy
 #| msgid "En cours de vérification"
 msgid "En attente de vérification"
-msgstr "Under review"
+msgstr "Pending verification"
 
 #: .\templates\user\parcel_search.html:305
-#, fuzzy
 #| msgid "Sécurisez vos informations foncières"
 msgid "Informations foncières vérifiées"
-msgstr "Secure your land information"
+msgstr "Verified land information"
 
 #: .\templates\user\parcel_search.html:309
 msgid ""
 "Cette parcelle possède actuellement le statut vérifié dans la plateforme."
-msgstr ""
+msgstr "This parcel is currently marked as verified on the platform."
 
 #: .\templates\user\parcel_search.html:327
-#, fuzzy
 #| msgid "Parcelle en attente"
 msgid "Vérification en attente"
-msgstr "Pending parcel"
+msgstr "Verification pending"
 
 #: .\templates\user\parcel_search.html:331
 msgid ""
 "Les informations de cette parcelle sont encore en attente de vérification."
-msgstr ""
+msgstr "The information for this parcel is still pending verification."
 
 #: .\templates\user\parcel_search.html:349
-#, fuzzy
 #| msgid "Parcelle en litige"
 msgid "Attention : parcelle en litige"
-msgstr "Disputed parcel"
+msgstr "Warning: disputed parcel"
 
 #: .\templates\user\parcel_search.html:353
-#, fuzzy
 #| msgid "Aucune parcelle n'est actuellement disponible."
 msgid "Cette parcelle est actuellement signalée comme étant en litige."
-msgstr "No parcel is currently available."
+msgstr "This parcel is currently reported as disputed."
 
 #: .\templates\user\parcel_search.html:371
-#, fuzzy
 #| msgid "Voir la carte"
 msgid "Voir la fiche complète"
-msgstr "View map"
+msgstr "View full record"
 
 #: .\templates\user\parcel_search.html:379
-#, fuzzy
 #| msgid "Voir la carte"
 msgid "Localiser sur la carte"
-msgstr "View map"
+msgstr "Locate on map"
 
 #: .\templates\user\parcel_search.html:404
-#, fuzzy
 #| msgid "Constructions enregistrées sur cette parcelle."
 msgid "Documents administratifs enregistrés pour cette parcelle."
-msgstr "Buildings registered on this parcel."
+msgstr "Administrative documents recorded for this parcel."
 
 #: .\templates\user\parcel_search.html:510
-#, fuzzy
 #| msgid "Aucune parcelle n'est actuellement disponible."
 msgid "Aucun document disponible"
-msgstr "No parcel is currently available."
+msgstr "No documents available"
 
 #: .\templates\user\parcel_search.html:544
 msgid "Historique des opérations enregistrées pour cette parcelle."
 msgstr "History of transactions recorded for this parcel."
 
 #: .\templates\user\parcel_search.html:633
-#, fuzzy
 #| msgid "Inscription"
 msgid "Aucune transaction"
-msgstr "Register"
+msgstr "No transactions"
 
 #: .\templates\user\parcel_search.html:661
 msgid "Bâtiments"
-msgstr ""
+msgstr "Buildings"
 
 #: .\templates\user\parcel_search.html:669
 msgid "Constructions enregistrées sur cette parcelle."
@@ -1133,47 +1068,42 @@ msgstr "Buildings registered on this parcel."
 
 #: .\templates\user\parcel_search.html:712
 #: .\templates\user\parcel_search.html:832
-#, fuzzy
 #| msgid "Inscription"
 msgid "Aucune description"
-msgstr "Register"
+msgstr "No description"
 
 #: .\templates\user\parcel_search.html:737
-#, fuzzy
 #| msgid "Type de construction"
 msgid "Aucune construction"
-msgstr "Building type"
+msgstr "No buildings"
 
 #: .\templates\user\parcel_search.html:766
 msgid "Agriculture"
-msgstr ""
+msgstr "Agriculture"
 
 #: .\templates\user\parcel_search.html:774
 msgid "Informations agricoles enregistrées pour cette parcelle."
 msgstr "Agricultural information recorded for this parcel."
 
 #: .\templates\user\parcel_search.html:858
-#, fuzzy
 #| msgid "Zone agricole"
 msgid "Aucune zone agricole"
-msgstr "Agricultural zones"
+msgstr "No agricultural zones"
 
 #: .\templates\user\parcel_search.html:888
-#, fuzzy
 #| msgid "Localisation"
 msgid "Géolocalisation"
-msgstr "Location"
+msgstr "Geolocation"
 
 #: .\templates\user\parcel_search.html:896
-#, fuzzy
 #| msgid "Informations agricoles enregistrées pour cette parcelle."
 msgid "Position géographique enregistrée pour cette parcelle."
-msgstr "Agricultural information recorded for this parcel."
+msgstr "Geographic position recorded for this parcel."
 
 #: .\templates\user\parcel_search.html:978
 msgid ""
 "Utilisez la carte pour visualiser précisément la position de la parcelle."
-msgstr ""
+msgstr "Use the map to view the parcel's precise location."
 
 #: .\templates\user\parcel_search.html:999
 msgid "Parcelle introuvable"
@@ -1186,248 +1116,223 @@ msgid ""
 msgstr "No parcel matches this reference. Check the reference and try again."
 
 #: .\templates\user\payment.html:5
-#, fuzzy
 #| msgid "Signalements"
 msgid "Paiement"
-msgstr "Reports"
+msgstr "Payment"
 
 #: .\templates\user\payment.html:13
-#, fuzzy
 #| msgid "Informations de la parcelle"
 msgid "Paiement de la parcelle"
-msgstr "Parcel information"
+msgstr "Parcel payment"
 
 #: .\templates\user\payment.html:17
 msgid "Choisissez votre moyen de paiement pour continuer."
-msgstr ""
+msgstr "Choose your payment method to continue."
 
 #: .\templates\user\payment.html:67 .\templates\user\payment.html:242
 #: .\templates\user\payment.html:298 .\templates\user\payment.html:419
 #: .\templates\user\purchase_confirm.html:98
 msgid "Montant à payer"
-msgstr ""
+msgstr "Amount to pay"
 
 #: .\templates\user\payment.html:86
 msgid "Choisissez votre moyen de paiement"
-msgstr ""
+msgstr "Choose your payment method"
 
 #: .\templates\user\payment.html:107
 msgid "Payez avec votre compte MTN Mobile Money."
-msgstr ""
+msgstr "Pay with your MTN Mobile Money account."
 
 #: .\templates\user\payment.html:114
 msgid "Payer avec MTN MoMo"
-msgstr ""
+msgstr "Pay with MTN MoMo"
 
 #: .\templates\user\payment.html:139
 msgid "Payez avec votre compte Moov Money."
-msgstr ""
+msgstr "Pay with your Moov Money account."
 
 #: .\templates\user\payment.html:147
 msgid "Payer avec Moov Money"
-msgstr ""
+msgstr "Pay with Moov Money"
 
 #: .\templates\user\payment.html:168
-#, fuzzy
 #| msgid "Carte foncière"
 msgid "Carte bancaire"
-msgstr "Land map"
+msgstr "Bank card"
 
 #: .\templates\user\payment.html:172
 msgid "Payez avec une carte bancaire."
-msgstr ""
+msgstr "Pay with a bank card."
 
 #: .\templates\user\payment.html:180
-#, fuzzy
 #| msgid "Voir la carte"
 msgid "Payer par carte"
-msgstr "View map"
+msgstr "Pay by card"
 
 #: .\templates\user\payment.html:195
 msgid "Aucun paiement ne sera effectué avant votre confirmation finale."
-msgstr ""
+msgstr "No payment will be made before your final confirmation."
 
 #: .\templates\user\payment.html:214
 msgid "Entrez le numéro MTN Mobile Money qui effectuera le paiement."
-msgstr ""
+msgstr "Enter the MTN Mobile Money number that will make the payment."
 
 #: .\templates\user\payment.html:228 .\templates\user\payment.html:284
 msgid "Numéro de téléphone"
-msgstr ""
+msgstr "Phone number"
 
 #: .\templates\user\payment.html:252
-#, fuzzy
 #| msgid "Confirmer le mot de passe"
 msgid "Confirmer le paiement MTN MoMo"
-msgstr "Confirm password"
+msgstr "Confirm MTN MoMo payment"
 
 #: .\templates\user\payment.html:276
 msgid "Entrez le numéro Moov Money qui effectuera le paiement."
-msgstr ""
+msgstr "Enter the Moov Money number that will make the payment."
 
 #: .\templates\user\payment.html:308
-#, fuzzy
 #| msgid "Confirmer le mot de passe"
 msgid "Confirmer le paiement Moov Money"
-msgstr "Confirm password"
+msgstr "Confirm Moov Money payment"
 
 #: .\templates\user\payment.html:324
 msgid "Paiement par carte bancaire"
-msgstr ""
+msgstr "Bank card payment"
 
 #: .\templates\user\payment.html:330
-#, fuzzy
 #| msgid "Vérifiez les informations et les documents d'une parcelle."
 msgid "Entrez les informations de votre carte pour effectuer le paiement."
-msgstr "Verify parcel information and documents."
+msgstr "Enter your card details to make the payment."
 
 #: .\templates\user\payment.html:339
-#, fuzzy
 #| msgid "Nom d'utilisateur"
 msgid "Nom du titulaire"
-msgstr "Username"
+msgstr "Cardholder name"
 
 #: .\templates\user\payment.html:358
-#, fuzzy
 #| msgid "Numéro"
 msgid "Numéro de carte"
-msgstr "Number"
+msgstr "Card number"
 
 #: .\templates\user\payment.html:380
 msgid "Date d'expiration"
-msgstr ""
+msgstr "Expiration date"
 
 #: .\templates\user\payment.html:432
-#, fuzzy
 #| msgid "Confirmer le mot de passe"
 msgid "Confirmer le paiement par carte"
-msgstr "Confirm password"
+msgstr "Confirm card payment"
 
 #: .\templates\user\payment.html:444
 #: .\templates\user\purchase_confirm.html:181
 msgid "Retour aux détails"
-msgstr ""
+msgstr "Back to details"
 
 #: .\templates\user\payment_success.html:5
 msgid "Paiement réussi"
-msgstr ""
+msgstr "Payment successful"
 
 #: .\templates\user\payment_success.html:21
 msgid "Paiement réussi !"
-msgstr ""
+msgstr "Payment successful!"
 
 #: .\templates\user\payment_success.html:25
-#, fuzzy
 #| msgid ""
 #| "Votre signalement a été enregistré avec succès. Il sera examiné par un "
 #| "administrateur."
 msgid "Votre paiement a été enregistré avec succès."
-msgstr ""
-"Your report has been submitted successfully. It will be reviewed by an "
-"administrator."
+msgstr "Your payment has been recorded successfully."
 
 #: .\templates\user\payment_success.html:44
 msgid "Montant payé"
-msgstr ""
+msgstr "Amount paid"
 
 #: .\templates\user\payment_success.html:54
-#, fuzzy
 #| msgid "Mot de passe"
 msgid "Moyen de paiement"
-msgstr "Password"
+msgstr "Payment method"
 
 #: .\templates\user\payment_success.html:64
-#, fuzzy
 #| msgid "Référence de la parcelle"
 msgid "Référence de transaction"
-msgstr "Parcel reference"
+msgstr "Transaction reference"
 
 #: .\templates\user\payment_success.html:76
 msgid ""
 "Le paiement a été enregistré. Le transfert de propriété doit maintenant être "
 "vérifié et validé par l'administration."
-msgstr ""
+msgstr "The payment has been recorded. The transfer of ownership must now be reviewed and validated by the administration."
 
 #: .\templates\user\payment_success.html:83
-#, fuzzy
 #| msgid "Voir la carte"
 msgid "Voir la parcelle"
-msgstr "View map"
+msgstr "View parcel"
 
 #: .\templates\user\purchase_confirm.html:5
 #: .\templates\user\purchase_confirm.html:13
 msgid "Confirmation d'achat"
-msgstr ""
+msgstr "Purchase confirmation"
 
 #: .\templates\user\purchase_confirm.html:17
-#, fuzzy
 #| msgid "Vérifiez les informations et les documents d'une parcelle."
 msgid "Vérifiez les informations avant de continuer vers le paiement."
-msgstr "Verify parcel information and documents."
+msgstr "Review the information before proceeding to payment."
 
 #: .\templates\user\purchase_confirm.html:76
-#, fuzzy
 #| msgid "Propriétaire"
 msgid "Propriétaire actuel"
-msgstr "Owners"
+msgstr "Current owner"
 
 #: .\templates\user\purchase_confirm.html:117
-#, fuzzy
 #| msgid "Informations de la parcelle"
 msgid "Informations de l'acheteur"
-msgstr "Parcel information"
+msgstr "Buyer information"
 
 #: .\templates\user\purchase_confirm.html:150
-#, fuzzy
 #| msgid "Non renseigné"
 msgid "Non renseignée"
 msgstr "Not provided"
 
 #: .\templates\user\purchase_confirm.html:162
-#, fuzzy
 #| msgid "Vérifiez les informations et les documents d'une parcelle."
 msgid ""
 "Vérifiez attentivement les informations de la parcelle avant de procéder au "
 "paiement."
-msgstr "Verify parcel information and documents."
+msgstr "Carefully review the parcel information before proceeding with payment."
 
 #: .\templates\user\purchase_confirm.html:173
-#, fuzzy
 #| msgid "Consulter les signalements."
 msgid "Continuer vers le paiement"
-msgstr "View reports."
+msgstr "Continue to payment"
 
 #: .\templates\user\purchase_unavailable.html:16
-#, fuzzy
 #| msgid "Parcelle en litige"
 msgid "Parcelle non disponible"
-msgstr "Disputed parcel"
+msgstr "Parcel unavailable"
 
 #: .\templates\user\purchase_unavailable.html:20
-#, fuzzy
 #| msgid "Aucune parcelle n'est actuellement disponible."
 msgid "Cette parcelle n'est plus disponible à l'achat."
-msgstr "No parcel is currently available."
+msgstr "This parcel is no longer available for purchase."
 
 #: .\templates\user\purchase_unavailable.html:30
 msgid ""
 "Cette parcelle est actuellement réservée. Un paiement a déjà été effectué et "
 "le transfert de propriété est en attente de validation."
-msgstr ""
+msgstr "This parcel is currently reserved. A payment has already been made and the transfer of ownership is awaiting validation."
 
 #: .\templates\user\purchase_unavailable.html:35
 msgid "Cette parcelle a déjà été vendue."
-msgstr ""
+msgstr "This parcel has already been sold."
 
 #: .\templates\user\purchase_unavailable.html:40
 msgid "Cette parcelle ne peut pas être achetée actuellement."
-msgstr ""
+msgstr "This parcel cannot currently be purchased."
 
 #: .\templates\user\purchase_unavailable.html:46
-#, fuzzy
 #| msgid "Informations de la parcelle"
 msgid "Retour aux détails de la parcelle"
-msgstr "Parcel information"
+msgstr "Back to parcel details"
 
 #: .\templates\user\report_problem.html:40
 msgid "Signalement envoyé"
