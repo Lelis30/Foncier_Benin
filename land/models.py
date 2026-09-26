@@ -31,6 +31,12 @@ class Parcel(models.Model):
         ('VERIFIED', 'Vérifiée'),
         ('PENDING', 'En attente'),
         ('DISPUTED', 'En litige'),
+
+    ]
+    SALE_STATUS_CHOICES = [
+        ('AVAILABLE', 'Disponible'),
+        ('RESERVED', 'Réservée - paiement effectué'),
+        ('SOLD', 'Vendue'),
     ]
 
     reference = models.CharField(
@@ -74,6 +80,13 @@ class Parcel(models.Model):
     for_sale = models.BooleanField(
         default=False,
         verbose_name="À vendre"
+    )
+
+    sale_status = models.CharField(
+        max_length=20,
+        choices=SALE_STATUS_CHOICES,
+        default='AVAILABLE',
+        verbose_name="État de la vente"
     )
 
     created_at = models.DateTimeField(

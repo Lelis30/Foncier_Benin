@@ -190,9 +190,9 @@ def payment_page(request, parcel_id):
     parcel = get_object_or_404(
         Parcel,
         id=parcel_id,
-        for_sale=True
+        for_sale=True,
+        sale_status='AVAILABLE'
     )
-
     return render(
         request,
         'user/payment.html',
@@ -208,7 +208,8 @@ def confirm_payment(request, parcel_id, method):
     parcel = get_object_or_404(
         Parcel,
         id=parcel_id,
-        for_sale=True
+        for_sale=True,
+        sale_status='AVAILABLE'
     )
 
     # Vérifier le moyen de paiement
@@ -252,6 +253,9 @@ def confirm_payment(request, parcel_id, method):
     )
 
     purchase.save()
+
+    parcel.sale_status = 'RESERVED'
+    parcel.save(update_fields=['sale_status'])
 
     return render(
         request,

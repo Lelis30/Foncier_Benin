@@ -269,6 +269,9 @@
             📲 Moov Money
         </h4>
 
+        <form method="post"
+      action="{% url 'confirm_payment' parcel.id 'MOOV' %}">
+    {% csrf_token %}
         <p>
             {% trans "Entrez le numéro Moov Money qui effectuera le paiement." %}
         </p>
@@ -282,11 +285,13 @@
             </label>
 
             <input
-                type="tel"
-                id="moov-phone"
-                class="form-control"
-                placeholder="Exemple : 01 95 00 00 00"
-            >
+    type="tel"
+    id="moov-phone"
+    name="phone"
+    class="form-control"
+    placeholder="Exemple : 01 95 00 00 00"
+    required
+>
         </div>
 
         <div class="alert alert-info">
@@ -297,14 +302,16 @@
         </div>
 
         <button
-            type="button"
+            type="submit"
             class="btn btn-success"
         >
             📲 {% trans "Confirmer le paiement Moov Money" %}
         </button>
 
+        </form>
     </div>
 </div>
+
 <!-- FORMULAIRE CARTE BANCAIRE -->
 <div
     id="card-payment-form"
@@ -316,7 +323,9 @@
         <h4 class="mb-3">
             💳 {% trans "Paiement par carte bancaire" %}
         </h4>
-
+    <form method="post"
+      action="{% url 'confirm_payment' parcel.id 'CARD' %}">
+    {% csrf_token %}
         <p>
             {% trans "Entrez les informations de votre carte pour effectuer le paiement." %}
         </p>
@@ -331,11 +340,13 @@
             </label>
 
             <input
-                type="text"
-                id="card-name"
-                class="form-control"
-                placeholder="Exemple : Yann Tokin"
-            >
+    type="text"
+    id="card-name"
+    name="card_name"
+    class="form-control"
+    placeholder="Exemple : Yann Tokin"
+    required
+>
         </div>
 
         <!-- NUMERO DE CARTE -->
@@ -348,12 +359,14 @@
             </label>
 
             <input
-                type="text"
-                id="card-number"
-                class="form-control"
-                placeholder="1234 5678 9012 3456"
-                maxlength="19"
-            >
+    type="text"
+    id="card-number"
+    name="card_number"
+    class="form-control"
+    placeholder="1234 5678 9012 3456"
+    maxlength="19"
+    required
+>
         </div>
 
         <div class="row">
@@ -373,6 +386,8 @@
                     class="form-control"
                     placeholder="MM/AA"
                     maxlength="5"
+                    name="card_expiry"
+                    required
                 >
             </div>
 
@@ -391,6 +406,8 @@
                     class="form-control"
                     placeholder="123"
                     maxlength="4"
+                    name="card_cvv"
+                    required
                 >
             </div>
 
@@ -409,13 +426,16 @@
 
         <!-- CONFIRMATION -->
         <button
-            type="button"
+            type="submit"
             class="btn btn-primary"
         >
             💳 {% trans "Confirmer le paiement par carte" %}
         </button>
 
+        </form>
+
     </div>
+
 </div>
         <a
             href="{% url 'parcel_detail' parcel.id %}"
