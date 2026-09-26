@@ -1,66 +1,426 @@
-/* MODE ACCESSIBILITE - CONTRASTE ELEVE */
+/* ==========================================
+   NAVBAR MODERNE - FONCIER BÉNIN
+========================================== */
 
-body.high-contrast {
-    background-color: #000 !important;
-    color: #fff !important;
+.modern-navbar {
+    background: linear-gradient(
+        135deg,
+        #111827 0%,
+        #18252f 55%,
+        #0f5132 100%
+    );
+
+    min-height: 95px;
+    padding: 12px 0;
+    border-bottom: 3px solid #198754;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
 }
 
-body.high-contrast main,
-body.high-contrast .container {
-    color: #fff;
+.navbar-logo {
+    width: 85px;
+    height: 70px;
+    object-fit: contain;
+    transition: transform 0.25s ease, filter 0.25s ease;
 }
 
-body.high-contrast .accessibility-bar {
-    background-color: #000 !important;
-    color: #fff !important;
-    border-bottom: 2px solid #ffff00;
+.navbar-brand:hover .navbar-logo {
+    transform: scale(1.05);
 }
 
-body.high-contrast .navbar {
-    background-color: #000 !important;
-    border-bottom: 2px solid #ffff00;
+.brand-name {
+    color: white;
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.1;
 }
 
-body.high-contrast .card {
-    background-color: #111 !important;
-    color: #fff !important;
-    border: 2px solid #ffff00 !important;
+.brand-subtitle {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.75rem;
+    margin-top: 5px;
 }
 
-body.high-contrast .table {
-    --bs-table-bg: #000;
-    --bs-table-color: #fff;
-    --bs-table-border-color: #ffff00;
+.nav-login-btn,
+.nav-register-btn,
+.nav-dashboard-btn,
+.nav-logout-btn {
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-weight: 600;
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background-color 0.2s ease;
 }
 
-body.high-contrast .table th,
-body.high-contrast .table td {
-    background-color: #000 !important;
-    color: #fff !important;
-    border-color: #ffff00 !important;
+.nav-login-btn {
+    background: white;
+    color: #17212b;
+    border: 1px solid white;
 }
 
-body.high-contrast .text-muted {
-    color: #fff !important;
+.nav-login-btn:hover {
+    background: #f4f7f5;
+    color: #198754;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
 }
 
-body.high-contrast a:not(.btn) {
-    color: #ffff00 !important;
+.nav-register-btn {
+    background: #198754;
+    color: white;
+    border: 1px solid #198754;
 }
 
-body.high-contrast input,
-body.high-contrast select,
-body.high-contrast textarea {
-    background-color: #000 !important;
-    color: #fff !important;
-    border: 2px solid #ffff00 !important;
+.nav-register-btn:hover {
+    background: #157347;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(25, 135, 84, 0.35);
 }
 
-body.high-contrast .btn {
-    border: 2px solid #ffff00 !important;
+.nav-dashboard-btn {
+    background: white;
+    color: #17212b;
 }
 
-body.high-contrast footer {
-    background-color: #000 !important;
-    color: #fff !important;
+.nav-dashboard-btn:hover {
+    background: #f1f5f3;
+    color: #198754;
+    transform: translateY(-2px);
+}
+
+.nav-logout-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.nav-logout-btn:hover {
+    background: #bb2d3b;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.nav-language {
+    min-width: 135px;
+    height: 45px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .modern-navbar {
+        min-height: auto;
+    }
+
+    .navbar-logo {
+        width: 65px;
+        height: 55px;
+    }
+
+    .nav-login-btn,
+    .nav-register-btn,
+    .nav-dashboard-btn,
+    .nav-logout-btn {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+
+    .nav-language {
+        min-width: 105px;
+        font-size: 0.85rem;
+    }
+}
+
+/* =====================================
+   MENU ACCESSIBILITÉ
+===================================== */
+
+.accessibility-bar {
+    background: #f8faf9;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 7px 0;
+}
+
+.accessibility-dropdown-btn {
+    background: #ffffff;
+    color: #17352a;
+
+    border: 1px solid #198754;
+    border-radius: 10px;
+
+    padding: 8px 16px;
+
+    font-weight: 600;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+    transition: all 0.2s ease;
+}
+
+.accessibility-dropdown-btn:hover,
+.accessibility-dropdown-btn:focus {
+    background: #198754;
+    color: white;
+    border-color: #198754;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 15px rgba(25, 135, 84, 0.20);
+}
+
+
+/* MENU */
+
+.accessibility-menu {
+    width: 270px;
+
+    padding: 10px;
+
+    margin-top: 8px !important;
+
+    border: none;
+    border-radius: 14px;
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.16);
+}
+
+
+/* TITRE */
+
+.accessibility-title {
+    padding: 10px 14px;
+
+    color: #198754;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+
+/* OPTIONS */
+
+.accessibility-item {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 11px 14px;
+
+    border-radius: 8px;
+
+    font-weight: 500;
+
+    transition: all 0.15s ease;
+}
+
+.accessibility-item:hover {
+    background: #eef8f2;
+    color: #198754;
+}
+
+/* =====================================================
+   TABLEAU DE BORD UTILISATEUR
+===================================================== */
+
+/* HERO */
+
+.dashboard-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 55px 60px;
+    border-radius: 24px;
+    background: linear-gradient(
+        135deg,
+        #0f1f2d 0%,
+        #12372a 55%,
+        #198754 100%
+    );
+    color: white;
+    box-shadow: 0 18px 45px rgba(15, 31, 45, 0.18);
+}
+
+.dashboard-hero::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    right: -80px;
+    top: -120px;
+}
+
+.dashboard-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 750px;
+}
+
+.dashboard-badge {
+    display: inline-block;
+    padding: 7px 14px;
+    margin-bottom: 18px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.14);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.dashboard-hero h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    margin-bottom: 14px;
+}
+
+.dashboard-hero p {
+    max-width: 650px;
+    margin-bottom: 25px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+
+/* BOUTONS DU HERO */
+
+.dashboard-hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.dashboard-hero-actions .btn {
+    border-radius: 12px;
+    padding: 11px 22px;
+    font-weight: 600;
+}
+
+
+/* TITRE SERVICES */
+
+.dashboard-section-badge {
+    display: inline-block;
+    background: #eaf7f0;
+    color: #198754;
+    padding: 6px 13px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+
+/* CARTES SERVICES */
+
+.dashboard-service-card {
+    height: 100%;
+    padding: 32px;
+    background: white;
+    border: 1px solid #edf0f2;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.dashboard-service-card:hover {
+    transform: translateY(-7px);
+    border-color: #b8dfca;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.10);
+}
+
+.dashboard-service-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 64px;
+    height: 64px;
+
+    margin-bottom: 22px;
+
+    border-radius: 18px;
+    background: #edf8f2;
+
+    font-size: 30px;
+}
+
+.dashboard-alert-icon {
+    background: #fff0f0;
+}
+
+.dashboard-service-card h4 {
+    margin-bottom: 12px;
+    font-weight: 750;
+    color: #15202b;
+}
+
+.dashboard-service-card p {
+    min-height: 72px;
+    margin-bottom: 18px;
+    color: #68727d;
+    line-height: 1.65;
+}
+
+.dashboard-service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    color: #198754;
+    font-weight: 700;
+    text-decoration: none;
+
+    transition: gap 0.2s ease;
+}
+
+.dashboard-service-link:hover {
+    color: #116b41;
+    gap: 10px;
+}
+
+
+/* CARTE FONCIERE */
+
+#map-section {
+    border: none;
+    border-radius: 22px !important;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08) !important;
+}
+
+#map-section h3 {
+    font-weight: 750;
+    color: #15202b;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .dashboard-hero {
+        padding: 35px 25px;
+        border-radius: 18px;
+    }
+
+    .dashboard-hero h1 {
+        font-size: 2rem;
+    }
+
+    .dashboard-hero-actions {
+        flex-direction: column;
+    }
+
+    .dashboard-hero-actions .btn {
+        width: 100%;
+    }
+
+    .dashboard-service-card {
+        padding: 25px;
+    }
 }

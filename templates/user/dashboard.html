@@ -8,53 +8,41 @@
 
 {% block content %}
 
-<!-- TITRE -->
+<!-- HERO DASHBOARD -->
 
+<div class="dashboard-hero mb-5">
 
-<div class="mb-4">
+    <div class="dashboard-hero-content">
 
-    <h1>
-        🏠 {% trans "Tableau de bord" %}
-    </h1>
+        <span class="dashboard-badge">
+            🏡 {% trans "Mon espace foncier" %}
+        </span>
 
-    <p class="lead">
-        {% trans "Bienvenue" %},
-        <strong>{{ user.username }}</strong>.
-    </p>
+        <h1>
+            {% trans "Bonjour" %},
+            <strong>
+                {% if user.first_name %}
+                    {{ user.first_name }}
+                {% else %}
+                    {{ user.username }}
+                {% endif %}
+            </strong>
+            👋
+        </h1>
 
-    <p>
-        {% trans "Consultez, recherchez et vérifiez les informations foncières." %}
-    </p>
+        <p>
+            {% trans "Consultez, recherchez et vérifiez vos informations foncières depuis votre espace personnel." %}
+        </p>
 
-</div>
+        <div class="dashboard-hero-actions">
 
+            <a href="{% url 'search_parcel' %}"
+               class="btn btn-light btn-lg">
+                🔎 {% trans "Rechercher une parcelle" %}
+            </a>
 
-<!-- ACTIONS PRINCIPALES -->
-
-
-<div class="row">
-
-
-    <!-- CARTE FONCIERE -->
-
-    <div class="col-md-4 mb-4">
-
-        <div class="card shadow p-4 text-center h-100">
-
-            <h1>🗺️</h1>
-
-            <h4>
-                {% trans "Carte foncière" %}
-            </h4>
-
-            <p>
-                {% trans "Visualisez les parcelles enregistrées sur la carte." %}
-            </p>
-
-            <a
-                href="#map-section"
-                class="btn btn-primary mt-auto"
-            >
+            <a href="#map-section"
+               class="btn btn-outline-light btn-lg">
                 🗺️ {% trans "Voir la carte" %}
             </a>
 
@@ -62,28 +50,53 @@
 
     </div>
 
+</div>
 
-    <!-- VERIFIER UNE PARCELLE -->
 
-    <div class="col-md-4 mb-4">
+<!-- ACTIONS PRINCIPALES -->
 
-        <div class="card shadow p-4 text-center h-100">
+<div class="mb-4">
 
-            <h1>🔎</h1>
+    <span class="dashboard-section-badge">
+        {% trans "Services" %}
+    </span>
+
+    <h2 class="fw-bold mt-2">
+        {% trans "Que souhaitez-vous faire ?" %}
+    </h2>
+
+    <p class="text-muted">
+        {% trans "Accédez rapidement aux principaux services fonciers." %}
+    </p>
+
+</div>
+
+
+<div class="row g-4 mb-5">
+
+    <!-- VERIFIER -->
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="dashboard-service-card">
+
+            <div class="dashboard-service-icon">
+                🔎
+            </div>
 
             <h4>
                 {% trans "Vérifier une parcelle" %}
             </h4>
 
             <p>
-                {% trans "Recherchez une parcelle à partir de sa référence." %}
+                {% trans "Recherchez une parcelle à partir de sa référence et consultez ses informations." %}
             </p>
 
-            <a
-                href="{% url 'search_parcel' %}"
-                class="btn btn-success mt-auto"
-            >
-                🔎 {% trans "Vérifier" %}
+            <a href="{% url 'search_parcel' %}"
+               class="dashboard-service-link">
+
+                {% trans "Rechercher" %} →
+
             </a>
 
         </div>
@@ -91,27 +104,59 @@
     </div>
 
 
-    <!-- SIGNALER UN PROBLEME -->
+    <!-- CARTE -->
 
-    <div class="col-md-4 mb-4">
+    <div class="col-lg-4 col-md-6">
 
-        <div class="card shadow p-4 text-center h-100">
+        <div class="dashboard-service-card">
 
-            <h1>🚨</h1>
+            <div class="dashboard-service-icon">
+                🗺️
+            </div>
+
+            <h4>
+                {% trans "Carte foncière" %}
+            </h4>
+
+            <p>
+                {% trans "Visualisez les parcelles et les zones agricoles enregistrées sur la carte." %}
+            </p>
+
+            <a href="#map-section"
+               class="dashboard-service-link">
+
+                {% trans "Explorer la carte" %} →
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- SIGNALER -->
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="dashboard-service-card">
+
+            <div class="dashboard-service-icon dashboard-alert-icon">
+                🚨
+            </div>
 
             <h4>
                 {% trans "Signaler un problème" %}
             </h4>
 
             <p>
-                {% trans "Signalez une anomalie concernant une parcelle." %}
+                {% trans "Signalez une anomalie ou un problème concernant une parcelle." %}
             </p>
 
-            <a
-                href="{% url 'report_problem' %}"
-                class="btn btn-danger mt-auto"
-            >
-                🚨 {% trans "Signaler" %}
+            <a href="{% url 'report_problem' %}"
+               class="dashboard-service-link">
+
+                {% trans "Faire un signalement" %} →
+
             </a>
 
         </div>
@@ -121,35 +166,129 @@
 </div>
 
 
-<!-- CARTE -->
+<!-- CARTE FONCIERE -->
+
+<section id="map-section" class="dashboard-map-section">
+
+    <!-- EN-TETE -->
+
+    <div class="dashboard-map-header">
+
+        <div>
+
+            <span class="dashboard-section-badge">
+                🗺️ {% trans "Carte interactive" %}
+            </span>
+
+            <h2 class="fw-bold mt-3 mb-2">
+                {% trans "Explorez les informations foncières" %}
+            </h2>
+
+            <p class="text-muted mb-0">
+                {% trans "Visualisez les parcelles et les zones agricoles enregistrées sur le territoire." %}
+            </p>
+
+        </div>
 
 
-<div
-    id="map-section"
-    class="card shadow mt-4 p-4"
->
+        <div class="dashboard-map-info">
 
-    <h3>
-        🗺️ {% trans "Carte des parcelles" %}
-    </h3>
+            <span class="map-live-dot"></span>
 
-    <p>
-        {% trans "Les parcelles et les zones agricoles enregistrées apparaissent automatiquement sur la carte." %}
-    </p>
+            {% trans "Données foncières disponibles" %}
 
+        </div>
 
-    <div
-        id="map"
-        style="
-            height: 500px;
-            width: 100%;
-            border-radius: 10px;
-        "
-    >
     </div>
 
-</div>
 
+    <!-- INFORMATIONS -->
+
+    <div class="map-information-bar">
+
+        <div class="map-information-item">
+            <span>📍</span>
+
+            <div>
+                <strong>
+                    {% trans "Parcelles" %}
+                </strong>
+
+                <small>
+                    {% trans "Localisation des terrains" %}
+                </small>
+            </div>
+        </div>
+
+
+        <div class="map-information-item">
+            <span>🌾</span>
+
+            <div>
+                <strong>
+                    {% trans "Zones agricoles" %}
+                </strong>
+
+                <small>
+                    {% trans "Espaces agricoles enregistrés" %}
+                </small>
+            </div>
+        </div>
+
+
+        <div class="map-information-item">
+            <span>🔎</span>
+
+            <div>
+                <strong>
+                    {% trans "Carte interactive" %}
+                </strong>
+
+                <small>
+                    {% trans "Cliquez sur un marqueur pour voir les détails" %}
+                </small>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- CARTE -->
+
+    <div class="dashboard-map-container">
+
+        <div id="map"></div>
+
+    </div>
+
+
+    <!-- LEGENDE RAPIDE -->
+
+    <div class="dashboard-map-footer">
+
+        <div class="map-status">
+            <span>✅</span>
+            {% trans "Vérifiée" %}
+        </div>
+
+        <div class="map-status">
+            <span>⏳</span>
+            {% trans "En attente" %}
+        </div>
+
+        <div class="map-status">
+            <span>⚠️</span>
+            {% trans "En litige" %}
+        </div>
+
+        <div class="map-status">
+            <span>🌾</span>
+            {% trans "Zone agricole" %}
+        </div>
+
+    </div>
+
+</section>
 
 <!-- DONNEES DJANGO POUR JAVASCRIPT -->
 
@@ -753,5 +892,195 @@ overlayMaps[
 
 </script>
 
+<style>
+
+.dashboard-map-section {
+    background: #ffffff;
+    border: 1px solid #e8eeeb;
+    border-radius: 22px;
+    padding: 30px;
+    margin-top: 45px;
+    margin-bottom: 45px;
+    box-shadow: 0 12px 35px rgba(15, 45, 35, 0.08);
+}
+
+
+/* EN-TETE */
+
+.dashboard-map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.dashboard-map-header h2 {
+    color: #102231;
+}
+
+
+/* INDICATEUR DONNEES */
+
+.dashboard-map-info {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    background: #eef9f3;
+    color: #168c55;
+
+    padding: 10px 16px;
+    border-radius: 50px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.map-live-dot {
+    width: 9px;
+    height: 9px;
+
+    background: #20a464;
+    border-radius: 50%;
+
+    box-shadow: 0 0 0 5px rgba(32, 164, 100, 0.12);
+}
+
+
+/* BARRE INFORMATIONS */
+
+.map-information-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+
+    margin-bottom: 22px;
+}
+
+.map-information-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    background: #f8fbf9;
+
+    border: 1px solid #e8efeb;
+    border-radius: 14px;
+
+    padding: 14px 16px;
+}
+
+.map-information-item > span {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eaf7f0;
+    border-radius: 12px;
+
+    font-size: 20px;
+}
+
+.map-information-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-information-item strong {
+    color: #17252f;
+    font-size: 14px;
+}
+
+.map-information-item small {
+    color: #7b8782;
+    margin-top: 2px;
+}
+
+
+/* CONTENEUR CARTE */
+
+.dashboard-map-container {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    border: 1px solid #dfe8e3;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* IMPORTANT : CONSERVE LA TAILLE LEAFLET */
+
+#map {
+    width: 100%;
+    height: 540px;
+}
+
+
+/* PIED / LEGENDE */
+
+.dashboard-map-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    padding-top: 20px;
+}
+
+.map-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 8px 13px;
+
+    background: #f8faf9;
+
+    border: 1px solid #e5ebe8;
+    border-radius: 50px;
+
+    color: #4c5d55;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .dashboard-map-section {
+        padding: 20px;
+    }
+
+    .dashboard-map-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .map-information-bar {
+        grid-template-columns: 1fr;
+    }
+
+    #map {
+        height: 430px;
+    }
+
+}
+
+</style>
 
 {% endblock %}

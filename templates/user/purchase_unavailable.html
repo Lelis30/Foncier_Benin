@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body text-center p-5">
+
+            <div style="font-size: 60px;">
+                🔒
+            </div>
+
+            <h2 class="mt-3">
+                {% trans "Parcelle non disponible" %}
+            </h2>
+
+            <p class="text-muted mt-3">
+                {% trans "Cette parcelle n'est plus disponible à l'achat." %}
+            </p>
+
+            <p>
+                <strong>{% trans "Référence" %} :</strong>
+                {{ parcel.reference }}
+            </p>
+
+            {% if parcel.sale_status == 'RESERVED' %}
+                <div class="alert alert-warning mt-4">
+                    ⏳ {% trans "Cette parcelle est actuellement réservée. Un paiement a déjà été effectué et le transfert de propriété est en attente de validation." %}
+                </div>
+
+            {% elif parcel.sale_status == 'SOLD' %}
+                <div class="alert alert-danger mt-4">
+                    🔴 {% trans "Cette parcelle a déjà été vendue." %}
+                </div>
+
+            {% else %}
+                <div class="alert alert-secondary mt-4">
+                    {% trans "Cette parcelle ne peut pas être achetée actuellement." %}
+                </div>
+            {% endif %}
+
+            <a href="{% url 'parcel_detail' parcel.id %}"
+               class="btn btn-primary mt-3">
+                ← {% trans "Retour aux détails de la parcelle" %}
+            </a>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -13,291 +13,457 @@
     <div class="col-lg-10">
 
 
-        <!-- TITRE -->
+       <!-- HERO RECHERCHE -->
+
+<section class="parcel-search-hero mb-4">
+
+    <div class="parcel-search-hero-content">
+
+        <span class="parcel-search-badge">
+            🔎 {% trans "Vérification foncière" %}
+        </span>
+
+        <h1>
+            {% trans "Vérifier une parcelle" %}
+        </h1>
+
+        <p>
+            {% trans "Consultez les informations foncières d'une parcelle à partir de sa référence." %}
+        </p>
 
 
-        <div class="mb-4">
+</section>
 
-            <h1>
-                🔎 {% trans "Vérifier une parcelle" %}
-            </h1>
 
-            <p class="lead">
-                {% trans "Entrez la référence de la parcelle que vous souhaitez vérifier." %}
+<!-- FORMULAIRE DE RECHERCHE -->
+
+<section class="parcel-search-box mb-5">
+
+    <div class="parcel-search-title">
+
+
+        <div>
+            <h3>
+                {% trans "Rechercher une parcelle" %}
+            </h3>
+
+            <p>
+                {% trans "Saisissez la référence cadastrale de la parcelle à vérifier." %}
             </p>
-
         </div>
 
+    </div>
 
 
-        <!-- FORMULAIRE DE RECHERCHE -->
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label
+            for="reference"
+            class="parcel-search-label"
+        >
+            {% trans "Référence de la parcelle" %}
+        </label>
 
 
-        <div class="card shadow-sm p-4 mb-4">
+        <div class="parcel-search-input-group">
 
-            <form method="POST">
+            <div class="parcel-reference-input">
 
-                {% csrf_token %}
+                <span>🔎</span>
 
-                <div class="mb-3">
-
-                    <label
-                        for="reference"
-                        class="form-label"
-                    >
-                        <strong>
-                            {% trans "Référence de la parcelle" %}
-                        </strong>
-                    </label>
-
-                    <input
-                        type="text"
-                        id="reference"
-                        name="reference"
-                        class="form-control form-control-lg"
-                        placeholder="Exemple : AB-02548"
-                        required
-                    >
-
-                </div>
-
-
-                <button
-                    type="submit"
-                    class="btn btn-success"
+                <input
+                    type="text"
+                    id="reference"
+                    name="reference"
+                    placeholder="Exemple : AB-02548"
+                    required
                 >
-                    🔎 {% trans "Vérifier" %}
-                </button>
 
-            </form>
+            </div>
+
+
+            <button
+                type="submit"
+                class="parcel-search-button"
+            >
+                {% trans "Vérifier la parcelle" %}
+                <span>→</span>
+            </button>
 
         </div>
 
+
+        <div class="parcel-search-help">
+
+            <span>💡</span>
+
+            {% trans "La référence permet d'identifier de manière unique une parcelle enregistrée dans la plateforme." %}
+
+        </div>
+
+    </form>
+
+</section>
 
 
         <!-- PARCELLE TROUVEE -->
 
+{% if parcel %}
 
-        {% if parcel %}
-
-        <div class="card shadow-sm p-4 mb-4">
-
-            <h2 class="mb-4">
-                📍 {% trans "Informations de la parcelle" %}
-            </h2>
+<div class="parcel-result-card mb-4">
 
 
-            <!-- REFERENCE -->
+    <!-- EN-TETE DE LA FICHE -->
 
-            <p>
+    <div class="parcel-result-header">
+
+        <div class="parcel-result-title">
+
+            <div class="parcel-result-icon">
+                📍
+            </div>
+
+            <div>
+
+                <span class="parcel-result-label">
+                    {% trans "Fiche foncière" %}
+                </span>
+
+                <h2>
+                    {{ parcel.reference }}
+                </h2>
+
+                <p>
+                    {% trans "Informations enregistrées pour cette parcelle" %}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUT -->
+
+        <div>
+
+            {% if parcel.status == 'VERIFIED' %}
+
+                <span class="parcel-status-badge status-verified">
+                    ✅ {% trans "Parcelle vérifiée" %}
+                </span>
+
+            {% elif parcel.status == 'PENDING' %}
+
+                <span class="parcel-status-badge status-pending">
+                    ⏳ {% trans "En attente de vérification" %}
+                </span>
+
+            {% elif parcel.status == 'DISPUTED' %}
+
+                <span class="parcel-status-badge status-disputed">
+                    ⚠️ {% trans "Parcelle en litige" %}
+                </span>
+
+            {% else %}
+
+                <span class="parcel-status-badge">
+                    {{ parcel.get_status_display }}
+                </span>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- INFORMATIONS PRINCIPALES -->
+
+    <div class="parcel-info-grid">
+
+
+        <!-- REFERENCE -->
+
+        <div class="parcel-info-item">
+
+            <div class="parcel-info-icon">
+                🏷️
+            </div>
+
+            <div>
+
+                <span class="parcel-info-label">
+                    {% trans "Référence" %}
+                </span>
 
                 <strong>
-                    {% trans "Référence" %} :
+                    {{ parcel.reference }}
                 </strong>
 
-                {{ parcel.reference }}
+            </div>
 
-            </p>
+        </div>
 
 
-            <!-- LOCALISATION -->
+        <!-- LOCALISATION -->
 
-            <p>
+        <div class="parcel-info-item">
+
+            <div class="parcel-info-icon">
+                📍
+            </div>
+
+            <div>
+
+                <span class="parcel-info-label">
+                    {% trans "Localisation" %}
+                </span>
 
                 <strong>
-                    {% trans "Localisation" %} :
+                    {{ parcel.location }}
                 </strong>
 
-                {{ parcel.location }}
+            </div>
 
-            </p>
+        </div>
 
 
-            <!-- SUPERFICIE -->
+        <!-- SUPERFICIE -->
 
-            <p>
+        <div class="parcel-info-item">
+
+            <div class="parcel-info-icon">
+                📐
+            </div>
+
+            <div>
+
+                <span class="parcel-info-label">
+                    {% trans "Superficie" %}
+                </span>
 
                 <strong>
-                    {% trans "Superficie" %} :
+                    {{ parcel.area }} m²
                 </strong>
 
-                {{ parcel.area }} m²
+            </div>
 
-            </p>
+        </div>
 
 
-            <!-- PROPRIETAIRE -->
+        <!-- PROPRIETAIRE -->
 
-            <p>
+        <div class="parcel-info-item">
+
+            <div class="parcel-info-icon">
+                👤
+            </div>
+
+            <div>
+
+                <span class="parcel-info-label">
+                    {% trans "Propriétaire" %}
+                </span>
 
                 <strong>
-                    {% trans "Propriétaire" %} :
+
+                    {% if parcel.owner %}
+
+                        {{ parcel.owner.first_name }}
+                        {{ parcel.owner.last_name }}
+
+                    {% else %}
+
+                        {% trans "Non renseigné" %}
+
+                    {% endif %}
+
                 </strong>
 
-                {% if parcel.owner %}
+            </div>
 
-                    {{ parcel.owner.first_name }}
-                    {{ parcel.owner.last_name }}
+        </div>
 
-                {% else %}
-
-                    {% trans "Non renseigné" %}
-
-                {% endif %}
-
-            </p>
+    </div>
 
 
-            <!-- STATUT -->
+    <!-- MESSAGE DE VERIFICATION -->
 
-            <p>
+    {% if parcel.status == 'VERIFIED' %}
+
+        <div class="parcel-verification-message verification-success">
+
+            <span class="verification-icon">
+                ✓
+            </span>
+
+            <div>
 
                 <strong>
-                    {% trans "Statut" %} :
+                    {% trans "Informations foncières vérifiées" %}
                 </strong>
 
+                <p>
+                    {% trans "Cette parcelle possède actuellement le statut vérifié dans la plateforme." %}
+                </p>
 
-                {% if parcel.status == 'VERIFIED' %}
+            </div>
 
-                    <span class="badge bg-success">
-                        ✅ {% trans "Vérifiée" %}
-                    </span>
+        </div>
 
+    {% elif parcel.status == 'PENDING' %}
 
-                {% elif parcel.status == 'PENDING' %}
+        <div class="parcel-verification-message verification-pending">
 
-                    <span class="badge bg-warning text-dark">
-                        ⏳ {% trans "En attente" %}
-                    </span>
+            <span class="verification-icon">
+                ⏳
+            </span>
 
+            <div>
 
-                {% elif parcel.status == 'DISPUTED' %}
+                <strong>
+                    {% trans "Vérification en attente" %}
+                </strong>
 
-                    <span class="badge bg-danger">
-                        ⚠️ {% trans "En litige" %}
-                    </span>
+                <p>
+                    {% trans "Les informations de cette parcelle sont encore en attente de vérification." %}
+                </p>
 
+            </div>
 
-                {% else %}
+        </div>
 
-                    <span class="badge bg-secondary">
-                        {{ parcel.get_status_display }}
-                    </span>
+    {% elif parcel.status == 'DISPUTED' %}
 
-                {% endif %}
+        <div class="parcel-verification-message verification-disputed">
 
-            </p>
+            <span class="verification-icon">
+                !
+            </span>
 
-<div class="mt-3">
+            <div>
 
-    <a
-        href="{% url 'parcel_detail' parcel.id %}"
-        class="btn btn-outline-primary"
-    >
-        👁️ {% trans "Voir les détails de la parcelle" %}
-    </a>
+                <strong>
+                    {% trans "Attention : parcelle en litige" %}
+                </strong>
 
-</div>
+                <p>
+                    {% trans "Cette parcelle est actuellement signalée comme étant en litige." %}
+                </p>
 
+            </div>
 
-            <!-- DOCUMENTS FONCIERS -->
+        </div>
 
-
-            <hr class="my-4">
-
-
-            <h3 class="mb-3">
-
-                📄 {% trans "Documents fonciers" %}
-
-            </h3>
+    {% endif %}
 
 
-            {% if parcel.documents.all %}
+    <!-- ACTIONS -->
 
-            <div class="table-responsive">
+    <div class="parcel-result-actions">
 
-                <table
-                    class="table table-bordered table-hover align-middle"
-                >
+        <a
+            href="{% url 'parcel_detail' parcel.id %}"
+            class="parcel-primary-action"
+        >
+            👁️ {% trans "Voir la fiche complète" %}
+            <span>→</span>
+        </a>
 
-                    <thead class="table-dark">
+        <a
+            href="#parcel-map"
+            class="parcel-secondary-action"
+        >
+            🗺️ {% trans "Localiser sur la carte" %}
+        </a>
+
+    </div>
+
+
+    <!-- DOCUMENTS FONCIERS -->
+
+<section class="parcel-data-section">
+
+    <div class="parcel-section-header">
+
+        <div class="parcel-section-heading">
+
+            <div class="parcel-section-icon">
+                📄
+            </div>
+
+            <div>
+
+                <h3>
+                    {% trans "Documents fonciers" %}
+                </h3>
+
+                <p>
+                    {% trans "Documents administratifs enregistrés pour cette parcelle." %}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {% if parcel.documents.all %}
+
+        <div class="modern-table-wrapper">
+
+            <table class="modern-parcel-table">
+
+                <thead>
+                    <tr>
+                        <th>{% trans "Type" %}</th>
+                        <th>{% trans "Numéro" %}</th>
+                        <th>{% trans "Statut" %}</th>
+                        <th>{% trans "Document" %}</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    {% for document in parcel.documents.all %}
 
                         <tr>
-
-                            <th>
-                                {% trans "Type" %}
-                            </th>
-
-                            <th>
-                                {% trans "Numéro" %}
-                            </th>
-
-                            <th>
-                                {% trans "Statut" %}
-                            </th>
-
-                            <th>
-                                {% trans "Document" %}
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                        {% for document in parcel.documents.all %}
-
-                        <tr>
-
-                            <!-- TYPE -->
 
                             <td>
-
-                                {{ document.get_document_type_display }}
-
+                                <div class="table-main-value">
+                                    {{ document.get_document_type_display }}
+                                </div>
                             </td>
 
 
-                            <!-- NUMERO -->
-
                             <td>
-
-                                <strong>
+                                <span class="document-number">
                                     {{ document.document_number }}
-                                </strong>
-
+                                </span>
                             </td>
 
-
-                            <!-- STATUT -->
 
                             <td>
 
                                 {% if document.verified %}
 
-                                    <span class="badge bg-success">
-
-                                        ✅ {% trans "Vérifié" %}
-
+                                    <span class="modern-status status-ok">
+                                        ✓ {% trans "Vérifié" %}
                                     </span>
 
                                 {% else %}
 
-                                    <span class="badge bg-warning text-dark">
-
-                                        ⏳ {% trans "Non vérifié" %}
-
+                                    <span class="modern-status status-waiting">
+                                         {% trans "Non vérifié" %}
                                     </span>
 
                                 {% endif %}
 
                             </td>
 
-
-                            <!-- FICHIER -->
 
                             <td>
 
@@ -307,19 +473,15 @@
                                         href="{{ document.document_file.url }}"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        class="btn btn-sm btn-primary"
+                                        class="document-view-button"
                                     >
-
-                                        👁️ {% trans "Consulter" %}
-
+                                         {% trans "Consulter" %}
                                     </a>
 
                                 {% else %}
 
-                                    <span class="text-muted">
-
-                                        {% trans "Aucun fichier" %}
-
+                                    <span class="no-document">
+                                        — {% trans "Aucun fichier" %}
                                     </span>
 
                                 {% endif %}
@@ -328,359 +490,497 @@
 
                         </tr>
 
-                        {% endfor %}
+                    {% endfor %}
 
-                    </tbody>
+                </tbody>
 
-                </table>
+            </table>
 
+        </div>
+
+
+    {% else %}
+
+        <div class="parcel-empty-state">
+
+
+
+            <div>
+                <strong>
+                    {% trans "Aucun document disponible" %}
+                </strong>
+
+                <p>
+                    {% trans "Aucun document foncier n'est enregistré pour cette parcelle." %}
+                </p>
             </div>
 
+        </div>
 
-            {% else %}
+    {% endif %}
 
-            <div class="alert alert-info">
-
-                ℹ️
-                {% trans "Aucun document foncier n'est enregistré pour cette parcelle." %}
-
-            </div>
-
-            {% endif %}
-
+</section>
 
 <!-- HISTORIQUE DES TRANSACTIONS -->
 
+<section class="parcel-data-section">
 
-    <hr class="my-4">
+    <div class="parcel-section-header">
 
-    <h3 class="mb-3">
-    🔄 {% trans "Historique des transactions" %}
-    </h3>
+        <div class="parcel-section-heading">
 
-    <p class="text-muted">
-    {% trans "Historique des opérations enregistrées pour cette parcelle." %}
-    </p>
+            <div class="parcel-section-icon transaction-icon">
+                🔄
+            </div>
+
+            <div>
+
+
+                <h3>
+                    {% trans "Historique des transactions" %}
+                </h3>
+
+                <p>
+                    {% trans "Historique des opérations enregistrées pour cette parcelle." %}
+                </p>
+            </div>
+
+        </div>
+
+    </div>
 
 
     {% if transactions %}
 
-        <div class="table-responsive">
+        <div class="modern-table-wrapper">
 
-    <table class="table table-bordered table-hover align-middle">
+            <table class="modern-parcel-table">
 
-        <thead class="table-dark">
+                <thead>
 
-            <tr>
+                    <tr>
+                        <th>{% trans "Type" %}</th>
+                        <th>{% trans "Date" %}</th>
+                        <th>{% trans "Description" %}</th>
+                        <th>{% trans "Statut" %}</th>
+                    </tr>
 
-                <th>
-                    {% trans "Type" %}
-                </th>
-
-                <th>
-                    {% trans "Date" %}
-                </th>
-
-                <th>
-                    {% trans "Description" %}
-                </th>
-
-                <th>
-                    {% trans "Statut" %}
-                </th>
-
-            </tr>
-
-        </thead>
+                </thead>
 
 
-        <tbody>
+                <tbody>
 
-            {% for transaction in transactions %}
+                    {% for transaction in transactions %}
 
-            <tr>
+                        <tr>
 
-                <!-- TYPE -->
-
-                <td>
-
-                    <strong>
-                        {{ transaction.get_transaction_type_display }}
-                    </strong>
-
-                </td>
+                            <td>
+                                <div class="table-main-value">
+                                     {{ transaction.get_transaction_type_display }}
+                                </div>
+                            </td>
 
 
-                <!-- DATE -->
-
-                <td style="white-space: nowrap;">
-
-                    📅 {{ transaction.date|date:"d/m/Y" }}
-
-                </td>
+                            <td>
+                                <span class="transaction-date">
+                                     {{ transaction.date|date:"d/m/Y" }}
+                                </span>
+                            </td>
 
 
-                <!-- DESCRIPTION -->
-
-                <td>
-
-                    {{ transaction.description }}
-
-                </td>
+                            <td class="transaction-description">
+                                {{ transaction.description }}
+                            </td>
 
 
-                <!-- STATUT -->
+                            <td>
 
-                <td>
+                                {% if transaction.verified %}
 
-                    {% if transaction.verified %}
+                                    <span class="modern-status status-ok">
+                                        ✓ {% trans "Vérifiée" %}
+                                    </span>
 
-                        <span class="badge bg-success">
-                            ✅ {% trans "Vérifiée" %}
-                        </span>
+                                {% else %}
 
-                    {% else %}
+                                    <span class="modern-status status-waiting">
+                                        ⏳ {% trans "Non vérifiée" %}
+                                    </span>
 
-                        <span class="badge bg-warning text-dark">
-                            ⏳ {% trans "Non vérifiée" %}
-                        </span>
+                                {% endif %}
 
-                    {% endif %}
+                            </td>
 
-                </td>
+                        </tr>
 
-            </tr>
+                    {% endfor %}
 
-            {% endfor %}
+                </tbody>
 
-        </tbody>
+            </table>
 
-    </table>
-
-</div>
+        </div>
 
 
-{% else %}
+    {% else %}
 
-<div class="alert alert-info">
+        <div class="parcel-empty-state">
 
-    ℹ️
-    {% trans "Aucune transaction n'est enregistrée pour cette parcelle." %}
+            <span>🕘</span>
 
-</div>
+            <div>
+                <strong>
+                    {% trans "Aucune transaction" %}
+                </strong>
 
-{% endif %}
+                <p>
+                    {% trans "Aucune transaction n'est enregistrée pour cette parcelle." %}
+                </p>
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</section>
 
 <!-- CONSTRUCTIONS -->
 
+<section class="parcel-data-section">
 
-<hr class="my-4">
+    <div class="parcel-section-header">
 
-<h3 class="mb-3">
-    🏠 {% trans "Constructions sur la parcelle" %}
-</h3>
+        <div class="parcel-section-heading">
 
-<p class="text-muted">
-    {% trans "Constructions enregistrées sur cette parcelle." %}
-</p>
+            <div class="parcel-section-icon building-icon">
+                🏠
+            </div>
 
-{% if parcel.buildings.all %}
+            <div>
+                <span class="parcel-section-label">
+                    {% trans "Bâtiments" %}
+                </span>
 
-<div class="table-responsive">
+                <h3>
+                    {% trans "Constructions sur la parcelle" %}
+                </h3>
 
-    <table class="table table-bordered table-hover align-middle">
+                <p>
+                    {% trans "Constructions enregistrées sur cette parcelle." %}
+                </p>
+            </div>
 
-        <thead class="table-dark">
+        </div>
 
-            <tr>
-                <th>
-                    {% trans "Type de construction" %}
-                </th>
-
-                <th>
-                    {% trans "Description" %}
-                </th>
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            {% for building in parcel.buildings.all %}
-
-            <tr>
-
-                <td>
-                    <strong>
-                        🏠 {{ building.get_building_type_display }}
-                    </strong>
-                </td>
-
-                <td>
-
-                    {% if building.description %}
-
-                        {{ building.description }}
-
-                    {% else %}
-
-                        <span class="text-muted">
-                            {% trans "Aucune description" %}
-                        </span>
-
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-            {% endfor %}
-
-        </tbody>
-
-    </table>
-
-</div>
-
-{% else %}
-
-<div class="alert alert-info">
-
-    ℹ️
-    {% trans "Aucune construction n'est enregistrée sur cette parcelle." %}
-
-</div>
-
-{% endif %}
+    </div>
 
 
-    <!-- ZONES AGRICOLES -->
+    {% if parcel.buildings.all %}
+
+        <div class="modern-table-wrapper">
+
+            <table class="modern-parcel-table">
+
+                <thead>
+                    <tr>
+                        <th>{% trans "Type de construction" %}</th>
+                        <th>{% trans "Description" %}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for building in parcel.buildings.all %}
+
+                        <tr>
+
+                            <td>
+                                <div class="table-main-value">
+                                    🏠 {{ building.get_building_type_display }}
+                                </div>
+                            </td>
+
+                            <td>
+
+                                {% if building.description %}
+
+                                    {{ building.description }}
+
+                                {% else %}
+
+                                    <span class="no-document">
+                                        — {% trans "Aucune description" %}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% else %}
+
+        <div class="parcel-empty-state">
 
 
-        <hr class="my-4">
 
-        <h3 class="mb-3">
-    🌾 {% trans "Zones agricoles" %}
-        </h3>
+            <div>
+                <strong>
+                    {% trans "Aucune construction" %}
+                </strong>
 
-            <p class="text-muted">
-        {% trans "Informations agricoles enregistrées pour cette parcelle." %}
-        </p>
+                <p>
+                    {% trans "Aucune construction n'est enregistrée sur cette parcelle." %}
+                </p>
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+   <!-- ZONES AGRICOLES -->
+
+<section class="parcel-data-section">
+
+    <div class="parcel-section-header">
+
+        <div class="parcel-section-heading">
+
+            <div class="parcel-section-icon agriculture-icon">
+                🌾
+            </div>
+
+            <div>
+
+                <span class="parcel-section-label">
+                    {% trans "Agriculture" %}
+                </span>
+
+                <h3>
+                    {% trans "Zones agricoles" %}
+                </h3>
+
+                <p>
+                    {% trans "Informations agricoles enregistrées pour cette parcelle." %}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
 
     {% if parcel.agricultural_zones.all %}
 
-    <div class="table-responsive">
+        <div class="modern-table-wrapper">
 
-        <table class="table table-bordered table-hover align-middle">
+            <table class="modern-parcel-table">
 
-            <thead class="table-dark">
-                <tr>
-                <th>{% trans "Nom" %}</th>
-                <th>{% trans "Localisation" %}</th>
-                <th>{% trans "Superficie" %}</th>
-                <th>{% trans "Description" %}</th>
-            </tr>
-        </thead>
+                <thead>
 
-        <tbody>
+                    <tr>
+                        <th>{% trans "Nom" %}</th>
+                        <th>{% trans "Localisation" %}</th>
+                        <th>{% trans "Superficie" %}</th>
+                        <th>{% trans "Description" %}</th>
+                    </tr>
 
-            {% for zone in parcel.agricultural_zones.all %}
+                </thead>
 
-            <tr>
+                <tbody>
 
-                <td>
-                    <strong>
-                        🌾 {{ zone.name }}
-                    </strong>
-                </td>
+                    {% for zone in parcel.agricultural_zones.all %}
 
-                <td>
-                    📍 {{ zone.location }}
-                </td>
+                        <tr>
 
-                <td>
-                    {{ zone.area }} m²
-                </td>
+                            <td>
+                                <div class="table-main-value">
+                                    🌾 {{ zone.name }}
+                                </div>
+                            </td>
 
-                <td>
-                    {% if zone.description %}
-                        {{ zone.description }}
-                    {% else %}
-                        <span class="text-muted">
-                            {% trans "Aucune description" %}
-                        </span>
-                    {% endif %}
-                </td>
+                            <td>
+                                📍 {{ zone.location }}
+                            </td>
 
-            </tr>
+                            <td>
+                                <strong>
+                                    {{ zone.area }} m²
+                                </strong>
+                            </td>
 
-            {% endfor %}
+                            <td>
 
-        </tbody>
+                                {% if zone.description %}
 
-    </table>
+                                    {{ zone.description }}
 
-</div>
+                                {% else %}
 
-{% else %}
+                                    <span class="no-document">
+                                        — {% trans "Aucune description" %}
+                                    </span>
 
-<div class="alert alert-info">
-    ℹ️ {% trans "Aucune zone agricole n'est enregistrée pour cette parcelle." %}
-</div>
+                                {% endif %}
 
-{% endif %}
+                            </td>
 
-            <!-- COORDONNEES GPS -->
+                        </tr>
 
+                    {% endfor %}
 
-            <hr class="my-4">
+                </tbody>
 
+            </table>
 
-            <h3>
-                🌍 {% trans "Localisation géographique" %}
-            </h3>
+        </div>
+
+    {% else %}
+
+        <div class="parcel-empty-state">
 
 
-            <div class="row mb-3">
 
-                <div class="col-md-6">
+            <div>
 
-                    <strong>
-                        {% trans "Latitude" %} :
-                    </strong>
+                <strong>
+                    {% trans "Aucune zone agricole" %}
+                </strong>
 
+                <p>
+                    {% trans "Aucune zone agricole n'est enregistrée pour cette parcelle." %}
+                </p>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+           <!-- LOCALISATION GEOGRAPHIQUE -->
+
+<section class="parcel-location-section">
+
+    <div class="parcel-section-header">
+
+        <div class="parcel-section-heading">
+
+            <div class="parcel-section-icon location-icon">
+                🌍
+            </div>
+
+            <div>
+
+                <span class="parcel-section-label">
+                    {% trans "Géolocalisation" %}
+                </span>
+
+                <h3>
+                    {% trans "Localisation géographique" %}
+                </h3>
+
+                <p>
+                    {% trans "Position géographique enregistrée pour cette parcelle." %}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COORDONNEES -->
+
+    <div class="coordinates-grid">
+
+        <div class="coordinate-card">
+
+            <div class="coordinate-icon">
+                ↕️
+            </div>
+
+            <div>
+
+                <span>
+                    {% trans "Latitude" %}
+                </span>
+
+                <strong>
                     {{ parcel.latitude }}
+                </strong>
 
-                </div>
+            </div>
+
+        </div>
 
 
-                <div class="col-md-6">
+        <div class="coordinate-card">
 
-                    <strong>
-                        {% trans "Longitude" %} :
-                    </strong>
+            <div class="coordinate-icon">
+                ↔️
+            </div>
 
+            <div>
+
+                <span>
+                    {% trans "Longitude" %}
+                </span>
+
+                <strong>
                     {{ parcel.longitude }}
-
-                </div>
+                </strong>
 
             </div>
 
+        </div>
+
+    </div>
 
 
-            <!-- CARTE -->
+    <!-- CARTE -->
 
+    <div class="parcel-map-wrapper">
 
-            <div
-                id="parcel-map"
-                style="
-                    height: 350px;
-                    width: 100%;
-                    border-radius: 10px;
-                    overflow: hidden;
-                "
-            >
+        <div class="parcel-map-topbar">
+
+            <div>
+                📍
+                <strong>
+                    {{ parcel.reference }}
+                </strong>
             </div>
+
+            <span>
+                🗺️ {% trans "Carte interactive" %}
+            </span>
+
+        </div>
+
+
+        <div id="parcel-map"></div>
+
+
+        <div class="parcel-map-hint">
+            💡 {% trans "Utilisez la carte pour visualiser précisément la position de la parcelle." %}
+        </div>
+
+    </div>
+
+</section>
 
 
         </div>
@@ -909,5 +1209,1118 @@ document.addEventListener(
 
 {% endif %}
 
+<style>
+
+/* RECHERCHE PARCELLE */
+
+.parcel-search-hero {
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 40px 45px;
+
+    border-radius: 22px;
+
+    background: linear-gradient(
+        135deg,
+        #0f1f2d 0%,
+        #12372a 55%,
+        #198754 100%
+    );
+
+    color: white;
+
+    box-shadow: 0 15px 40px rgba(15, 31, 45, 0.15);
+}
+
+
+.parcel-search-hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    right: -60px;
+    top: -90px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.06);
+}
+
+
+.parcel-search-hero-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 700px;
+}
+
+
+.parcel-search-badge {
+    display: inline-block;
+
+    padding: 7px 14px;
+
+    margin-bottom: 15px;
+
+    border-radius: 50px;
+
+    background: rgba(255, 255, 255, 0.14);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.parcel-search-hero h1 {
+    margin-bottom: 10px;
+
+    font-size: 2.4rem;
+    font-weight: 800;
+}
+
+
+.parcel-search-hero p {
+    margin: 0;
+
+    max-width: 620px;
+
+    color: rgba(255, 255, 255, 0.86);
+
+    font-size: 1.05rem;
+}
+
+
+.parcel-search-hero-icon {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 90px;
+    height: 90px;
+
+    flex-shrink: 0;
+
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.13);
+
+    font-size: 42px;
+}
+
+
+/* FORMULAIRE */
+
+.parcel-search-box {
+    padding: 30px;
+
+    background: white;
+
+    border: 1px solid #e8eeeb;
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(15, 45, 35, 0.07);
+}
+
+
+.parcel-search-title {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 25px;
+}
+
+
+.parcel-search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    background: #eaf7f0;
+
+    border-radius: 14px;
+
+    font-size: 23px;
+}
+
+
+.parcel-search-title h3 {
+    margin: 0 0 3px;
+
+    color: #15202b;
+
+    font-weight: 750;
+}
+
+
+.parcel-search-title p {
+    margin: 0;
+
+    color: #7a8580;
+
+    font-size: 14px;
+}
+
+
+.parcel-search-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #34423c;
+
+    font-weight: 700;
+}
+
+
+.parcel-search-input-group {
+    display: flex;
+
+    gap: 12px;
+}
+
+
+.parcel-reference-input {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 16px;
+
+    background: #f8faf9;
+
+    border: 1px solid #dce5e0;
+    border-radius: 13px;
+
+    transition: 0.2s ease;
+}
+
+
+.parcel-reference-input:focus-within {
+    background: white;
+
+    border-color: #198754;
+
+    box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.09);
+}
+
+
+.parcel-reference-input input {
+    width: 100%;
+
+    padding: 14px 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #17231d;
+
+    font-size: 16px;
+}
+
+
+.parcel-search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    padding: 0 24px;
+
+    border: none;
+    border-radius: 13px;
+
+    background: #198754;
+
+    color: white;
+
+    font-weight: 700;
+
+    transition: 0.2s ease;
+}
+
+
+.parcel-search-button:hover {
+    background: #116b41;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 7px 18px rgba(25, 135, 84, 0.22);
+}
+
+
+.parcel-search-help {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 14px;
+
+    color: #7a8580;
+
+    font-size: 13px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .parcel-search-hero {
+        padding: 30px 25px;
+    }
+
+    .parcel-search-hero h1 {
+        font-size: 1.9rem;
+    }
+
+    .parcel-search-hero-icon {
+        display: none;
+    }
+
+    .parcel-search-box {
+        padding: 22px;
+    }
+
+    .parcel-search-input-group {
+        flex-direction: column;
+    }
+
+    .parcel-search-button {
+        min-height: 50px;
+    }
+
+}
+/*FICHE FONCIERE*/
+
+.parcel-result-card {
+    background: #ffffff;
+    border: 1px solid #e6ece9;
+    border-radius: 22px;
+    padding: 32px;
+    box-shadow: 0 12px 35px rgba(15, 45, 35, 0.08);
+}
+
+
+/* EN-TETE */
+
+.parcel-result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+
+    border-bottom: 1px solid #edf1ef;
+}
+
+.parcel-result-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.parcel-result-icon {
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 17px;
+
+    background: #eaf7f0;
+
+    font-size: 28px;
+}
+
+.parcel-result-label {
+    color: #198754;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.parcel-result-title h2 {
+    margin: 2px 0;
+
+    color: #14251d;
+
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.parcel-result-title p {
+    margin: 0;
+
+    color: #7b8580;
+    font-size: 14px;
+}
+
+
+/* STATUT */
+
+.parcel-status-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 9px 14px;
+
+    border-radius: 50px;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.status-verified {
+    background: #e8f7ef;
+    color: #157347;
+}
+
+.status-pending {
+    background: #fff6dc;
+    color: #856404;
+}
+
+.status-disputed {
+    background: #fdebec;
+    color: #b02a37;
+}
+
+
+/* INFORMATIONS */
+
+.parcel-info-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.parcel-info-item {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 18px;
+
+    background: #f8faf9;
+
+    border: 1px solid #e8eeeb;
+    border-radius: 15px;
+}
+
+.parcel-info-icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #ffffff;
+
+    border: 1px solid #e5ece8;
+    border-radius: 12px;
+
+    font-size: 20px;
+}
+
+.parcel-info-item > div:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.parcel-info-label {
+    margin-bottom: 3px;
+
+    color: #818c86;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.parcel-info-item strong {
+    color: #26352e;
+
+    font-size: 15px;
+}
+
+
+/* MESSAGE DE VERIFICATION */
+
+.parcel-verification-message {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 16px 18px;
+
+    margin-bottom: 25px;
+
+    border-radius: 14px;
+}
+
+.parcel-verification-message .verification-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    font-weight: 800;
+}
+
+.parcel-verification-message strong {
+    display: block;
+    margin-bottom: 2px;
+}
+
+.parcel-verification-message p {
+    margin: 0;
+    font-size: 13px;
+}
+
+.verification-success {
+    background: #edf9f2;
+    color: #146c43;
+}
+
+.verification-success .verification-icon {
+    background: #198754;
+    color: white;
+}
+
+.verification-pending {
+    background: #fff8e5;
+    color: #856404;
+}
+
+.verification-pending .verification-icon {
+    background: #ffc107;
+    color: #423300;
+}
+
+.verification-disputed {
+    background: #fdeced;
+    color: #a52834;
+}
+
+.verification-disputed .verification-icon {
+    background: #dc3545;
+    color: white;
+}
+
+
+/* ACTIONS */
+
+.parcel-result-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    margin-bottom: 5px;
+}
+
+.parcel-primary-action,
+.parcel-secondary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    border-radius: 11px;
+
+    font-weight: 700;
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+.parcel-primary-action {
+    background: #198754;
+    color: white;
+}
+
+.parcel-primary-action:hover {
+    background: #116b41;
+    color: white;
+
+    transform: translateY(-1px);
+}
+
+.parcel-secondary-action {
+    background: white;
+    color: #34443c;
+
+    border: 1px solid #dce5e0;
+}
+
+.parcel-secondary-action:hover {
+    background: #f5f8f6;
+    color: #198754;
+
+    border-color: #bcd7c9;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .parcel-result-card {
+        padding: 22px;
+    }
+
+    .parcel-result-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .parcel-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .parcel-result-actions {
+        flex-direction: column;
+    }
+
+    .parcel-primary-action,
+    .parcel-secondary-action {
+        width: 100%;
+    }
+
+}
+
+/* =====================================================
+   SECTIONS DE LA FICHE FONCIERE
+===================================================== */
+
+.parcel-data-section {
+    margin-top: 28px;
+    padding: 26px;
+
+    background: #ffffff;
+
+    border: 1px solid #e7edea;
+    border-radius: 18px;
+}
+
+
+.parcel-section-header {
+    margin-bottom: 22px;
+}
+
+
+.parcel-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.parcel-section-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #eaf7f0;
+
+    border-radius: 14px;
+
+    font-size: 22px;
+}
+
+
+.transaction-icon {
+    background: #edf4ff;
+}
+
+
+.parcel-section-label {
+    color: #198754;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+
+.parcel-section-heading h3 {
+    margin: 2px 0 3px;
+
+    color: #17251e;
+
+    font-size: 1.3rem;
+    font-weight: 750;
+}
+
+
+.parcel-section-heading p {
+    margin: 0;
+
+    color: #7b8580;
+
+    font-size: 13px;
+}
+
+
+/* TABLEAUX */
+
+.modern-table-wrapper {
+    overflow-x: auto;
+
+    border: 1px solid #e8eeeb;
+    border-radius: 14px;
+}
+
+
+.modern-parcel-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background: white;
+}
+
+
+.modern-parcel-table thead {
+    background: #f5f8f6;
+}
+
+
+.modern-parcel-table th {
+    padding: 13px 16px;
+
+    color: #68756f;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    text-align: left;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    border-bottom: 1px solid #e3eae6;
+}
+
+
+.modern-parcel-table td {
+    padding: 16px;
+
+    color: #39463f;
+
+    font-size: 14px;
+
+    vertical-align: middle;
+
+    border-bottom: 1px solid #edf1ef;
+}
+
+
+.modern-parcel-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+.modern-parcel-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+
+.modern-parcel-table tbody tr:hover {
+    background: #fafcfb;
+}
+
+
+.table-main-value {
+    color: #27372f;
+    font-weight: 700;
+}
+
+
+.document-number {
+    font-weight: 700;
+    color: #495750;
+}
+
+
+.transaction-date {
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+
+.transaction-description {
+    min-width: 220px;
+}
+
+
+/* BADGES */
+
+.modern-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 6px 10px;
+
+    border-radius: 50px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.status-ok {
+    background: #e8f7ef;
+    color: #157347;
+}
+
+
+.status-waiting {
+    background: #fff5d8;
+    color: #806000;
+}
+
+
+/* BOUTON DOCUMENT */
+
+.document-view-button {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 7px 11px;
+
+    background: #edf7f2;
+
+    border: 1px solid #cfe7da;
+    border-radius: 9px;
+
+    color: #157347;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: 0.2s ease;
+}
+
+
+.document-view-button:hover {
+    background: #198754;
+    border-color: #198754;
+
+    color: white;
+}
+
+
+.no-document {
+    color: #909a95;
+    font-size: 13px;
+}
+
+
+/* ETAT VIDE */
+
+.parcel-empty-state {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 18px;
+
+    background: #f8faf9;
+
+    border: 1px dashed #d6e1db;
+    border-radius: 13px;
+
+    color: #65726c;
+}
+
+
+.parcel-empty-state > span {
+    font-size: 25px;
+}
+
+
+.parcel-empty-state strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #34443c;
+}
+
+
+.parcel-empty-state p {
+    margin: 0;
+
+    font-size: 13px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .parcel-data-section {
+        padding: 20px;
+    }
+
+    .modern-parcel-table {
+        min-width: 650px;
+    }
+
+}
+
+/* =====================================================
+   CONSTRUCTIONS / AGRICULTURE / LOCALISATION
+===================================================== */
+
+.building-icon {
+    background: #fff4e5;
+}
+
+.agriculture-icon {
+    background: #eef8e8;
+}
+
+.location-icon {
+    background: #eaf3ff;
+}
+
+
+/* COORDONNEES */
+
+.parcel-location-section {
+    margin-top: 28px;
+
+    padding: 26px;
+
+    background: #ffffff;
+
+    border: 1px solid #e7edea;
+    border-radius: 18px;
+}
+
+
+.coordinates-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+
+.coordinate-card {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 16px;
+
+    background: #f8faf9;
+
+    border: 1px solid #e7edea;
+    border-radius: 14px;
+}
+
+
+.coordinate-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: white;
+
+    border: 1px solid #e3eae6;
+    border-radius: 11px;
+
+    font-size: 18px;
+}
+
+
+.coordinate-card > div:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.coordinate-card span {
+    color: #818c86;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+
+.coordinate-card strong {
+    margin-top: 2px;
+
+    color: #26352e;
+
+    font-size: 15px;
+}
+
+
+/* CARTE */
+
+.parcel-map-wrapper {
+    overflow: hidden;
+
+    background: white;
+
+    border: 1px solid #dfe7e3;
+    border-radius: 16px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+.parcel-map-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 13px 17px;
+
+    background: #f8faf9;
+
+    border-bottom: 1px solid #e5ebe8;
+
+    color: #435149;
+
+    font-size: 13px;
+}
+
+
+.parcel-map-topbar > span {
+    color: #198754;
+    font-weight: 700;
+}
+
+
+/* IMPORTANT POUR LEAFLET */
+
+#parcel-map {
+    width: 100%;
+    height: 400px;
+}
+
+
+.parcel-map-hint {
+    padding: 12px 16px;
+
+    background: #f8faf9;
+
+    border-top: 1px solid #e5ebe8;
+
+    color: #76817c;
+
+    font-size: 12px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .parcel-location-section {
+        padding: 20px;
+    }
+
+    .coordinates-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #parcel-map {
+        height: 330px;
+    }
+
+    .parcel-map-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+
+</style>
 
 {% endblock %}

@@ -40,10 +40,12 @@ class ParcelAdmin(admin.ModelAdmin):
         'status',
         'price',
         'for_sale',
+        'sale_status',
     )
 
     list_filter = (
         'status',
+        'sale_status',
     )
 
     search_fields = (
@@ -245,11 +247,12 @@ class PurchaseAdmin(admin.ModelAdmin):
 
             parcel.owner = new_owner
             parcel.for_sale = False
-
+            parcel.sale_status = 'SOLD'
             parcel.save(
                 update_fields=[
                     'owner',
-                    'for_sale'
+                    'for_sale',
+                    'sale_status',
                 ]
             )
             LandTransaction.objects.create(

@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load static %}
 
+
 <!DOCTYPE html>
 
 <html lang="{{ LANGUAGE_CODE }}">
@@ -40,175 +41,157 @@
 <body>
 
 
-<!-- BARRE D'ACCESSIBILITÉ -->
+<!-- MENU ACCESSIBILITÉ -->
+<div class="accessibility-bar">
 
-<div class="accessibility-bar py-2">
-    <div class="container d-flex flex-wrap align-items-center justify-content-end gap-2">
+    <div class="container d-flex justify-content-end">
 
-        <span class="fw-bold">
-            ♿ {% trans "Accessibilité" %}
-        </span>
+        <div class="dropdown">
 
-        <button
-            type="button"
-            class="btn btn-sm btn-outline-secondary"
-            onclick="decreaseFontSize()"
-            title="{% trans 'Réduire la taille du texte' %}"
-            aria-label="{% trans 'Réduire la taille du texte' %}"
-        >
-            A−
-        </button>
+            <button
+                class="btn accessibility-dropdown-btn dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="{% trans 'Options d’accessibilité' %}"
+            >
+                ♿ {% trans "Accessibilité" %}
+            </button>
 
-        <button
-            type="button"
-            class="btn btn-sm btn-outline-secondary"
-            onclick="increaseFontSize()"
-            title="{% trans 'Agrandir la taille du texte' %}"
-            aria-label="{% trans 'Agrandir la taille du texte' %}"
-        >
-            A+
-        </button>
+            <ul class="dropdown-menu dropdown-menu-end accessibility-menu">
 
-        <button
-            type="button"
-            class="btn btn-sm btn-outline-dark"
-            onclick="toggleHighContrast()"
-            title="{% trans 'Activer ou désactiver le contraste élevé' %}"
-        >
-            ◐ {% trans "Contraste" %}
-        </button>
+                <li class="accessibility-title">
+                    ♿ {% trans "Options d'accessibilité" %}
+                </li>
 
-        <button
-            type="button"
-            class="btn btn-sm btn-outline-primary"
-            onclick="readPage()"
-            title="{% trans 'Lire le contenu de la page' %}"
-        >
-            🔊 {% trans "Lire" %}
-        </button>
+                <li><hr class="dropdown-divider"></li>
 
-        <button
-            type="button"
-            class="btn btn-sm btn-outline-danger"
-            onclick="stopReading()"
-            title="{% trans 'Arrêter la lecture vocale' %}"
-        >
-            ⏹ {% trans "Arrêter" %}
-        </button>
+                <li>
+                    <button
+                        class="dropdown-item accessibility-item"
+                        type="button"
+                        onclick="decreaseFont()"
+                    >
+                        🔤 {% trans "Réduire le texte" %}
+                        <span>A−</span>
+                    </button>
+                </li>
+
+                <li>
+                    <button
+                        class="dropdown-item accessibility-item"
+                        type="button"
+                        onclick="increaseFont()"
+                    >
+                        🔠 {% trans "Agrandir le texte" %}
+                        <span>A+</span>
+                    </button>
+                </li>
+
+                <li>
+                    <button
+                        class="dropdown-item accessibility-item"
+                        type="button"
+                        onclick="toggleContrast()"
+                    >
+                        ◐ {% trans "Contraste élevé" %}
+                    </button>
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>
+                    <button
+                        class="dropdown-item accessibility-item"
+                        type="button"
+                        onclick="readPage()"
+                    >
+                        🔊 {% trans "Lire la page" %}
+                    </button>
+                </li>
+
+                <li>
+                    <button
+                        class="dropdown-item accessibility-item text-danger"
+                        type="button"
+                        onclick="stopReading()"
+                    >
+                        ⏹ {% trans "Arrêter la lecture" %}
+                    </button>
+                </li>
+
+            </ul>
+
+        </div>
 
     </div>
+
 </div>
 
 <!-- BARRE DE NAVIGATION -->
-
-
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+<nav class="navbar navbar-expand-lg modern-navbar">
 
     <div class="container">
 
+        <!-- LOGO / IDENTITÉ -->
+        <a class="navbar-brand d-flex align-items-center"
+           href="{% url 'home' %}">
 
-        <!-- Logo -->
+            <img
+                src="{% static 'images/logo-foncier-benin.png' %}"
+                alt="Foncier Bénin"
+                class="navbar-logo"
+            >
 
-        <a
-            class="navbar-brand"
-            href="{% url 'home' %}"
-        >
-            🗺️ Foncier Bénin
+            <div class="brand-text ms-3 d-none d-md-block">
+                <div class="brand-name">
+                    Foncier Bénin
+                </div>
+
+                <div class="brand-subtitle">
+                    {% trans "Information foncière simple et sécurisée" %}
+                </div>
+            </div>
+
         </a>
 
 
-        <!-- Menu -->
-
-        <div class="d-flex align-items-center gap-2">
-
-
-            <!-- UTILISATEUR CONNECTÉ -->
-
+        <!-- MENU -->
+        <div class="d-flex align-items-center gap-2 ms-auto">
 
             {% if user.is_authenticated %}
 
+                <a href="{% url 'user_dashboard' %}"
+                class="btn nav-dashboard-btn">
+                 🏠 {% trans "Tableau de bord" %}
+                </a>
 
-                <!-- Administrateur -->
-
-                {% if user.is_staff %}
-
-                    <a
-                        class="btn btn-warning"
-                        href="{% url 'admin_dashboard' %}"
-                    >
-                        ⚙️ {% trans "Administration" %}
-                    </a>
-
-
-                <!-- Utilisateur normal -->
-
-                {% else %}
-
-                    <a
-                        class="btn btn-light"
-                        href="{% url 'user_dashboard' %}"
-                    >
-                        🏠 {% trans "Tableau de bord" %}
-                    </a>
-
-                {% endif %}
-
-
-                <!-- Déconnexion -->
-
-                <a
-                    class="btn btn-danger"
-                    href="{% url 'logout' %}"
-                >
+                <a href="{% url 'logout' %}"
+                   class="btn nav-logout-btn">
                     🚪 {% trans "Déconnexion" %}
                 </a>
 
-
-            <!-- UTILISATEUR NON CONNECTÉ -->
-
-
             {% else %}
 
-
-                <!-- Connexion -->
-
-                <a
-                    class="btn btn-light"
-                    href="{% url 'login' %}"
-                >
+                <a href="{% url 'login' %}"
+                   class="btn nav-login-btn">
                     🔐 {% trans "Connexion" %}
                 </a>
 
-
-                <!-- Inscription -->
-
-                <a
-                    class="btn btn-success"
-                    href="{% url 'register' %}"
-                >
-                    👤 {% trans "Inscription" %}
+                <a href="{% url 'register' %}"
+                   class="btn nav-register-btn">
+                    👤 {% trans "Créer un compte" %}
                 </a>
-
 
             {% endif %}
 
 
-            <!-- CHOIX DE LA LANGUE -->
-
-
-            <form
-                action="{% url 'set_language' %}"
-                method="post"
-                class="m-0"
-            >
+            <!-- LANGUE -->
+            <form action="{% url 'set_language' %}"
+                  method="post"
+                  class="m-0">
 
                 {% csrf_token %}
-
-
-                <!--
-                Après changement de langue,
-                rester sur la page actuelle.
-                -->
 
                 <input
                     name="next"
@@ -216,44 +199,28 @@
                     value="{{ request.path }}"
                 >
 
-
-                <!-- Langue actuellement utilisée -->
-
-                {% get_current_language as CURRENT_LANGUAGE %}
-
-
                 <select
                     name="language"
+                    class="form-select nav-language"
                     onchange="this.form.submit()"
-                    class="form-select"
                     aria-label="{% trans 'Choisir la langue' %}"
                 >
 
+                    {% get_current_language as LANGUAGE_CODE %}
 
-                    <!-- Français -->
-
-                    <option
-                        value="fr"
-                        {% if CURRENT_LANGUAGE == 'fr' %}selected{% endif %}
-                    >
-                        🇫🇷 Français
+                    <option value="fr"
+                        {% if LANGUAGE_CODE == 'fr' %}selected{% endif %}>
+                        🇧🇯 Français
                     </option>
 
-
-                    <!-- Anglais -->
-
-                    <option
-                        value="en"
-                        {% if CURRENT_LANGUAGE == 'en' %}selected{% endif %}
-                    >
+                    <option value="en"
+                        {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>
                         🇬🇧 English
                     </option>
-
 
                 </select>
 
             </form>
-
 
         </div>
 
@@ -288,7 +255,7 @@
 <!-- JAVASCRIPT ACCESSIBILITÉ -->
 
 
-<script src="{% static 'js/accessibility.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
 </body>

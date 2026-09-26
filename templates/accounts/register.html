@@ -2,88 +2,232 @@
 {% load i18n %}
 
 {% block title %}
-{% trans "Inscription" %}
+{% trans "Créer un compte" %} - Foncier Bénin
 {% endblock %}
 
 
 {% block content %}
 
-<div class="row justify-content-center">
+<style>
 
-    <div class="col-md-7">
+    .register-wrapper {
+        max-width: 680px;
+        margin: 35px auto 60px;
+    }
 
-        <div class="card shadow p-4">
+    .register-card {
+        background: #ffffff;
+        border: 1px solid #e8ecef;
+        border-radius: 18px;
+        padding: 40px 45px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    }
 
-            <h2 class="text-center mb-4">
-                👤 {% trans "Créer un compte" %}
-            </h2>
+    .register-header {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    .register-icon {
+        width: 65px;
+        height: 65px;
+        margin: 0 auto 15px;
+        border-radius: 50%;
+        background: #eef8f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+    }
+
+    .register-header h1 {
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: #17212b;
+    }
+
+    .register-header p {
+        color: #6c757d;
+        margin: 0;
+    }
+
+    /* Tous les champs Django */
+
+    .register-form p {
+        margin-bottom: 20px;
+    }
+
+    .register-form label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 7px;
+        color: #263238;
+    }
+
+    .register-form input {
+        display: block;
+        width: 100%;
+        height: 48px;
+        padding: 10px 14px;
+        border: 1px solid #ced4da;
+        border-radius: 9px;
+        background: #ffffff;
+        font-size: 16px;
+        transition: 0.2s ease;
+        box-sizing: border-box;
+    }
+
+    .register-form input:focus {
+        border-color: #198754;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.12);
+    }
+
+    /* Textes d'aide Django */
+
+    .register-form .helptext {
+        display: block;
+        margin-top: 6px;
+        color: #6c757d;
+        font-size: 13px;
+    }
+
+    .register-form ul {
+        margin-top: 7px;
+        padding-left: 20px;
+        color: #6c757d;
+        font-size: 13px;
+    }
+
+    /* Erreurs */
+
+    .register-form .errorlist {
+        list-style: none;
+        padding: 10px 12px;
+        margin: 5px 0 10px;
+        background: #fff2f2;
+        color: #dc3545;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    /* Bouton */
+
+    .register-button {
+        width: 100%;
+        border: none;
+        border-radius: 9px;
+        padding: 13px 20px;
+        margin-top: 10px;
+        background: #198754;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.2s ease;
+    }
+
+    .register-button:hover {
+        background: #146c43;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(25, 135, 84, 0.20);
+    }
+
+    .register-login {
+        border-top: 1px solid #e5e7eb;
+        margin-top: 25px;
+        padding-top: 22px;
+        text-align: center;
+        color: #6c757d;
+    }
+
+    .register-login a {
+        color: #198754;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .register-login a:hover {
+        text-decoration: underline;
+    }
 
 
-            <form method="POST" id="registerForm">
+    /* Téléphone */
 
-                {% csrf_token %}
+    @media (max-width: 768px) {
+
+        .register-wrapper {
+            margin: 15px auto 40px;
+        }
+
+        .register-card {
+            padding: 28px 20px;
+            border-radius: 14px;
+        }
+
+        .register-header h1 {
+            font-size: 25px;
+        }
+    }
+
+</style>
 
 
-                {{ form.as_p }}
+<div class="register-wrapper">
 
+    <div class="register-card">
 
-                <button
-                    type="submit"
-                    class="btn btn-success w-100"
-                >
-                    👤 {% trans "Créer mon compte" %}
-                </button>
+        <!-- EN-TÊTE -->
 
-            </form>
+        <div class="register-header">
 
+            <div class="register-icon">
+                👤
+            </div>
 
-            <hr>
+            <h1>
+                {% trans "Créer un compte" %}
+            </h1>
 
-
-            <p class="text-center">
-
-                {% trans "Vous avez déjà un compte ?" %}
-
-                <a href="{% url 'login' %}">
-                    {% trans "Se connecter" %}
-                </a>
-
+            <p>
+                {% trans "Créez votre espace personnel sur Foncier Bénin." %}
             </p>
+
+        </div>
+
+
+        <!-- FORMULAIRE -->
+
+        <form method="post" class="register-form">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button
+                type="submit"
+                class="register-button"
+            >
+                👤 {% trans "Créer mon compte" %}
+            </button>
+
+        </form>
+
+
+        <!-- CONNEXION -->
+
+        <div class="register-login">
+
+            {% trans "Vous avez déjà un compte ?" %}
+
+            <a href="{% url 'login' %}">
+                {% trans "Se connecter" %}
+            </a>
 
         </div>
 
     </div>
 
 </div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const form = document.getElementById("registerForm");
-
-    const requiredFields = form.querySelectorAll(
-        "input[required]"
-    );
-
-    requiredFields.forEach(function(field) {
-
-        field.addEventListener("invalid", function() {
-
-            if (field.validity.valueMissing) {
-                field.setCustomValidity(
-                    "Veuillez renseigner ce champ."
-                );
-            }
-
-        });
-
-        field.addEventListener("input", function() {
-            field.setCustomValidity("");
-        });
-
-    });
-
-});
-</script>
 
 {% endblock %}

@@ -167,7 +167,7 @@ def purchase_parcel(request, parcel_id):
         id=parcel_id
     )
 
-    if not parcel.for_sale or parcel.price is None:
+    if not parcel.for_sale or parcel.price is None or parcel.sale_status != 'AVAILABLE':
         return render(
             request,
             'user/purchase_unavailable.html',
