@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.utils import timezone
+from django.contrib import messages
+
 from .models import (
     Owner,
     Parcel,
@@ -9,7 +12,6 @@ from .models import (
     Report,
     Purchase,
 )
-
 
 @admin.register(Owner)
 class OwnerAdmin(admin.ModelAdmin):
@@ -178,12 +180,17 @@ class PurchaseAdmin(admin.ModelAdmin):
         'created_at',
         'paid_at',
         'transaction_reference',
+        'payment_method',
+        'transfer_validated',
     )
 
     list_filter = (
         'status',
         'created_at',
+        'payment_method',
+        'transfer_validated',
     )
+    actions = ['validate_transfer']
 
     search_fields = (
         'parcel__reference',
@@ -195,3 +202,80 @@ class PurchaseAdmin(admin.ModelAdmin):
     readonly_fields = (
         'created_at',
     )
+
+    @admin.action(description="Valider le transfert de propriété")
+    def validate_transfer(self, request, queryset):
+
+        for purchase in queryset:
+
+            if purchase.status != 'PAID':
+                self.message_user(
+                    request,
+                    f"Le paiement de {purchase.parcel.reference} n'est pas validé.",
+                    level=messages.ERROR
+                )
+                continue
+
+            if purchase.transfer_validated:
+                self.message_user(
+                    request,
+                    f"Le transfert de {purchase.parcel.reference} a déjà été validé.",
+                    level=messages.WARNING
+                )
+                continue
+            if not purchase.parcel.for_sale:
+                self.message_user(
+                    request,
+                    f"La parcelle {purchase.parcel.reference} n'est plus disponible à la vente.",
+                    level=messages.ERROR
+                )
+                continue
+
+            buyer = purchase.buyer
+
+            new_owner, created = Owner.objects.get_or_create(
+                email=buyer.email,
+                defaults={
+                    'first_name': buyer.first_name or buyer.username,
+                    'last_name': buyer.last_name or '',
+                    'phone': '',
+                }
+            )
+            parcel = purchase.parcel
+
+            parcel.owner = new_owner
+            parcel.for_sale = False
+
+            parcel.save(
+                update_fields=[
+                    'owner',
+                    'for_sale'
+                ]
+            )
+            LandTransaction.objects.create(
+                parcel=parcel,
+                transaction_type='TRANSFER',
+                date=timezone.now().date(),
+                description=(
+                    f"Transfert de propriété validé après paiement "
+                    f"{purchase.transaction_reference}. "
+                    f"Nouveau propriétaire : {new_owner.first_name} {new_owner.last_name}."
+                ),
+                verified=True
+            )
+
+            purchase.transfer_validated = True
+            purchase.transfer_validated_at = timezone.now()
+
+            purchase.save(
+                update_fields=[
+                    'transfer_validated',
+                    'transfer_validated_at'
+                ]
+            )
+
+            self.message_user(
+                request,
+                f"Transfert de la parcelle {purchase.parcel.reference} validé.",
+                level=messages.SUCCESS
+            )

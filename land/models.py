@@ -263,6 +263,12 @@ class Purchase(models.Model):
         ('CANCELLED', 'Annulé'),
     ]
 
+    PAYMENT_METHOD_CHOICES = [
+        ('MTN', 'MTN Mobile Money'),
+        ('MOOV', 'Moov Money'),
+        ('CARD', 'Carte bancaire'),
+    ]
+
     parcel = models.ForeignKey(
         Parcel,
         on_delete=models.PROTECT,
@@ -300,6 +306,30 @@ class Purchase(models.Model):
         blank=True,
         null=True
     )
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_METHOD_CHOICES,
+        blank=True,
+        null=True
+    )
+    transfer_validated = models.BooleanField(
+        default=False,
+        verbose_name="Transfert de propriété validé"
+    )
+
+    transfer_validated_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name="Date de validation du transfert"
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['parcel', 'buyer'],
+                name='unique_purchase_per_parcel_buyer'
+            )
+        ]
 
     def __str__(self):
         return f"{self.parcel.reference} - {self.buyer.username} - {self.status}"

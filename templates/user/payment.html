@@ -1,0 +1,491 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Paiement" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="mb-4">
+
+    <h1>
+        💳 {% trans "Paiement de la parcelle" %}
+    </h1>
+
+    <p class="lead">
+        {% trans "Choisissez votre moyen de paiement pour continuer." %}
+    </p>
+
+</div>
+
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-body p-4">
+
+        <h3 class="mb-4">
+            📍 {% trans "Parcelle" %} {{ parcel.reference }}
+        </h3>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <strong>
+                    {% trans "Localisation" %}
+                </strong>
+
+                <p>
+                    {{ parcel.location }}
+                </p>
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <strong>
+                    {% trans "Superficie" %}
+                </strong>
+
+                <p>
+                    {{ parcel.area }} m²
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="mt-4">
+
+            <h5>
+                💰 {% trans "Montant à payer" %}
+            </h5>
+
+            <h2 class="text-success">
+                {{ parcel.price|floatformat:"0" }} FCFA
+            </h2>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-body p-4">
+
+        <h3 class="mb-4">
+            💳 {% trans "Choisissez votre moyen de paiement" %}
+        </h3>
+
+
+        <div class="row">
+
+            <!-- MTN MOBILE MONEY -->
+
+            <div class="col-md-4 mb-3">
+
+                <div class="card h-100 text-center">
+
+                    <div class="card-body">
+
+                        <h1>📱</h1>
+
+                        <h4>
+                            MTN Mobile Money
+                        </h4>
+
+                        <p>
+                            {% trans "Payez avec votre compte MTN Mobile Money." %}
+                        </p>
+
+                        <button
+                         type="button"
+                               class="btn btn-warning w-100"
+                               onclick="showPaymentForm('mtn')">
+                                {% trans "Payer avec MTN MoMo" %}
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MOOV MONEY -->
+
+            <div class="col-md-4 mb-3">
+
+                <div class="card h-100 text-center">
+
+                    <div class="card-body">
+
+                        <h1>📲</h1>
+
+                        <h4>
+                            Moov Money
+                        </h4>
+
+                        <p>
+                            {% trans "Payez avec votre compte Moov Money." %}
+                        </p>
+
+                        <button
+    type="button"
+    class="btn btn-success w-100"
+    onclick="showPaymentForm('moov')"
+>
+    {% trans "Payer avec Moov Money" %}
+</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CARTE BANCAIRE -->
+
+            <div class="col-md-4 mb-3">
+
+                <div class="card h-100 text-center">
+
+                    <div class="card-body">
+
+                        <h1>💳</h1>
+
+                        <h4>
+                            {% trans "Carte bancaire" %}
+                        </h4>
+
+                        <p>
+                            {% trans "Payez avec une carte bancaire." %}
+                        </p>
+
+                        <button
+    type="button"
+    class="btn btn-primary w-100"
+    onclick="showPaymentForm('card')"
+>
+    💳 {% trans "Payer par carte" %}
+</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="alert alert-warning mt-4">
+
+            🔐
+            {% trans "Aucun paiement ne sera effectué avant votre confirmation finale." %}
+
+        </div>
+
+
+<!-- FORMULAIRE MTN MOBILE MONEY -->
+
+<div
+    id="mtn-payment-form"
+    class="card mt-4"
+    style="display: none;"
+>
+    <div class="card-body">
+
+        <h4 class="mb-3">
+            📱 MTN Mobile Money
+        </h4>
+
+        <p>
+            {% trans "Entrez le numéro MTN Mobile Money qui effectuera le paiement." %}
+        </p>
+
+        <form
+            method="post"
+            action="{% url 'confirm_payment' parcel.id 'MTN' %}"
+        >
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label
+                    for="mtn-phone"
+                    class="form-label"
+                >
+                    {% trans "Numéro de téléphone" %}
+                </label>
+
+                <input
+                    type="tel"
+                    id="mtn-phone"
+                    name="phone"
+                    class="form-control"
+                    placeholder="Exemple : 01 97 00 00 00"
+                    required
+                >
+            </div>
+
+            <div class="alert alert-info">
+                💰 {% trans "Montant à payer" %} :
+                <strong>
+                    {{ parcel.price|floatformat:"0" }} FCFA
+                </strong>
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-warning"
+            >
+                📱 {% trans "Confirmer le paiement MTN MoMo" %}
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+<!-- FORMULAIRE MOOV MONEY -->
+<div
+    id="moov-payment-form"
+    class="card mt-4"
+    style="display: none;"
+>
+    <div class="card-body">
+
+        <h4 class="mb-3">
+            📲 Moov Money
+        </h4>
+
+        <p>
+            {% trans "Entrez le numéro Moov Money qui effectuera le paiement." %}
+        </p>
+
+        <div class="mb-3">
+            <label
+                for="moov-phone"
+                class="form-label"
+            >
+                {% trans "Numéro de téléphone" %}
+            </label>
+
+            <input
+                type="tel"
+                id="moov-phone"
+                class="form-control"
+                placeholder="Exemple : 01 95 00 00 00"
+            >
+        </div>
+
+        <div class="alert alert-info">
+            💰 {% trans "Montant à payer" %} :
+            <strong>
+                {{ parcel.price|floatformat:"0" }} FCFA
+            </strong>
+        </div>
+
+        <button
+            type="button"
+            class="btn btn-success"
+        >
+            📲 {% trans "Confirmer le paiement Moov Money" %}
+        </button>
+
+    </div>
+</div>
+<!-- FORMULAIRE CARTE BANCAIRE -->
+<div
+    id="card-payment-form"
+    class="card mt-4"
+    style="display: none;"
+>
+    <div class="card-body">
+
+        <h4 class="mb-3">
+            💳 {% trans "Paiement par carte bancaire" %}
+        </h4>
+
+        <p>
+            {% trans "Entrez les informations de votre carte pour effectuer le paiement." %}
+        </p>
+
+        <!-- NOM DU TITULAIRE -->
+        <div class="mb-3">
+            <label
+                for="card-name"
+                class="form-label"
+            >
+                {% trans "Nom du titulaire" %}
+            </label>
+
+            <input
+                type="text"
+                id="card-name"
+                class="form-control"
+                placeholder="Exemple : Yann Tokin"
+            >
+        </div>
+
+        <!-- NUMERO DE CARTE -->
+        <div class="mb-3">
+            <label
+                for="card-number"
+                class="form-label"
+            >
+                {% trans "Numéro de carte" %}
+            </label>
+
+            <input
+                type="text"
+                id="card-number"
+                class="form-control"
+                placeholder="1234 5678 9012 3456"
+                maxlength="19"
+            >
+        </div>
+
+        <div class="row">
+
+            <!-- DATE EXPIRATION -->
+            <div class="col-md-6 mb-3">
+                <label
+                    for="card-expiry"
+                    class="form-label"
+                >
+                    {% trans "Date d'expiration" %}
+                </label>
+
+                <input
+                    type="text"
+                    id="card-expiry"
+                    class="form-control"
+                    placeholder="MM/AA"
+                    maxlength="5"
+                >
+            </div>
+
+            <!-- CVV -->
+            <div class="col-md-6 mb-3">
+                <label
+                    for="card-cvv"
+                    class="form-label"
+                >
+                    CVV
+                </label>
+
+                <input
+                    type="password"
+                    id="card-cvv"
+                    class="form-control"
+                    placeholder="123"
+                    maxlength="4"
+                >
+            </div>
+
+        </div>
+
+        <!-- MONTANT -->
+        <div class="alert alert-info">
+
+            💰 {% trans "Montant à payer" %} :
+
+            <strong>
+                {{ parcel.price|floatformat:"0" }} FCFA
+            </strong>
+
+        </div>
+
+        <!-- CONFIRMATION -->
+        <button
+            type="button"
+            class="btn btn-primary"
+        >
+            💳 {% trans "Confirmer le paiement par carte" %}
+        </button>
+
+    </div>
+</div>
+        <a
+            href="{% url 'parcel_detail' parcel.id %}"
+            class="btn btn-secondary"
+        >
+            ← {% trans "Retour aux détails" %}
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+    function showPaymentForm(method) {
+
+        const mtnForm =
+            document.getElementById("mtn-payment-form");
+
+        const moovForm =
+            document.getElementById("moov-payment-form");
+
+        const cardForm =
+            document.getElementById("card-payment-form");
+
+        // Cacher tous les formulaires
+        if (mtnForm) {
+            mtnForm.style.display = "none";
+        }
+
+        if (moovForm) {
+            moovForm.style.display = "none";
+        }
+
+        if (cardForm) {
+            cardForm.style.display = "none";
+        }
+
+        // MTN MOBILE MONEY
+        if (method === "mtn" && mtnForm) {
+
+            mtnForm.style.display = "block";
+
+            mtnForm.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+
+        // MOOV MONEY
+        if (method === "moov" && moovForm) {
+
+            moovForm.style.display = "block";
+
+            moovForm.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+        // CARTE BANCAIRE
+        if (method === "card" && cardForm) {
+
+            cardForm.style.display = "block";
+
+            cardForm.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+    });
+}
+    }
+</script>
+
+{% endblock %}

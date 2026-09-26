@@ -1,10 +1,12 @@
 from django.urls import path
+from . import views
 
 from .views import (
     search_parcel,
     report_problem,
     parcel_detail,
     purchase_parcel,
+    payment_page,
 )
 
 
@@ -32,5 +34,16 @@ urlpatterns = [
     'parcel/<int:parcel_id>/purchase/',
     purchase_parcel,
     name='purchase_parcel'
+    ),
+
+    path(
+    'parcel/<int:parcel_id>/payment/',
+    payment_page,
+    name='payment_page'),
+
+    path(
+    'parcel/<int:parcel_id>/payment/<str:method>/confirm/',
+    views.confirm_payment,
+    name='confirm_payment'
     ),
 ]

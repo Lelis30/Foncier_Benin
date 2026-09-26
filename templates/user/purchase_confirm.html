@@ -166,13 +166,12 @@
 
 <div class="d-flex gap-2 mb-4">
 
-    <button
-        type="button"
-        class="btn btn-success btn-lg"
-        disabled
-    >
-        💳 {% trans "Continuer vers le paiement" %}
-    </button>
+    <a
+    href="{% url 'payment_page' parcel.id %}"
+    class="btn btn-success btn-lg"
+>
+    💳 {% trans "Continuer vers le paiement" %}
+</a>
 
 
     <a

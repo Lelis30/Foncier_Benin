@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Parcel, Report, LandTransaction
-
+from .models import Parcel, Report, LandTransaction, Purchase
+from django.utils import timezone
+from django.views.decorators.http import require_POST
 
 @login_required
 def search_parcel(request):
@@ -180,5 +181,83 @@ def purchase_parcel(request, parcel_id):
         'user/purchase_confirm.html',
         {
             'parcel': parcel
+        }
+    )
+
+@login_required
+def payment_page(request, parcel_id):
+
+    parcel = get_object_or_404(
+        Parcel,
+        id=parcel_id,
+        for_sale=True
+    )
+
+    return render(
+        request,
+        'user/payment.html',
+        {
+            'parcel': parcel,
+        }
+    )
+
+@login_required
+@require_POST
+def confirm_payment(request, parcel_id, method):
+
+    parcel = get_object_or_404(
+        Parcel,
+        id=parcel_id,
+        for_sale=True
+    )
+
+    # Vérifier le moyen de paiement
+    allowed_methods = ['MTN', 'MOOV', 'CARD']
+
+    method = method.upper()
+
+    if method not in allowed_methods:
+        return redirect(
+            'payment_page',
+            parcel_id=parcel.id
+        )
+
+    # Créer ou récupérer l'achat
+    purchase, created = Purchase.objects.get_or_create(
+        parcel=parcel,
+        buyer=request.user,
+        defaults={
+            'amount': parcel.price,
+            'status': 'PENDING'
+        }
+    )
+    if not created and purchase.status == 'PAID':
+        return render(
+            request,
+            'user/payment_success.html',
+            {
+                'parcel': parcel,
+                'purchase': purchase,
+                'already_paid': True,
+            }
+        )
+    # Enregistrer le paiement simulé
+    purchase.status = 'PAID'
+    purchase.payment_method = method
+    purchase.paid_at = timezone.now()
+
+    # Référence de transaction de démonstration
+    purchase.transaction_reference = (
+        f"FB-{purchase.id}-{timezone.now().strftime('%Y%m%d%H%M%S')}"
+    )
+
+    purchase.save()
+
+    return render(
+        request,
+        'user/payment_success.html',
+        {
+            'parcel': parcel,
+            'purchase': purchase
         }
     )

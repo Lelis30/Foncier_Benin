@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Paiement réussi" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card shadow-sm">
+
+        <div class="card-body p-5 text-center">
+
+            <div style="font-size: 70px;">
+                ✅
+            </div>
+
+            <h1 class="mt-3 text-success">
+                {% trans "Paiement réussi !" %}
+            </h1>
+
+            <p class="lead mt-3">
+                {% trans "Votre paiement a été enregistré avec succès." %}
+            </p>
+
+            <hr class="my-4">
+
+            <div class="row text-start">
+
+                <div class="col-md-6 mb-3">
+                    <strong>
+                        📍 {% trans "Parcelle" %}
+                    </strong>
+
+                    <p>
+                        {{ parcel.reference }}
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>
+                        💰 {% trans "Montant payé" %}
+                    </strong>
+
+                    <p>
+                        {{ purchase.amount|floatformat:"0" }} FCFA
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>
+                        💳 {% trans "Moyen de paiement" %}
+                    </strong>
+
+                    <p>
+                        {{ purchase.get_payment_method_display }}
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>
+                        🔖 {% trans "Référence de transaction" %}
+                    </strong>
+
+                    <p>
+                        {{ purchase.transaction_reference }}
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="alert alert-warning mt-3 text-start">
+                ⏳
+                {% trans "Le paiement a été enregistré. Le transfert de propriété doit maintenant être vérifié et validé par l'administration." %}
+            </div>
+
+            <a
+                href="{% url 'parcel_detail' parcel.id %}"
+                class="btn btn-primary mt-3"
+            >
+                📍 {% trans "Voir la parcelle" %}
+            </a>
+
+            <a
+                href="{% url 'user_dashboard' %}"
+                class="btn btn-secondary mt-3"
+            >
+                🏠 {% trans "Retour au tableau de bord" %}
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
