@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-24 23:17+0100\n"
+"POT-Creation-Date: 2026-09-26 00:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +18,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\accounts\forms.py:9
-#: .\accounts\forms.py:9
 msgid "Prénom"
 msgstr "First name"
 
-#: .\accounts\forms.py:15
+#: .\accounts\forms.py:15 .\templates\user\parcel_search.html:568
 msgid "Nom"
 msgstr "Last name"
 
@@ -52,7 +50,7 @@ msgid "Les mots de passe ne correspondent pas."
 msgstr "The passwords do not match."
 
 #: .\templates\accounts\login.html:5 .\templates\accounts\login.html:18
-#: .\templates\base.html:123
+#: .\templates\base.html:179
 msgid "Connexion"
 msgstr "Login"
 
@@ -70,7 +68,7 @@ msgstr "Don't have an account yet?"
 msgid "Créer un compte"
 msgstr "Create an account"
 
-#: .\templates\accounts\register.html:5 .\templates\base.html:133
+#: .\templates\accounts\register.html:5 .\templates\base.html:189
 msgid "Inscription"
 msgstr "Register"
 
@@ -83,77 +81,214 @@ msgid "Vous avez déjà un compte ?"
 msgstr "Already have an account?"
 
 #: .\templates\admin_dashboard\dashboard.html:5
-#: .\templates\admin_dashboard\dashboard.html:14 .\templates\base.html:82
+#: .\templates\admin_dashboard\dashboard.html:18 .\templates\base.html:139
 msgid "Administration"
 msgstr "Administration"
 
-#: .\templates\admin_dashboard\dashboard.html:18
+#: .\templates\admin_dashboard\dashboard.html:22
 msgid "Gestion de la plateforme foncière."
 msgstr "Land platform management."
 
-#: .\templates\admin_dashboard\dashboard.html:35
+#: .\templates\admin_dashboard\dashboard.html:42
 msgid "Parcelles"
 msgstr "Parcels"
 
-#: .\templates\admin_dashboard\dashboard.html:39
+#: .\templates\admin_dashboard\dashboard.html:46
 msgid "Gérer les parcelles."
 msgstr "Manage parcels."
 
-#: .\templates\admin_dashboard\dashboard.html:46
-#: .\templates\admin_dashboard\dashboard.html:74
-#: .\templates\admin_dashboard\dashboard.html:102
+#: .\templates\admin_dashboard\dashboard.html:53
+#: .\templates\admin_dashboard\dashboard.html:81
+#: .\templates\admin_dashboard\dashboard.html:109
 msgid "Gérer"
 msgstr "Manage"
 
-#: .\templates\admin_dashboard\dashboard.html:63
+#: .\templates\admin_dashboard\dashboard.html:70
 msgid "Propriétaires"
 msgstr "Owners"
 
-#: .\templates\admin_dashboard\dashboard.html:67
+#: .\templates\admin_dashboard\dashboard.html:74
 msgid "Gérer les propriétaires."
 msgstr "Manage owners."
 
-#: .\templates\admin_dashboard\dashboard.html:91
+#: .\templates\admin_dashboard\dashboard.html:98
 msgid "Documents"
 msgstr "Documents"
 
-#: .\templates\admin_dashboard\dashboard.html:95
+#: .\templates\admin_dashboard\dashboard.html:102
 msgid "Gérer les documents fonciers."
 msgstr "Manage land documents."
 
-#: .\templates\admin_dashboard\dashboard.html:119
+#: .\templates\admin_dashboard\dashboard.html:126
 msgid "Signalements"
 msgstr "Reports"
 
-#: .\templates\admin_dashboard\dashboard.html:123
+#: .\templates\admin_dashboard\dashboard.html:130
 msgid "Consulter les signalements."
 msgstr "View reports."
 
-#: .\templates\admin_dashboard\dashboard.html:130
+#: .\templates\admin_dashboard\dashboard.html:137
 msgid "Voir"
 msgstr "View"
 
-#: .\templates\admin_dashboard\dashboard.html:143
+#: .\templates\admin_dashboard\dashboard.html:153
+msgid "Suivi des signalements"
+msgstr "Reports"
+
+#: .\templates\admin_dashboard\dashboard.html:172
+msgid "Total"
+msgstr "Total"
+
+#: .\templates\admin_dashboard\dashboard.html:191
+#: .\templates\admin_dashboard\dashboard.html:372
+#: .\templates\admin_dashboard\dashboard.html:479
+#: .\templates\user\parcel_search.html:170
+msgid "En attente"
+msgstr "Pending"
+
+#: .\templates\admin_dashboard\dashboard.html:210
+msgid "En vérification"
+msgstr "Under review"
+
+#: .\templates\admin_dashboard\dashboard.html:229
+msgid "Résolus"
+msgstr "Resolved"
+
+#: .\templates\admin_dashboard\dashboard.html:257
+msgid "Signalements récents"
+msgstr "Recent reports"
+
+#: .\templates\admin_dashboard\dashboard.html:261
+msgid "Consultez les problèmes signalés par les utilisateurs."
+msgstr "View issues reported by users."
+
+#: .\templates\admin_dashboard\dashboard.html:271
+msgid "Gestion complète"
+msgstr "Full administration"
+
+#: .\templates\admin_dashboard\dashboard.html:292
+msgid "Parcelle"
+msgstr "Parcels"
+
+#: .\templates\admin_dashboard\dashboard.html:296
+msgid "Utilisateur"
+msgstr "Username"
+
+#: .\templates\admin_dashboard\dashboard.html:300
+#: .\templates\user\parcel_search.html:375
+#: .\templates\user\parcel_search.html:491
+#: .\templates\user\parcel_search.html:571
+msgid "Description"
+msgstr "Register"
+
+#: .\templates\admin_dashboard\dashboard.html:304
+#: .\templates\user\parcel_search.html:156
+#: .\templates\user\parcel_search.html:227
+#: .\templates\user\parcel_search.html:379
+msgid "Statut"
+msgstr "Status"
+
+#: .\templates\admin_dashboard\dashboard.html:308
+#: .\templates\user\parcel_search.html:371
+msgid "Date"
+msgstr "Date"
+
+#: .\templates\admin_dashboard\dashboard.html:312
+msgid "Action"
+msgstr "Action"
+
+#: .\templates\admin_dashboard\dashboard.html:382
+#: .\templates\admin_dashboard\dashboard.html:492
+msgid "En cours de vérification"
+msgstr "Under review"
+
+#: .\templates\admin_dashboard\dashboard.html:391
+#: .\templates\admin_dashboard\dashboard.html:505
+msgid "Résolu"
+msgstr "Resolved"
+
+#: .\templates\admin_dashboard\dashboard.html:432
+msgid "Modifier"
+msgstr "Edit"
+
+#: .\templates\admin_dashboard\dashboard.html:455
+msgid "Aucun signalement n'a encore été enregistré."
+msgstr "No reports have been submitted yet."
+
+#: .\templates\admin_dashboard\dashboard.html:471
+msgid "Statut des signalements"
+msgstr "View reports."
+
+#: .\templates\admin_dashboard\dashboard.html:483
+msgid "Le signalement n'a pas encore été traité."
+msgstr "The report has not been processed yet."
+
+#: .\templates\admin_dashboard\dashboard.html:496
+msgid "Le signalement est en cours d'analyse."
+msgstr "The report is currently under review."
+
+#: .\templates\admin_dashboard\dashboard.html:509
+msgid "Le problème a été traité."
+msgstr "The issue has been resolved."
+
+#: .\templates\admin_dashboard\dashboard.html:526
 msgid "Administration avancée"
 msgstr "Advanced administration"
 
-#: .\templates\admin_dashboard\dashboard.html:147
+#: .\templates\admin_dashboard\dashboard.html:530
 msgid "Accédez à l'interface complète d'administration Django."
 msgstr "Access the full Django administration interface."
 
-#: .\templates\admin_dashboard\dashboard.html:156
+#: .\templates\admin_dashboard\dashboard.html:539
 msgid "Administration complète"
 msgstr "Full administration"
 
+#: .\templates\base.html:49
+msgid "Accessibilité"
+msgstr "Accessible"
+
+#: .\templates\base.html:56 .\templates\base.html:57
+msgid "Réduire la taille du texte"
+msgstr "Decrease text size"
+
+#: .\templates\base.html:66 .\templates\base.html:67
+msgid "Agrandir la taille du texte"
+msgstr "Increase text size"
+
+#: .\templates\base.html:76
+msgid "Activer ou désactiver le contraste élevé"
+msgstr "Enable or disable high contrast"
+
+#: .\templates\base.html:78
+msgid "Contraste"
+msgstr "Contrast"
+
+#: .\templates\base.html:85
+msgid "Lire le contenu de la page"
+msgstr "Read page content"
+
+#: .\templates\base.html:87
+msgid "Lire"
+msgstr "Read"
+
 #: .\templates\base.html:94
+msgid "Arrêter la lecture vocale"
+msgstr "Stop voice reading"
+
+#: .\templates\base.html:96
+msgid "Arrêter"
+msgstr "Stop"
+
+#: .\templates\base.html:151 .\templates\user\dashboard.html:5
+#: .\templates\user\dashboard.html:17
 msgid "Tableau de bord"
 msgstr "Dashboard"
 
-#: .\templates\base.html:106
+#: .\templates\base.html:163
 msgid "Déconnexion"
 msgstr "Logout"
 
-#: .\templates\base.html:175
+#: .\templates\base.html:229
 msgid "Choisir la langue"
 msgstr "Choose language"
 
@@ -164,8 +299,7 @@ msgstr "Understand and secure land information in Benin"
 #: .\templates\home.html:23
 msgid ""
 "Visualisez, recherchez et vérifiez les informations foncières facilement."
-msgstr ""
-"View, search and verify land information easily."
+msgstr "View, search and verify land information easily."
 
 #: .\templates\home.html:64
 msgid "Visualiser"
@@ -175,7 +309,8 @@ msgstr "View"
 msgid "Visualisez les parcelles et leur localisation sur une carte."
 msgstr "View parcels and their locations on a map."
 
-#: .\templates\home.html:87
+#: .\templates\home.html:87 .\templates\user\dashboard.html:86
+#: .\templates\user\parcel_search.html:69
 msgid "Vérifier"
 msgstr "Verify"
 
@@ -200,68 +335,330 @@ msgid ""
 "Notre plateforme facilite l'accès aux informations relatives aux parcelles, "
 "propriétaires et documents fonciers."
 msgstr ""
-"Our platform makes it easier to access information about parcels, "
-"owners and land documents."
+"Our platform makes it easier to access information about parcels, owners and "
+"land documents."
 
 #: .\templates\home.html:148
 msgid "Commencer"
 msgstr "Get started"
 
-#: .\templates\user\dashboard.html:5
-msgid "Mon espace"
-msgstr "My account"
-
-#: .\templates\user\dashboard.html:16
+#: .\templates\user\dashboard.html:21
 msgid "Bienvenue"
 msgstr "Welcome"
 
-#: .\templates\user\dashboard.html:25
-msgid "Bienvenue sur votre espace foncier."
-msgstr "Welcome to your land management area."
+#: .\templates\user\dashboard.html:26
 
-#: .\templates\user\dashboard.html:46
+#| msgid ""
+#| "Visualisez, recherchez et vérifiez les informations foncières facilement."
+msgid "Consultez, recherchez et vérifiez les informations foncières."
+msgstr "View, search and verify land information easily."
+
+#: .\templates\user\dashboard.html:47
 msgid "Carte foncière"
 msgstr "Land map"
 
-#: .\templates\user\dashboard.html:52
-msgid "Visualisez les parcelles disponibles sur la carte."
-msgstr "View available parcels on the map."
+#: .\templates\user\dashboard.html:51
 
-#: .\templates\user\dashboard.html:56
+#| msgid "Visualisez les parcelles disponibles sur la carte."
+msgid "Visualisez les parcelles enregistrées sur la carte."
+msgstr "View registered parcels on the map."
+
+#: .\templates\user\dashboard.html:58
 msgid "Voir la carte"
 msgstr "View map"
 
-#: .\templates\user\dashboard.html:75
+#: .\templates\user\dashboard.html:75 .\templates\user\parcel_search.html:5
+#: .\templates\user\parcel_search.html:22
 msgid "Vérifier une parcelle"
 msgstr "Verify a parcel"
 
-#: .\templates\user\dashboard.html:81
-msgid "Recherchez une parcelle avec sa référence."
+#: .\templates\user\dashboard.html:79
+
+#| msgid "Recherchez une parcelle avec sa référence."
+msgid "Recherchez une parcelle à partir de sa référence."
 msgstr "Search for a parcel using its reference."
 
-#: .\templates\user\dashboard.html:88
-msgid "Rechercher"
-msgstr "Search"
-
-#: .\templates\user\dashboard.html:107
+#: .\templates\user\dashboard.html:103 .\templates\user\report_problem.html:5
+#: .\templates\user\report_problem.html:20
 msgid "Signaler un problème"
 msgstr "Report a problem"
 
-#: .\templates\user\dashboard.html:113
+#: .\templates\user\dashboard.html:107
 msgid "Signalez une anomalie concernant une parcelle."
 msgstr "Report an issue concerning a parcel."
 
-#: .\templates\user\dashboard.html:117
+#: .\templates\user\dashboard.html:114
 msgid "Signaler"
 msgstr "Report"
 
-#: .\templates\user\dashboard.html:132
+#: .\templates\user\dashboard.html:133
 msgid "Carte des parcelles"
 msgstr "Parcel map"
 
-#: .\templates\user\dashboard.html:136
-msgid "Visualisation des parcelles sur la carte."
-msgstr "View parcels on the map."
+#: .\templates\user\dashboard.html:137
+msgid ""
+"Les parcelles et les zones agricoles enregistrées apparaissent "
+"automatiquement sur la carte."
+msgstr ""
+"Registered parcels and agricultural zones automatically appear on the map."
+
+#: .\templates\user\dashboard.html:177 .\templates\user\parcel_search.html:553
+msgid "Zones agricoles"
+msgstr "Agricultural zones"
+
+#: .\templates\user\dashboard.html:178
+msgid "Parcelles vérifiées"
+msgstr "Verified parcels"
+
+#: .\templates\user\dashboard.html:179
+
+#| msgid "Parcelle concernée"
+msgid "Parcelles en attente"
+msgstr "Pending parcels"
+
+#: .\templates\user\dashboard.html:180
+
+#| msgid "Parcelles"
+msgid "Parcelles en litige"
+msgstr "Disputed parcels"
+
+#: .\templates\user\dashboard.html:181
+msgid "Légende"
+msgstr "Legend"
+
+#: .\templates\user\dashboard.html:182
+
+#| msgid "Parcelle concernée"
+msgid "Parcelle vérifiée"
+msgstr "Verified parcel"
+
+#: .\templates\user\dashboard.html:183
+
+#| msgid "Parcelle concernée"
+msgid "Parcelle en attente"
+msgstr "Pending parcel"
+
+#: .\templates\user\dashboard.html:184
+
+#| msgid "Parcelle concernée"
+msgid "Parcelle en litige"
+msgstr "Disputed parcel"
+
+#: .\templates\user\dashboard.html:185
+
+#| msgid "Zones agricoles"
+msgid "Zone agricole"
+msgstr "Agricultural zones"
+
+#: .\templates\user\parcel_search.html:26
+msgid "Entrez la référence de la parcelle que vous souhaitez vérifier."
+msgstr "Enter the reference of the parcel you want to verify."
+
+#: .\templates\user\parcel_search.html:49
+msgid "Référence de la parcelle"
+msgstr "Parcel reference"
+
+#: .\templates\user\parcel_search.html:86
+msgid "Informations de la parcelle"
+msgstr "Parcel information"
+
+#: .\templates\user\parcel_search.html:95
+msgid "Référence"
+msgstr "Reference"
+
+#: .\templates\user\parcel_search.html:108
+#: .\templates\user\parcel_search.html:569
+msgid "Localisation"
+msgstr "Location"
+
+#: .\templates\user\parcel_search.html:121
+#: .\templates\user\parcel_search.html:570
+msgid "Superficie"
+msgstr "Area"
+
+#: .\templates\user\parcel_search.html:134
+msgid "Propriétaire"
+msgstr "Owners"
+
+#: .\templates\user\parcel_search.html:144
+msgid "Non renseigné"
+msgstr "Not provided"
+
+#: .\templates\user\parcel_search.html:163
+#: .\templates\user\parcel_search.html:429
+msgid "Vérifiée"
+msgstr "Verified"
+
+#: .\templates\user\parcel_search.html:177
+msgid "En litige"
+msgstr "Disputed"
+
+#: .\templates\user\parcel_search.html:201
+msgid "Documents fonciers"
+msgstr "Land documents"
+
+#: .\templates\user\parcel_search.html:219
+#: .\templates\user\parcel_search.html:367
+msgid "Type"
+msgstr "Type"
+
+#: .\templates\user\parcel_search.html:223
+msgid "Numéro"
+msgstr "Number"
+
+#: .\templates\user\parcel_search.html:231
+msgid "Document"
+msgstr "Document"
+
+#: .\templates\user\parcel_search.html:273
+msgid "Vérifié"
+msgstr "Verified"
+
+#: .\templates\user\parcel_search.html:281
+msgid "Non vérifié"
+msgstr "Not verified"
+
+#: .\templates\user\parcel_search.html:303
+msgid "Consulter"
+msgstr "View"
+
+#: .\templates\user\parcel_search.html:311
+msgid "Aucun fichier"
+msgstr "No file"
+
+#: .\templates\user\parcel_search.html:335
+msgid "Aucun document foncier n'est enregistré pour cette parcelle."
+msgstr "No land document is registered for this parcel."
+
+#: .\templates\user\parcel_search.html:348
+msgid "Historique des transactions"
+msgstr "Transaction history"
+
+#: .\templates\user\parcel_search.html:352
+msgid "Historique des opérations enregistrées pour cette parcelle."
+msgstr "History of transactions recorded for this parcel."
+
+#: .\templates\user\parcel_search.html:435
+msgid "Non vérifiée"
+msgstr "Not verified"
+
+#: .\templates\user\parcel_search.html:458
+msgid "Aucune transaction n'est enregistrée pour cette parcelle."
+msgstr "No transaction is registered for this parcel."
+
+#: .\templates\user\parcel_search.html:470
+msgid "Constructions sur la parcelle"
+msgstr "Buildings on the parcel"
+
+#: .\templates\user\parcel_search.html:474
+msgid "Constructions enregistrées sur cette parcelle."
+msgstr "Buildings registered on this parcel."
+
+#: .\templates\user\parcel_search.html:487
+msgid "Type de construction"
+msgstr "Building type"
+
+#: .\templates\user\parcel_search.html:518
+#: .\templates\user\parcel_search.html:600
+#, fuzzy
+#| msgid "Inscription"
+msgid "Aucune description"
+msgstr "Register"
+
+#: .\templates\user\parcel_search.html:540
+msgid "Aucune construction n'est enregistrée sur cette parcelle."
+msgstr "No building is registered on this parcel."
+
+#: .\templates\user\parcel_search.html:557
+msgid "Informations agricoles enregistrées pour cette parcelle."
+msgstr "Agricultural information recorded for this parcel."
+
+#: .\templates\user\parcel_search.html:618
+msgid "Aucune zone agricole n'est enregistrée pour cette parcelle."
+msgstr "No agricultural zone is registered for this parcel."
+
+#: .\templates\user\parcel_search.html:630
+msgid "Localisation géographique"
+msgstr "Geographic location"
+
+#: .\templates\user\parcel_search.html:639
+msgid "Latitude"
+msgstr "Latitude"
+
+#: .\templates\user\parcel_search.html:650
+msgid "Longitude"
+msgstr "Longitude"
+
+#: .\templates\user\parcel_search.html:689
+msgid "Parcelle introuvable"
+msgstr "Parcel not found"
+
+#: .\templates\user\parcel_search.html:694
+msgid ""
+"Aucune parcelle ne correspond à cette référence. Vérifiez la référence et "
+"réessayez."
+msgstr "No parcel matches this reference. Check the reference and try again."
+
+#: .\templates\user\parcel_search.html:711
+#: .\templates\user\report_problem.html:172
+msgid "Retour au tableau de bord"
+msgstr "Back to dashboard"
+
+#: .\templates\user\report_problem.html:24
+msgid "Signalez une anomalie ou un problème concernant une parcelle."
+msgstr "Report an issue concerning a parcel."
+
+#: .\templates\user\report_problem.html:40
+msgid "Signalement envoyé"
+msgstr "Report submitted"
+
+#: .\templates\user\report_problem.html:44
+msgid ""
+"Votre signalement a été enregistré avec succès. Il sera examiné par un "
+"administrateur."
+msgstr ""
+"Your report has been submitted successfully. It will be reviewed by an "
+"administrator."
+
+#: .\templates\user\report_problem.html:71
+msgid "Parcelle concernée"
+msgstr "Parcel concerned"
+
+#: .\templates\user\report_problem.html:85
+
+#| msgid "Vérifier une parcelle"
+msgid "Sélectionnez une parcelle"
+msgstr "Select a parcel"
+
+#: .\templates\user\report_problem.html:116
+
+#| msgid "Signaler un problème"
+msgid "Description du problème"
+msgstr "Problem description"
+
+#: .\templates\user\report_problem.html:128
+msgid "Décrivez clairement le problème rencontré avec cette parcelle..."
+msgstr "Clearly describe the issue encountered with this parcel..."
+
+#: .\templates\user\report_problem.html:135
+msgid "Expliquez le problème avec le plus de détails possible."
+msgstr "Explain the issue in as much detail as possible."
+
+#: .\templates\user\report_problem.html:148
+msgid "Votre signalement sera transmis aux administrateurs pour vérification."
+msgstr "Your report will be sent to the administrators for review."
+
+#: .\templates\user\report_problem.html:162
+
+#| msgid "Consulter les signalements."
+msgid "Envoyer le signalement"
+msgstr "Submit the report"
+
+#: .\templates\user\report_problem.html:190
+
+#| msgid "Aucune parcelle n’est actuellement disponible."
+msgid "Aucune parcelle n'est actuellement disponible."
+msgstr "No parcel is currently available."
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:15
 msgid "Messages"
@@ -1469,3 +1866,15 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:248
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#~ msgid "Mon espace"
+#~ msgstr "My account"
+
+#~ msgid "Bienvenue sur votre espace foncier."
+#~ msgstr "Welcome to your land management area."
+
+#~ msgid "Rechercher"
+#~ msgstr "Search"
+
+#~ msgid "Visualisation des parcelles sur la carte."
+#~ msgstr "View parcels on the map."

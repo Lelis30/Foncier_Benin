@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Parcel, Report
+from .models import Parcel, Report, LandTransaction
 
 
 @login_required
@@ -93,5 +93,67 @@ def report_problem(request):
         {
             'parcels': parcels,
             'success': success
+        }
+    )
+
+@login_required
+def parcel_detail(request, parcel_id):
+
+    parcel = get_object_or_404(
+        Parcel.objects.select_related('owner'),
+        id=parcel_id
+    )
+
+    documents = parcel.documents.all()
+
+    transactions = LandTransaction.objects.filter(
+        parcel=parcel
+    ).order_by('-date')
+
+    buildings = parcel.buildings.all()
+
+    agricultural_zones = parcel.agricultural_zones.all()
+
+    return render(
+        request,
+        'user/parcel_detail.html',
+        {
+            'parcel': parcel,
+            'documents': documents,
+            'transactions': transactions,
+            'buildings': buildings,
+            'agricultural_zones': agricultural_zones,
+        }
+    )
+
+@login_required
+def parcel_detail(request, parcel_id):
+
+    parcel = get_object_or_404(
+        Parcel.objects.select_related('owner'),
+        id=parcel_id
+    )
+
+    documents = parcel.documents.all()
+
+    transactions = (
+        parcel.landtransaction_set
+        .all()
+        .order_by('-date')
+    )
+
+    buildings = parcel.buildings.all()
+
+    agricultural_zones = parcel.agricultural_zones.all()
+
+    return render(
+        request,
+        'user/parcel_detail.html',
+        {
+            'parcel': parcel,
+            'documents': documents,
+            'transactions': transactions,
+            'buildings': buildings,
+            'agricultural_zones': agricultural_zones,
         }
     )

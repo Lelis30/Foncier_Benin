@@ -153,3 +153,15 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# SECURITE DES SESSIONS
+
+# La session expire après 30 minutes d'inactivité
+SESSION_COOKIE_AGE = 1800
+
+# Renouvelle le délai de session à chaque activité
+SESSION_SAVE_EVERY_REQUEST = True
+
+# Ferme la session lorsque le navigateur est complètement fermé
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

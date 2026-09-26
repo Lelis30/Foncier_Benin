@@ -200,6 +200,27 @@ def admin_dashboard(request):
         status='RESOLVED'
     ).count()
 
+    # PARCELLES POUR LE TABLEAU DE BORD ADMIN
+
+    parcels = (
+        Parcel.objects
+            .select_related('owner')
+            .order_by('-created_at')
+    )
+
+    total_parcels = parcels.count()
+
+    verified_parcels = parcels.filter(
+        status='VERIFIED'
+    ).count()
+
+    pending_parcels = parcels.filter(
+        status='PENDING'
+    ).count()
+
+    disputed_parcels = parcels.filter(
+        status='DISPUTED'
+    ).count()
     return render(
         request,
         'admin_dashboard/dashboard.html',
@@ -209,5 +230,11 @@ def admin_dashboard(request):
             'pending_reports': pending_reports,
             'reviewing_reports': reviewing_reports,
             'resolved_reports': resolved_reports,
+            # Parcelles
+            'parcels': parcels,
+            'total_parcels': total_parcels,
+            'verified_parcels': verified_parcels,
+            'pending_parcels': pending_parcels,
+            'disputed_parcels': disputed_parcels,
         }
     )

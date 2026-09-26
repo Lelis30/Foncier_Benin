@@ -167,6 +167,23 @@
 
 <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+
+</script>
+
+    <!-- TRADUCTIONS JAVASCRIPT DE LA CARTE -->
+
+<script>
+    const mapTranslations = {
+        agriculturalZones: "{% trans 'Zones agricoles' %}",
+        verifiedParcels: "{% trans 'Parcelles vérifiées' %}",
+        pendingParcels: "{% trans 'Parcelles en attente' %}",
+        disputedParcels: "{% trans 'Parcelles en litige' %}",
+        legend: "{% trans 'Légende' %}",
+        verifiedParcel: "{% trans 'Parcelle vérifiée' %}",
+        pendingParcel: "{% trans 'Parcelle en attente' %}",
+        disputedParcel: "{% trans 'Parcelle en litige' %}",
+        agriculturalZone: "{% trans 'Zone agricole' %}"
+    };
 </script>
 
 
@@ -598,13 +615,23 @@ document.addEventListener(
         // CONTROLE DES COUCHES
 
 
-       const overlayMaps = {
-    "🌾 Zones agricoles": agriculturalLayer,
+       const overlayMaps = {};
 
-    "✅ Parcelles vérifiées": verifiedParcelsLayer,
-    "⏳ Parcelles en attente": pendingParcelsLayer,
-    "⚠️ Parcelles en litige": disputedParcelsLayer
-    };
+overlayMaps[
+    "🌾 " + mapTranslations.agriculturalZones
+] = agriculturalLayer;
+
+overlayMaps[
+    "✅ " + mapTranslations.verifiedParcels
+] = verifiedParcelsLayer;
+
+overlayMaps[
+    "⏳ " + mapTranslations.pendingParcels
+] = pendingParcelsLayer;
+
+overlayMaps[
+    "⚠️ " + mapTranslations.disputedParcels
+] = disputedParcelsLayer;
 
 
 
@@ -639,33 +666,32 @@ document.addEventListener(
                 div.innerHTML = `
     <div style="
         background: white;
-        color: black;
         padding: 12px 15px;
         border-radius: 8px;
         box-shadow: 0 1px 6px rgba(0,0,0,0.35);
         font-size: 14px;
-        line-height: 28px;
+        line-height: 26px;
     ">
 
         <strong>
-            🗺️ Légende
+            🗺️ ${mapTranslations.legend}
         </strong>
 
         <br>
 
-        ✅ Parcelle vérifiée
+        ✅ ${mapTranslations.verifiedParcel}
 
         <br>
 
-        ⏳ Parcelle en attente
+        ⏳ ${mapTranslations.pendingParcel}
 
         <br>
 
-        ⚠️ Parcelle en litige
+        ⚠️ ${mapTranslations.disputedParcel}
 
         <br>
 
-        🌾 Zone agricole
+        🌾 ${mapTranslations.agriculturalZone}
 
     </div>
 `;

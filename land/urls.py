@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     search_parcel,
     report_problem,
+    parcel_detail,
 )
 
 
@@ -18,6 +19,12 @@ urlpatterns = [
         'report/',
         report_problem,
         name='report_problem'
+    ),
+
+    path(
+        'parcel/<int:parcel_id>/',
+        parcel_detail,
+        name='parcel_detail'
     ),
 
 ]
