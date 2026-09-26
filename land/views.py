@@ -157,3 +157,28 @@ def parcel_detail(request, parcel_id):
             'agricultural_zones': agricultural_zones,
         }
     )
+
+@login_required
+def purchase_parcel(request, parcel_id):
+
+    parcel = get_object_or_404(
+        Parcel,
+        id=parcel_id
+    )
+
+    if not parcel.for_sale or parcel.price is None:
+        return render(
+            request,
+            'user/purchase_unavailable.html',
+            {
+                'parcel': parcel
+            }
+        )
+
+    return render(
+        request,
+        'user/purchase_confirm.html',
+        {
+            'parcel': parcel
+        }
+    )

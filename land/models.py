@@ -63,6 +63,19 @@ class Parcel(models.Model):
         default='PENDING'
     )
 
+    price = models.DecimalField(
+        max_digits=15,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name="Prix de vente"
+    )
+
+    for_sale = models.BooleanField(
+        default=False,
+        verbose_name="À vendre"
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True
     )
@@ -241,3 +254,52 @@ class Report(models.Model):
 
     def __str__(self):
         return f"Signalement #{self.id}"
+
+class Purchase(models.Model):
+
+    STATUS_CHOICES = [
+        ('PENDING', 'En attente de paiement'),
+        ('PAID', 'Payé'),
+        ('CANCELLED', 'Annulé'),
+    ]
+
+    parcel = models.ForeignKey(
+        Parcel,
+        on_delete=models.PROTECT,
+        related_name='purchases'
+    )
+
+    buyer = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='land_purchases'
+    )
+
+    amount = models.DecimalField(
+        max_digits=15,
+        decimal_places=2
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='PENDING'
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    paid_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    transaction_reference = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return f"{self.parcel.reference} - {self.buyer.username} - {self.status}"

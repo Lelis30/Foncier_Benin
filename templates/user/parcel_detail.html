@@ -1,10 +1,564 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load i18n %}
+{% load humanize %}
+{% block title %}
+    {% trans "Détails de la parcelle" %}
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- TITRE -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1>
+                📍 {% trans "Détails de la parcelle" %}
+            </h1>
+
+            <p class="text-muted mb-0">
+                {% trans "Consultez les informations enregistrées pour cette parcelle." %}
+            </p>
+        </div>
+
+        <a
+            href="{% url 'admin_dashboard' %}"
+            class="btn btn-secondary"
+        >
+            ← {% trans "Retour au tableau de bord" %}
+        </a>
+
+    </div>
+
+
+    <!-- INFORMATIONS PRINCIPALES -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+                🗺️ {% trans "Informations de la parcelle" %}
+            </h4>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <strong>
+                        {% trans "Référence" %}
+                    </strong>
+
+                    <p>
+                        {{ parcel.reference }}
+                    </p>
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+                    <strong>
+                        {% trans "Propriétaire" %}
+                    </strong>
+
+                    <p>
+                        {% if parcel.owner %}
+                            {{ parcel.owner.first_name }}
+                            {{ parcel.owner.last_name }}
+                        {% else %}
+                            {% trans "Non renseigné" %}
+                        {% endif %}
+                    </p>
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+                    <strong>
+                        {% trans "Localisation" %}
+                    </strong>
+
+                    <p>
+                        {{ parcel.location }}
+                    </p>
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+                    <strong>
+                        {% trans "Superficie" %}
+                    </strong>
+
+                    <p>
+                        {{ parcel.area }} m²
+                    </p>
+                </div>
+
+
+                <div class="col-md-6 mb-3">
+
+                    <strong>
+                        {% trans "Statut" %}
+                    </strong>
+
+                    <p class="mt-2">
+
+                        {% if parcel.status == "VERIFIED" %}
+
+                            <span class="badge bg-success">
+                                ✅ {% trans "Vérifiée" %}
+                            </span>
+
+                        {% elif parcel.status == "PENDING" %}
+
+                            <span class="badge bg-warning text-dark">
+                                ⏳ {% trans "En attente" %}
+                            </span>
+
+                        {% elif parcel.status == "DISPUTED" %}
+
+                            <span class="badge bg-danger">
+                                ⚠️ {% trans "En litige" %}
+                            </span>
+
+                        {% else %}
+
+                            {{ parcel.get_status_display }}
+
+                        {% endif %}
+
+                    </p>
+                    {% if parcel.for_sale and parcel.price %}
+
+    <div class="mt-3">
+
+        <strong>
+            💰 {% trans "Prix de vente" %}
+        </strong>
+
+        <p class="mb-2">
+    <strong>
+        {{ parcel.price|floatformat:"0g" }} FCFA
+    </strong>
+</p>
+
+<span class="badge bg-success">
+    🟢 {% trans "Disponible à la vente" %}
+</span>
+
+
+{% if not user.is_staff %}
+
+    <div class="mt-3">
+
+        <a
+            href="{% url 'purchase_parcel' parcel.id %}"
+            class="btn btn-success"
+        >
+            🛒 {% trans "Acheter cette parcelle" %}
+        </a>
+
+    </div>
+
+{% endif %}
+
+
+</div>
+
+{% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DOCUMENTS -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                📄 {% trans "Documents fonciers" %}
+            </h4>
+
+            {% if documents %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>{% trans "Type" %}</th>
+                                <th>{% trans "Numéro" %}</th>
+                                <th>{% trans "Statut" %}</th>
+                                <th>{% trans "Document" %}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for document in documents %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ document.get_document_type_display }}
+                                    </td>
+
+                                    <td>
+                                        {{ document.document_number }}
+                                    </td>
+
+                                    <td>
+
+                                        {% if document.verified %}
+
+                                            <span class="badge bg-success">
+                                                ✅ {% trans "Vérifié" %}
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="badge bg-warning text-dark">
+                                                ⏳ {% trans "Non vérifié" %}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+                                    <td>
+
+                                        {% if document.document_file %}
+
+                                            <a
+                                                href="{{ document.document_file.url }}"
+                                                target="_blank"
+                                                class="btn btn-sm btn-outline-primary"
+                                            >
+                                                👁️ {% trans "Consulter" %}
+                                            </a>
+
+                                        {% else %}
+
+                                            <span class="text-muted">
+                                                {% trans "Aucun fichier" %}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <p class="text-muted">
+                    {% trans "Aucun document foncier n'est enregistré pour cette parcelle." %}
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- TRANSACTIONS -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                🔄 {% trans "Historique des transactions" %}
+            </h4>
+
+            {% if transactions %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>{% trans "Type" %}</th>
+                                <th>{% trans "Date" %}</th>
+                                <th>{% trans "Description" %}</th>
+                                <th>{% trans "Statut" %}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for transaction in transactions %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ transaction.get_transaction_type_display }}
+                                    </td>
+
+                                    <td>
+                                        {{ transaction.date }}
+                                    </td>
+
+                                    <td>
+                                        {{ transaction.description }}
+                                    </td>
+
+                                    <td>
+
+                                        {% if transaction.verified %}
+
+                                            <span class="badge bg-success">
+                                                ✅ {% trans "Vérifiée" %}
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="badge bg-warning text-dark">
+                                                ⏳ {% trans "Non vérifiée" %}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <p class="text-muted">
+                    {% trans "Aucune transaction n'est enregistrée pour cette parcelle." %}
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- CONSTRUCTIONS -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                🏠 {% trans "Constructions sur la parcelle" %}
+            </h4>
+
+            {% if buildings %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    {% trans "Type de construction" %}
+                                </th>
+
+                                <th>
+                                    {% trans "Description" %}
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for building in buildings %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ building.get_building_type_display }}
+                                    </td>
+
+                                    <td>
+                                        {% if building.description %}
+                                            {{ building.description }}
+                                        {% else %}
+                                            {% trans "Non renseigné" %}
+                                        {% endif %}
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <p class="text-muted">
+                    {% trans "Aucune construction n'est enregistrée sur cette parcelle." %}
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ZONES AGRICOLES -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                🌾 {% trans "Zones agricoles" %}
+            </h4>
+
+            {% if agricultural_zones %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>{% trans "Nom" %}</th>
+                                <th>{% trans "Localisation" %}</th>
+                                <th>{% trans "Superficie" %}</th>
+                                <th>{% trans "Description" %}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for zone in agricultural_zones %}
+
+                                <tr>
+
+                                    <td>
+                                        {{ zone.name }}
+                                    </td>
+
+                                    <td>
+                                        {{ zone.location }}
+                                    </td>
+
+                                    <td>
+                                        {{ zone.area }} m²
+                                    </td>
+
+                                    <td>
+                                        {% if zone.description %}
+                                            {{ zone.description }}
+                                        {% else %}
+                                            {% trans "Non renseigné" %}
+                                        {% endif %}
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <p class="text-muted">
+                    {% trans "Aucune zone agricole n'est enregistrée pour cette parcelle." %}
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <!-- COORDONNEES -->
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                📍 {% trans "Localisation géographique" %}
+            </h4>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <strong>
+                        {% trans "Latitude" %}
+                    </strong>
+
+                    <p>
+                        {{ parcel.latitude }}
+                    </p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>
+                        {% trans "Longitude" %}
+                    </strong>
+
+                    <p>
+                        {{ parcel.longitude }}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTIONS ADMIN -->
+    {% if user.is_staff %}
+
+        <div class="d-flex gap-2 mb-4">
+
+            <a
+                href="{% url 'admin:land_parcel_change' parcel.id %}"
+                class="btn btn-primary"
+            >
+                ✏️ {% trans "Modifier la parcelle" %}
+            </a>
+
+            <a
+                href="{% url 'admin_dashboard' %}"
+                class="btn btn-outline-secondary"
+            >
+                ← {% trans "Retour au tableau de bord" %}
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

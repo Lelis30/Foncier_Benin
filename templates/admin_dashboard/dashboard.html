@@ -431,18 +431,28 @@
                 </td>
 
                 <!-- ACTION -->
-                <td>
+                <!-- ACTION -->
+<td>
 
-                    <a
-                        href="{% url 'admin:land_parcel_change' parcel.id %}"
-                        class="btn btn-sm btn-outline-primary"
-                    >
-                        ✏️ {% trans "Modifier" %}
-                    </a>
+    <div class="d-flex gap-2">
 
-                </td>
+        <a
+            href="{% url 'parcel_detail' parcel.id %}"
+            class="btn btn-sm btn-outline-success"
+        >
+            👁️ {% trans "Voir" %}
+        </a>
 
-            </tr>
+        <a
+            href="{% url 'admin:land_parcel_change' parcel.id %}"
+            class="btn btn-sm btn-outline-primary"
+        >
+            ✏️ {% trans "Modifier" %}
+        </a>
+
+    </div>
+
+</td>
 
         {% endfor %}
 

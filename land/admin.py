@@ -6,7 +6,8 @@ from .models import (
     Building,
     AgriculturalZone,
     LandTransaction,
-    Report
+    Report,
+    Purchase,
 )
 
 
@@ -29,13 +30,14 @@ class OwnerAdmin(admin.ModelAdmin):
 
 @admin.register(Parcel)
 class ParcelAdmin(admin.ModelAdmin):
-
     list_display = (
         'reference',
         'owner',
         'location',
         'area',
-        'status'
+        'status',
+        'price',
+        'for_sale',
     )
 
     list_filter = (
@@ -163,4 +165,33 @@ class ReportAdmin(admin.ModelAdmin):
         'parcel__reference',
         'user__username',
         'description',
+    )
+
+@admin.register(Purchase)
+class PurchaseAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'parcel',
+        'buyer',
+        'amount',
+        'status',
+        'created_at',
+        'paid_at',
+        'transaction_reference',
+    )
+
+    list_filter = (
+        'status',
+        'created_at',
+    )
+
+    search_fields = (
+        'parcel__reference',
+        'buyer__username',
+        'buyer__email',
+        'transaction_reference',
+    )
+
+    readonly_fields = (
+        'created_at',
     )

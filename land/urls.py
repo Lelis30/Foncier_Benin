@@ -4,6 +4,7 @@ from .views import (
     search_parcel,
     report_problem,
     parcel_detail,
+    purchase_parcel,
 )
 
 
@@ -27,4 +28,9 @@ urlpatterns = [
         name='parcel_detail'
     ),
 
+    path(
+    'parcel/<int:parcel_id>/purchase/',
+    purchase_parcel,
+    name='purchase_parcel'
+    ),
 ]

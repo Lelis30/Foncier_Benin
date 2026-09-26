@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Confirmation d'achat" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="mb-4">
+
+    <h1>
+        🛒 {% trans "Confirmation d'achat" %}
+    </h1>
+
+    <p class="lead">
+        {% trans "Vérifiez les informations avant de continuer vers le paiement." %}
+    </p>
+
+</div>
+
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-body p-4">
+
+        <h3 class="mb-4">
+            📍 {% trans "Parcelle" %} {{ parcel.reference }}
+        </h3>
+
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <strong>
+                    {% trans "Référence" %}
+                </strong>
+
+                <p>
+                    {{ parcel.reference }}
+                </p>
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <strong>
+                    {% trans "Localisation" %}
+                </strong>
+
+                <p>
+                    {{ parcel.location }}
+                </p>
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <strong>
+                    {% trans "Superficie" %}
+                </strong>
+
+                <p>
+                    {{ parcel.area }} m²
+                </p>
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <strong>
+                    {% trans "Propriétaire actuel" %}
+                </strong>
+
+                <p>
+                    {% if parcel.owner %}
+                        {{ parcel.owner }}
+                    {% else %}
+                        {% trans "Non renseigné" %}
+                    {% endif %}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="mt-4">
+
+            <h4>
+                💰 {% trans "Montant à payer" %}
+            </h4>
+
+            <h2 class="text-success">
+                {{ parcel.price|floatformat:"0" }} FCFA
+            </h2>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-body p-4">
+
+        <h4 class="mb-3">
+            👤 {% trans "Informations de l'acheteur" %}
+        </h4>
+
+        <p>
+            <strong>
+                {% trans "Nom d'utilisateur" %} :
+            </strong>
+
+            {{ user.username }}
+        </p>
+
+
+        <p>
+            <strong>
+                {% trans "Nom" %} :
+            </strong>
+
+            {% if user.get_full_name %}
+                {{ user.get_full_name }}
+            {% else %}
+                {% trans "Non renseigné" %}
+            {% endif %}
+        </p>
+
+
+        <p>
+            <strong>
+                {% trans "Adresse e-mail" %} :
+            </strong>
+
+            {% if user.email %}
+                {{ user.email }}
+            {% else %}
+                {% trans "Non renseignée" %}
+            {% endif %}
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="alert alert-warning">
+
+    ⚠️
+    {% trans "Vérifiez attentivement les informations de la parcelle avant de procéder au paiement." %}
+
+</div>
+
+
+<div class="d-flex gap-2 mb-4">
+
+    <button
+        type="button"
+        class="btn btn-success btn-lg"
+        disabled
+    >
+        💳 {% trans "Continuer vers le paiement" %}
+    </button>
+
+
+    <a
+        href="{% url 'parcel_detail' parcel.id %}"
+        class="btn btn-secondary btn-lg"
+    >
+        ← {% trans "Retour aux détails" %}
+    </a>
+
+</div>
+
+{% endblock %}
