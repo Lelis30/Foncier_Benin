@@ -166,3 +166,11 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 # Ferme la session lorsque le navigateur est complètement fermé
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# ==============================
+# AUTHENTIFICATION
+# ==============================
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'
+LOGOUT_REDIRECT_URL = '/'
