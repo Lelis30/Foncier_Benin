@@ -534,7 +534,7 @@ Foncier Bénin
 
 
 <!-- NOTRE MISSION -->
-<!-- NOTRE MISSION -->
+
 <section class="py-5 my-5">
 
     <div class="card border-0 shadow-lg overflow-hidden"
@@ -671,9 +671,18 @@ Foncier Bénin
                         min-height: 520px;
                      ">
 
-                    <div style="font-size: 90px;">
-                        🇧🇯
-                    </div>
+                    <div class="mb-3">
+    <img
+        src="{% static 'images/drapeau-benin.png' %}"
+        alt="{% trans 'Drapeau du Bénin' %}"
+        style="
+            width: 250px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.20);
+        "
+    >
+</div>
 
                     <h2 class="fw-bold mt-4 mb-3">
                         {% trans "Le foncier au service de tous" %}
