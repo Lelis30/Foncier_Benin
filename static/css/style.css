@@ -1,6 +1,4 @@
-/* ==========================================
-   NAVBAR MODERNE - FONCIER BÉNIN
-========================================== */
+/*  NAVBAR  */
 
 .modern-navbar {
     background: linear-gradient(
@@ -133,9 +131,7 @@
     }
 }
 
-/* =====================================
-   MENU ACCESSIBILITÉ
-===================================== */
+/* MENU ACCESSIBILITÉ */
 
 .accessibility-bar {
     background: #f8faf9;
@@ -221,11 +217,8 @@
     color: #198754;
 }
 
-/* =====================================================
-   TABLEAU DE BORD UTILISATEUR
-===================================================== */
+/* TABLEAU DE BORD UTILISATEUR */
 
-/* HERO */
 
 .dashboard-hero {
     position: relative;
@@ -284,7 +277,7 @@
 }
 
 
-/* BOUTONS DU HERO */
+/* BOUTONS */
 
 .dashboard-hero-actions {
     display: flex;
@@ -425,9 +418,7 @@
     }
 }
 
-/* ==========================================
-   MODE CONTRASTE ÉLEVÉ
-   ========================================== */
+/* MODE CONTRASTE ÉLEVÉ*/
 
 body.high-contrast {
     background: #000 !important;
