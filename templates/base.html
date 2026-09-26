@@ -42,6 +42,7 @@
 
 
 <!-- MENU ACCESSIBILITÉ -->
+
 <div class="accessibility-bar">
 
     <div class="container d-flex justify-content-end">
@@ -70,7 +71,7 @@
                     <button
                         class="dropdown-item accessibility-item"
                         type="button"
-                        onclick="decreaseFont()"
+                        onclick="decreaseFontSize()"
                     >
                         🔤 {% trans "Réduire le texte" %}
                         <span>A−</span>
@@ -81,7 +82,7 @@
                     <button
                         class="dropdown-item accessibility-item"
                         type="button"
-                        onclick="increaseFont()"
+                        onclick="increaseFontSize()"
                     >
                         🔠 {% trans "Agrandir le texte" %}
                         <span>A+</span>
@@ -92,7 +93,7 @@
                     <button
                         class="dropdown-item accessibility-item"
                         type="button"
-                        onclick="toggleContrast()"
+                        onclick="toggleHighContrast()"
                     >
                         ◐ {% trans "Contraste élevé" %}
                     </button>
@@ -257,6 +258,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<script src="{% static 'js/accessibility.js' %}"></script>
 
 </body>
 
